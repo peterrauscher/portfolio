@@ -1,0 +1,67 @@
+---
+title: "Running GitHub Actions on a randomized schedule"
+publishedAt: "2023-03-30"
+author: "Peter Rauscher"
+summary: "Use a lightweight Bash helper to rewrite cron entries at runtime so scheduled GitHub Actions avoid predictable execution windows."
+---
+
+GitHub Actions provide a generous free tier and make it easy to automate reminders, validations, and content refreshes. Plenty of those workflows run on cron schedules, but I wanted a workflow that didn't run at the same time every day. Randomizing the execution window spreads out load, avoids a recognizable pattern for scraping, and makes my usage look a little less like a bot.
+
+## Setting up the Randomized Workflow
+
+I started with a basic scheduled workflow and added a setup step that rewrites the cron expression each time it runs. A small Bash script picks a minute between 0 and 58, updates the workflow file in place, and commits the result back to the repo so the new schedule takes effect.
+
+```bash
+#!/bin/bash
+WORKFLOW_FILE=".github/workflows/validator.yml"
+RANDOM_MINUTE=$(shuf -i 0-58 -n 1)
+sed -i '' "s/cron: .*/cron: \"$RANDOM_MINUTE * * * *\"/" "$WORKFLOW_FILE"
+```
+
+That script lives at the repo root and gets invoked near the top of the workflow. I use a `COMMIT_TOKEN` secret with `repo` scope so the workflow can push the change back to the default branch without relying on the deprecated `GITHUB_TOKEN` write behavior.
+
+## Modifying the Workflow
+
+With the helper script in place, the workflow runs a few extra steps before the main job executes:
+
+```yaml
+name: Validator
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+
+jobs:
+  run-validator:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.COMMIT_TOKEN }}
+
+      - name: Randomize schedule
+        run: ./randomize-workflow.sh
+
+      - name: Commit updated cron
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .github/workflows/validator.yml
+          git commit -m "Randomize validator schedule [skip ci]" || echo "No changes"
+          git push
+
+      - name: Run validator
+        run: bun run validator
+```
+
+The cron expression shown in the workflow is just a placeholder; it gets replaced automatically every time the job runs. I opted for a writeable `contents` permission on the job so the commit step can succeed without granting broader scopes.
+
+## Conclusion
+
+Randomizing the schedule isn't necessary for most workflows, but it's a nice trick when you want to disguise scraping jobs, stagger notifications, or stay under rate limits. If you try this yourself, make sure whatever system consumes the workflow output can handle the variability.
+
+*Huge thanks to Dinesh for the late-night debugging session that kicked this off.*
