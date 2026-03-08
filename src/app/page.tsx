@@ -7,6 +7,7 @@ import Link from "next/link";
 import Markdown from "react-markdown";
 import ContactSection from "@/components/section/contact-section";
 import HackathonsSection from "@/components/section/hackathons-section";
+import NowSection from "@/components/section/now-section";
 import ProjectsSection from "@/components/section/projects-section";
 import WorkSection from "@/components/section/work-section";
 import { ArrowUpRight } from "lucide-react";
@@ -131,17 +132,22 @@ export default function Page() {
         </div>
       </section>
       <section id="projects">
-        <BlurFade delay={BLUR_FADE_DELAY * 11}>
+        <BlurFade delay={BLUR_FADE_DELAY * 13}>
           <ProjectsSection />
         </BlurFade>
       </section>
       <section id="hackathons">
-        <BlurFade delay={BLUR_FADE_DELAY * 13}>
+        <BlurFade delay={BLUR_FADE_DELAY * 15}>
           <HackathonsSection />
         </BlurFade>
       </section>
+      <section id="now">
+        <BlurFade delay={BLUR_FADE_DELAY * 17}>
+          <NowSection />
+        </BlurFade>
+      </section>
       <section id="contact">
-        <BlurFade delay={BLUR_FADE_DELAY * 16}>
+        <BlurFade delay={BLUR_FADE_DELAY * 18}>
           <ContactSection />
         </BlurFade>
       </section>
