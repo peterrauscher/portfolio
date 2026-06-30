@@ -17,11 +17,13 @@ import {
   DjangoSimpleIcon,
   DotNetSimpleIcon,
   FastApiSimpleIcon,
+  GcpSimpleIcon,
   KafkaSimpleIcon,
   MongoDbSimpleIcon,
   RabbitMqSimpleIcon,
   RedisSimpleIcon,
   ReduxSimpleIcon,
+  RustSimpleIcon,
   TanStackQuerySimpleIcon,
   TerraformSimpleIcon,
 } from "@/components/ui/simple-icons";
@@ -38,14 +40,15 @@ export const DATA = {
   location: "Philadelphia, PA",
   locationLink: "https://www.google.com/maps/place/philadelphia",
   description:
-    "Software Engineer specializing in full-stack development and scalable systems. I love building high-impact features and optimizing performance.",
+    "Senior software engineer bringing performant backend systems and AI-powered automation to multiple industries. Currently building @ Vividly.",
   summary:
-    "I'm a Software Engineer at [Perpay](https://perpay.com), where I architect scalable systems and build full-stack features that drive millions in revenue. [I graduated from Stevens Institute of Technology](/#education) with a B.S. in Computer Science, and have experience building fintech and e-commerce platforms, microservices, and data pipelines. I love solving performance bottlenecks, designing event-driven systems, and helping other engineers level up.",
+    "I'm currently a senior software engineer at [Vividly](https://www.govividly.com), where I work on the all-in-one platform for CPG brands. [I studied computer science at Stevens Institute of Technology](/#education) and have spent the years since building things across the stack — distributed systems, blazing fast data pipelines, smooth user experiences. The throughline has always been the puzzle-solving: finding the messy problem, untangling it, and shipping something that automates it away.",
   avatarUrl: "/me.png",
   skills: [
     // Languages
-    { name: "Python", icon: Python },
+    { name: "Rust", icon: RustSimpleIcon },
     { name: "TypeScript", icon: Typescript },
+    { name: "Python", icon: Python },
     // Backend Frameworks
     { name: "Django", icon: DjangoSimpleIcon },
     { name: "FastAPI", icon: FastApiSimpleIcon },
@@ -62,6 +65,7 @@ export const DATA = {
     { name: "Docker", icon: Docker },
     { name: "Kubernetes", icon: Kubernetes },
     { name: "AWS", icon: AwsSimpleIcon },
+    { name: "GCP", icon: GcpSimpleIcon },
     { name: "Terraform", icon: TerraformSimpleIcon },
     // Messaging & Queues
     { name: "Celery", icon: CelerySimpleIcon },
@@ -105,6 +109,18 @@ export const DATA = {
 
   work: [
     {
+      company: "Vividly",
+      href: "https://www.govividly.com",
+      badges: [],
+      location: "Remote",
+      title: "Senior Software Engineer",
+      logoUrl: "/vividly.jpg",
+      start: "May 2026",
+      end: "Present",
+      description:
+        "I get to touch a lot of interesting problems here — building performant Rust services, AI features, and improving the UX for a traditionally bloated workflow.",
+    },
+    {
       company: "Perpay",
       href: "https://perpay.com",
       badges: [],
@@ -112,7 +128,7 @@ export const DATA = {
       title: "Software Engineer II",
       logoUrl: "/perpay.png",
       start: "Apr 2025",
-      end: "Present",
+      end: "May 2026",
       description:
         "Architected the only scalable full-suite e-commerce platform powered by your paycheck. Went deep down the backend rabbit hole.",
     },
@@ -185,7 +201,7 @@ export const DATA = {
           icon: <Icons.github className="size-3" />,
         },
       ],
-      image: "",
+      image: "/neighborly.png",
       video: "",
     },
     {
@@ -210,7 +226,7 @@ export const DATA = {
           icon: <Icons.github className="size-3" />,
         },
       ],
-      image: "",
+      image: "/solesearch.png",
       video: "",
     },
   ],
