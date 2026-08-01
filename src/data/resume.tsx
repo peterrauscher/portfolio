@@ -12,12 +12,15 @@ import { Kubernetes } from "@/components/ui/svgs/kubernetes";
 import { Java } from "@/components/ui/svgs/java";
 import { Csharp } from "@/components/ui/svgs/csharp";
 import {
+  ActixSimpleIcon,
   AwsSimpleIcon,
   CelerySimpleIcon,
   DjangoSimpleIcon,
   DotNetSimpleIcon,
+  ExpressSimpleIcon,
   FastApiSimpleIcon,
   GcpSimpleIcon,
+  HonoSimpleIcon,
   KafkaSimpleIcon,
   MongoDbSimpleIcon,
   RabbitMqSimpleIcon,
@@ -26,6 +29,7 @@ import {
   RustSimpleIcon,
   TanStackQuerySimpleIcon,
   TerraformSimpleIcon,
+  PulumiSimpleIcon,
 } from "@/components/ui/simple-icons";
 
 type Skill = {
@@ -40,40 +44,35 @@ export const DATA = {
   location: "Philadelphia, PA",
   locationLink: "https://www.google.com/maps/place/philadelphia",
   description:
-    "Senior software engineer bringing performant backend systems and AI-powered automation to multiple industries. Currently building @ Vividly.",
+    "Senior software engineer building performant backend systems across multiple industries. Currently building @ Vividly.",
   summary:
-    "I'm currently a senior software engineer at [Vividly](https://www.govividly.com), where I work on the all-in-one platform for CPG brands. [I studied computer science at Stevens Institute of Technology](/#education) and have spent the years since building things across the stack — distributed systems, blazing fast data pipelines, smooth user experiences. The throughline has always been the puzzle-solving: finding the messy problem, untangling it, and shipping something that automates it away.",
+    "I'm currently a senior software engineer at [Vividly](https://www.govividly.com), where I work on the all-in-one platform for CPG brands. [I studied computer science at Stevens Institute of Technology](/#education) and have spent the years since building things across the stack — distributed systems, blazing fast data pipelines, smooth user experiences. The throughline has always been the puzzle-solving: finding the messy problem, untangling it, and shipping pragmatic solutions. In my free time, I tinker with building custom harnesses, eval loops, and my own software factory.",
   avatarUrl: "/me.png",
   skills: [
     // Languages
     { name: "Rust", icon: RustSimpleIcon },
     { name: "TypeScript", icon: Typescript },
     { name: "Python", icon: Python },
+    { name: "C#", icon: Csharp },
+    { name: "Java", icon: Java },
     // Backend Frameworks
+    { name: "Actix Web", icon: ActixSimpleIcon },
     { name: "Django", icon: DjangoSimpleIcon },
     { name: "FastAPI", icon: FastApiSimpleIcon },
-    // Frontend
-    { name: "React", icon: ReactLight },
-    { name: "Next.js", icon: NextjsIconDark },
-    { name: "Redux", icon: ReduxSimpleIcon },
-    { name: "TanStack Query", icon: TanStackQuerySimpleIcon },
-    // Databases
-    { name: "PostgreSQL", icon: Postgresql },
-    { name: "Redis", icon: RedisSimpleIcon },
-    { name: "MongoDB", icon: MongoDbSimpleIcon },
+    { name: "Hono", icon: HonoSimpleIcon },
+    { name: ".NET", icon: DotNetSimpleIcon },
     // Infrastructure & Cloud
-    { name: "Docker", icon: Docker },
-    { name: "Kubernetes", icon: Kubernetes },
     { name: "AWS", icon: AwsSimpleIcon },
     { name: "GCP", icon: GcpSimpleIcon },
+    { name: "PostgreSQL", icon: Postgresql },
+    { name: "Redis", icon: RedisSimpleIcon },
+    { name: "Kubernetes", icon: Kubernetes },
     { name: "Terraform", icon: TerraformSimpleIcon },
-    // Messaging & Queues
-    { name: "Celery", icon: CelerySimpleIcon },
-    { name: "Kafka", icon: KafkaSimpleIcon },
-    { name: "RabbitMQ", icon: RabbitMqSimpleIcon },
-    // Previous Experience
-    { name: "C#", icon: Csharp },
-    { name: ".NET Core", icon: DotNetSimpleIcon },
+    { name: "Pulumi", icon: PulumiSimpleIcon },
+    // Frontend
+    { name: "Next.js", icon: NextjsIconDark },
+    { name: "React", icon: ReactLight },
+    { name: "Redux", icon: ReduxSimpleIcon }
   ] as Skill[],
   navbar: [
     { href: "/", icon: HomeIcon, label: "Home" },
@@ -118,7 +117,7 @@ export const DATA = {
       start: "May 2026",
       end: "Present",
       description:
-        "I get to touch a lot of interesting problems here — building performant Rust services, AI features, and improving the UX for a traditionally bloated workflow.",
+        "I get to touch a lot of interesting problems here — building performant Rust services and improving the UX for a traditionally bloated workflow.",
     },
     {
       company: "Perpay",

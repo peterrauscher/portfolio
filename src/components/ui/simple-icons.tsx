@@ -24,9 +24,11 @@ const createSimpleIcon = (
   Icon.displayName = `${label.replace(/[^A-Za-z0-9]/g, "")}SimpleIcon`;
   return Icon;
 };
+export const ActixSimpleIcon = createSimpleIcon("actix", "Actix Web");
 
 export const DjangoSimpleIcon = createSimpleIcon("django", "Django");
 export const FastApiSimpleIcon = createSimpleIcon("fastapi", "FastAPI");
+export const ExpressSimpleIcon = createSimpleIcon("express", "Express");
 export const ReduxSimpleIcon = createSimpleIcon("redux", "Redux");
 export const TanStackQuerySimpleIcon = createSimpleIcon(
   "reactquery",
@@ -54,7 +56,9 @@ export const GcpSimpleIcon = ({ className }: IconProps) => (
     draggable={false}
   />
 );
+export const HonoSimpleIcon = createSimpleIcon("hono", "Hono");
 export const TerraformSimpleIcon = createSimpleIcon("terraform", "Terraform");
+export const PulumiSimpleIcon = createSimpleIcon("pulumi", "Pulumi");
 export const CelerySimpleIcon = createSimpleIcon("celery", "Celery");
 export const KafkaSimpleIcon = createSimpleIcon("apachekafka", "Kafka");
 export const RabbitMqSimpleIcon = createSimpleIcon("rabbitmq", "RabbitMQ");
