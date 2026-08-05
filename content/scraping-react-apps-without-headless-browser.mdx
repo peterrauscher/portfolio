@@ -7,21 +7,15 @@ summary: "You can scrape data-rich React and Next.js apps by leaning on the JSON
 
 If you've ever tried to build a web-scraping project, you've probably run into issues with dynamically rendered content, common in things like single-page applications (SPAs). Powered by technologies like Next.js and React, these SPAs offer seamless user experiences but pose unique challenges for web scrapers.
 
-I'll walk you through how I solved this challenge **_without_** using a headless browser, allowing me to keep resource costs low and continue web-scraping at scale. I use dead-simple tooling - Python, the requests library, and some string manipulation - to make the magic happen.
+Standard tools like BeautifulSoup just see the empty shell because they don't execute JS. The default fix is firing up a headless browser like Puppeteer or Selenium. That works, but it's slow, expensive, and uses a ton of memory.
 
-## Why are SPAs harder to scrape?
+I found a way to scrape these apps without a headless browser, using just Python, the `requests` library, and regex. 
 
-Traditional websites load all of their content synchronously and reload the entire page for each user navigation. Unlike these static sites, SPAs are a breed of modern web applications that load a single HTML page and dynamically update content with Javascript as users interact with them. Even non-SPA modern websites render more and more of their content through AJAX requests nowadays, from APIs and content management systems like Contentful.
+## The Trick
 
-The challenge with scraping SPAs stems from the fact that traditional web scraping tools, such as [BeautifulSoup](https://pypi.org/project/beautifulsoup4/) often struggle to capture data from dynamically rendered content, as they do not execute the Javascript embedded in `<script>` tags.
+When a React or Next.js app loads, it often ships the initial state data as a JSON blob right in the HTML `<script>` tags, so the frontend can hydrate without extra API calls. We just need to grab that JSON.
 
-The usual approach is to use a headless browser like [Selenium](https://www.selenium.dev/), [Puppeteer](https://pptr.dev/), or [Playwright](https://playwright.dev/) and scrape after the page has rendered completely. These tools load the entire web page, including executing JavaScript, rendering styles, and making AJAX requests. This approach can be resource-intensive and sluggish, particularly when dealing with unoptimized React code.
-
-![](https://peterrauscher.com/api?block_id=16ac6bf0-7757-80ee-85a0-dbc629f465e3)
-
-## The Solution
-
-We can use a simple GET request to the page's URL. This initial request fetches the HTML response, which often has the data we're looking for embedded in the bundled JS.
+Make a standard GET request:
 
 ```python
 import requests
@@ -31,9 +25,7 @@ response = requests.get(url)
 html_content = response.text
 ```
 
-### Extracting React/Next.js Data from HTML
-
-Here's where the magic happens. Our goal is to extract React data from the plaintext response. SPAs frequently load data within script tags, and we'll employ regular expressions (regex) to locate and extract these script tags.
+Now, extract the JSON. SPAs usually put this inside a specific script tag. You can use regex to find it and slice out the JSON payload.
 
 ```python
 import re
@@ -43,44 +35,21 @@ def extractor(html_content: str) -> str:
     react_app_script = re.search(
         "<script>document.getElementById.*</script>", html_content
     )
-    return (
-        "{"
-        + react_app_script.group()
-        .split("{", 2)[2]
-        .split("};window.initilizeAppWithHandoffState", 1)[0]
-        + "}"
-    )
+    # This slicing depends on the specific site's JS structure
+    raw_json = react_app_script.group().split("{", 2)[2].split("};window.initilizeAppWithHandoffState", 1)[0]
+    return "{" + raw_json + "}"
 
 react_data = json.loads(extractor(html_content))
 ```
 
-### Handling Authentication and Cookies
-
-In certain scenarios, SPAs may necessitate authentication or rely on cookies to access data. You can adeptly manage authentication and cookies within your scraping script using the session management features provided by the `requests` library. This enables you to maintain a persistent session and send authenticated requests.
+If the data is behind a login, just use a `requests.Session()` to handle cookies and auth, then fetch the page.
 
 ```python
-# Create a session
 session = requests.Session()
-
-# Authenticate (if needed)
-login_data = {
-    'username': 'your_username',
-    'password': 'your_password'
-}
-session.post('https://example.com/login', data=login_data)
-
-# Send requests with the session
+session.post('https://example.com/login', data={'user': 'me', 'pass': 'secret'})
 response = session.get('https://example.com/protected_data')
 ```
 
-## Conclusion
+That's it. No headless browser required.
 
-A little string manipulation goes a long way. Harnessing the power of regex you can create an efficient and lightweight approach to extracting data from SPA sites.
-
-### Chrome Extension
-
-When I was building an ingestion engine for an app I was working on, I wanted a quick way to view the hidden JSON blob I for the page I was viewing to see if it held the data I wanted. I built a chrome extension that displays this data and lets you easily copy or export it to help when writing scraping applications. [It's available on the Chrome Web Store](https://chromewebstore.google.com/detail/nextscraper/kjlhnflincmlpkgahnidgebbngieobod), check it out!
-
-### _Disclaimer_
-
-_Always respect website terms of service and robots.txt files when scraping data from the web._
+*I actually built a Chrome extension to quickly check if a page has this hidden JSON data before I write a scraper. [It's on the Web Store](https://chromewebstore.google.com/detail/nextscraper/kjlhnflincmlpkgahnidgebbngieobod).*
