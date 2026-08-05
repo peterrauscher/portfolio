@@ -44,9 +44,9 @@ export const DATA = {
   location: "Philadelphia, PA",
   locationLink: "https://www.google.com/maps/place/philadelphia",
   description:
-    "Senior software engineer building performant backend systems across multiple industries. Currently building @ Vividly.",
+    "I like to make sites faster and cloud bills lower. Performance is a feature too! Currently spending my time optimizing @ Vividly.",
   summary:
-    "I'm currently a senior software engineer at [Vividly](https://www.govividly.com), where I work on the all-in-one platform for CPG brands. [I studied computer science at Stevens Institute of Technology](/#education) and have spent the years since building things across the stack — distributed systems, blazing fast data pipelines, smooth user experiences. The throughline has always been the puzzle-solving: finding the messy problem, untangling it, and shipping pragmatic solutions. In my free time, I tinker with building custom harnesses, eval loops, and my own software factory.",
+    "I'm currently a senior software engineer at [Vividly](https://www.govividly.com), where I work on the all-in-one platform for CPG brands. [I studied computer science at Stevens Institute of Technology](/#education) and have spent the years since deep in backend and infra — distributed systems, data pipelines, cloud cost curves. I care a lot about the boring wins: snappier pages, leaner services, smaller bills. The throughline has always been the puzzle-solving: finding the messy problem, untangling it, and shipping pragmatic solutions. In my free time, I tinker with building custom harnesses, eval loops, and my own software factory.",
   avatarUrl: "/me.png",
   skills: [
     // Languages
