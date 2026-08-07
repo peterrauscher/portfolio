@@ -13,7 +13,7 @@ export default async function Icon() {
   const headersList = await headers();
   const host = headersList.get("host") ?? "localhost";
   const proto = headersList.get("x-forwarded-proto") ?? "http";
-  const imageUrl = `${proto}://${host}/me.png`;
+  const imageUrl = `${proto}://${host}/me.webp`;
 
   return new ImageResponse(
     <div

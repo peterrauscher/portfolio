@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { Suspense } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Tv } from "lucide-react";
 
 function GoodreadsIcon({ className }: { className?: string }) {
@@ -148,7 +149,7 @@ const LISTENING_TRACK = {
   name: "Bangladesh",
   artist: "The Sound of Animals Fighting",
   url: "https://music.youtube.com/watch?v=NHqCfPvP5o4",
-  albumArtUrl: "/bangladesh-album.png",
+  albumArtUrl: "/bangladesh-album.webp",
 };
 
 function ListeningWidget() {
@@ -176,9 +177,12 @@ function ListeningWidget() {
             rel="noopener noreferrer"
             className="group flex items-center gap-3"
           >
-            <img
+            <Image
               src={LISTENING_TRACK.albumArtUrl}
               alt={LISTENING_TRACK.name}
+              width={40}
+              height={40}
+              sizes="40px"
               className="ring-border size-10 flex-none rounded object-cover shadow-sm ring-1"
             />
             <div className="flex min-w-0 flex-col">

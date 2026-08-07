@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import { useState } from "react";
 import {
@@ -9,6 +8,7 @@ import {
 } from "@/components/ui/accordion";
 import { DATA } from "@/data/resume";
 import { ChevronDown, ChevronRight } from "lucide-react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 function LogoImage({ src, alt }: { src: string; alt: string }) {
@@ -21,9 +21,12 @@ function LogoImage({ src, alt }: { src: string; alt: string }) {
   }
 
   return (
-    <img
+    <Image
       src={src}
       alt={alt}
+      width={40}
+      height={40}
+      sizes="40px"
       className="ring-border size-8 flex-none rounded-full border object-cover shadow ring-2 md:size-10"
       onError={() => setImageError(true)}
     />

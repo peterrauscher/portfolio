@@ -47,7 +47,7 @@ export const DATA = {
     "I like to make sites faster and cloud bills lower. Performance is a feature too! Currently spending my time optimizing @ Vividly.",
   summary:
     "I'm currently a senior software engineer at [Vividly](https://www.govividly.com), where I work on the all-in-one platform for CPG brands. [I studied computer science at Stevens Institute of Technology](/#education) and have spent the years since deep in backend and infra — distributed systems, data pipelines, cloud cost curves. I care a lot about the boring wins: snappier pages, leaner services, smaller bills. The throughline has always been the puzzle-solving: finding the messy problem, untangling it, and shipping pragmatic solutions. In my free time, I tinker with building custom harnesses, eval loops, and my own software factory.",
-  avatarUrl: "/me.png",
+  avatarUrl: "/me.webp",
   skills: [
     // Languages
     { name: "Rust", icon: RustSimpleIcon },
@@ -114,7 +114,7 @@ export const DATA = {
       badges: [],
       location: "Remote",
       title: "Senior Software Engineer",
-      logoUrl: "/vividly.jpg",
+      logoUrl: "/vividly.webp",
       start: "May 2026",
       end: "Present",
       description:
@@ -126,7 +126,7 @@ export const DATA = {
       badges: [],
       location: "Philadelphia, PA",
       title: "Software Engineer II",
-      logoUrl: "/perpay.png",
+      logoUrl: "/perpay.webp",
       start: "Apr 2025",
       end: "May 2026",
       description:
@@ -138,7 +138,7 @@ export const DATA = {
       href: "https://perpay.com",
       location: "Philadelphia, PA",
       title: "Software Engineer I",
-      logoUrl: "/perpay.png",
+      logoUrl: "/perpay.webp",
       start: "Apr 2024",
       end: "Apr 2025",
       description:
@@ -150,7 +150,7 @@ export const DATA = {
       badges: [],
       location: "Philadelphia, PA",
       title: "Software Engineer",
-      logoUrl: "/almo.jpg",
+      logoUrl: "/almo.webp",
       start: "Jul 2023",
       end: "Apr 2024",
       description:
@@ -162,7 +162,7 @@ export const DATA = {
       badges: [],
       location: "Philadelphia, PA",
       title: "Software Engineer Intern",
-      logoUrl: "/almo.jpg",
+      logoUrl: "/almo.webp",
       start: "May 2019",
       end: "Aug 2019",
       description:
@@ -174,7 +174,7 @@ export const DATA = {
       school: "Stevens Institute of Technology",
       href: "https://stevens.edu",
       degree: "Bachelor of Science in Computer Science",
-      logoUrl: "/stevens.png",
+      logoUrl: "/stevens.webp",
       start: "2019",
       end: "2023",
     },
@@ -201,7 +201,7 @@ export const DATA = {
           icon: <Icons.github className="size-3" />,
         },
       ],
-      image: "/neighborly.png",
+      image: "/neighborly.webp",
       video: "",
     },
     {
@@ -226,7 +226,7 @@ export const DATA = {
           icon: <Icons.github className="size-3" />,
         },
       ],
-      image: "/solesearch.png",
+      image: "/solesearch.webp",
       video: "",
     },
   ],
@@ -237,7 +237,7 @@ export const DATA = {
       location: "",
       description:
         "Won grand prize for developing Neighborly, a React app and serverless API to connect neighbors looking to share resources using MongoDB Atlas.",
-      image: "/hackathon-grand-prize.png",
+      image: "/hackathon-grand-prize.webp",
       win: "Grand Prize Winner",
       links: [
         {

@@ -1,6 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import Image from "next/image";
 import { DATA } from "@/data/resume";
 import {
   Timeline,
@@ -41,9 +41,12 @@ export default function HackathonsSection() {
             >
               <TimelineConnectItem className="flex items-start justify-center">
                 {hackathon.image ? (
-                  <img
+                  <Image
                     src={hackathon.image}
                     alt={hackathon.title}
+                    width={40}
+                    height={40}
+                    sizes="40px"
                     className="bg-card ring-border z-10 size-10 flex-none shrink-0 overflow-hidden rounded-full border object-contain p-1 shadow ring-2"
                   />
                 ) : (
