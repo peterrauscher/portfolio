@@ -1,5 +1,5 @@
 import { Icons } from "@/components/icons";
-import { HomeIcon, NotebookIcon } from "lucide-react";
+import { BotIcon, HomeIcon, NotebookIcon } from "lucide-react";
 import { ReactLight } from "@/components/ui/svgs/reactLight";
 import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
 import { Typescript } from "@/components/ui/svgs/typescript";
@@ -77,6 +77,7 @@ export const DATA = {
   navbar: [
     { href: "/", icon: HomeIcon, label: "Home" },
     { href: "/blog", icon: NotebookIcon, label: "Blog" },
+    { href: "/ai-stack", icon: BotIcon, label: "AI Stack" },
   ],
   contact: {
     email: "peter@peterrauscher.com",
