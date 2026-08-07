@@ -32,7 +32,7 @@ function StackTable({
   nowrapLast?: boolean;
 }) {
   return (
-    <div className="my-6 border border-border rounded-xl overflow-hidden not-prose">
+    <div className="border-border not-prose my-6 overflow-hidden rounded-xl border">
       <div className="w-full overflow-x-auto">
         <table className="m-0 w-full min-w-full border-separate border-spacing-0 text-sm">
           <thead>
@@ -40,7 +40,7 @@ function StackTable({
               {headers.map((header) => (
                 <th
                   key={header}
-                  className="text-left font-semibold text-foreground border-b border-border bg-muted/50 px-3 py-2 align-middle"
+                  className="text-foreground border-border bg-muted/50 border-b px-3 py-2 text-left align-middle font-semibold"
                 >
                   {header}
                 </th>
@@ -60,11 +60,11 @@ function StackTable({
                     <td
                       key={cellIndex}
                       className={[
-                        "text-muted-foreground border-b border-border px-3 py-2.5 align-middle text-sm whitespace-normal",
-                        !isLast ? "border-r border-border" : "",
+                        "text-muted-foreground border-border border-b px-3 py-2.5 align-middle text-sm whitespace-normal",
+                        !isLast ? "border-border border-r" : "",
                         rowIndex === rows.length - 1 ? "border-b-0" : "",
                         isFirst
-                          ? "font-medium text-foreground/90 whitespace-nowrap"
+                          ? "text-foreground/90 font-medium whitespace-nowrap"
                           : "",
                         nowrapLast && isLast ? "whitespace-nowrap" : "",
                       ]
@@ -88,26 +88,24 @@ export default function AIStackPage() {
   return (
     <section id="ai-stack">
       <BlurFade delay={BLUR_FADE_DELAY}>
-        <h1 className="text-2xl font-semibold tracking-tight mb-2">
+        <h1 className="mb-2 text-2xl font-semibold tracking-tight">
           My AI stack
         </h1>
-        <p className="text-sm text-muted-foreground mb-8">
-          The industry is moving so fast now I make tweaks, changes, and try new tools every day, but I try and keep this up-to-date.
+        <p className="text-muted-foreground mb-8 text-sm">
+          The industry is moving so fast now I make tweaks, changes, and try new
+          tools every day, but I try and keep this up-to-date.
         </p>
       </BlurFade>
 
-      <article className="prose max-w-full text-pretty font-sans leading-relaxed text-muted-foreground dark:prose-invert">
-        <BlurFade delay={BLUR_FADE_DELAY * 2}>
-          <p>
-            This covers the setup I use when working on <strong>personal projects and open-source contributions</strong>. My setup at my day job is similar but I use more industry standard tools and models that are withing our data-retention policy.
-          </p>
-        </BlurFade>
-
+      <article className="prose text-muted-foreground dark:prose-invert max-w-full font-sans leading-relaxed text-pretty">
         <BlurFade delay={BLUR_FADE_DELAY * 3}>
           <h2>Coding tools</h2>
           <p>
-            omp is the control plane. The rest of the stack covers design,
-            planning, recurring agent work, deployment, and mobile continuity.
+            This covers the setup I use when working on{" "}
+            <strong>personal projects and open-source contributions</strong>. My
+            setup at my day job is similar but I use more industry standard
+            tools (like Figma) and models that are withing our data-retention
+            policy.
           </p>
           <StackTable
             headers={["Tool", "Role"]}
@@ -121,7 +119,18 @@ export default function AIStackPage() {
                 >
                   omp
                 </Link>,
-                "The best coding harness (verified). Amazing agent orchestration, subagent messaging, role maps, and highly extensible. My daily driver.",
+                <>
+                  The best coding harness (
+                  <Link
+                    href="https://x.com/composio/status/2085330847951970801"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    verified
+                  </Link>
+                  ). Amazing agent orchestration, subagent messaging, role maps,
+                  and highly extensible. My daily driver.
+                </>,
               ],
               [
                 <Link
@@ -201,17 +210,17 @@ export default function AIStackPage() {
             nowrapLast
             rows={[
               ["OpenAI", "ChatGPT Pro 20x", "$200"],
-              ["xAI", "SuperGrok, grok-4.5-high is great at design in pen.dev", "$30"],
+              [
+                "xAI",
+                "SuperGrok, grok-4.5-high is great at design in pen.dev",
+                "$30",
+              ],
               [
                 "OpenCode Go",
                 "Gives $60 of DeepSeek V4 Flash usage, GREAT deal",
                 "$10",
               ],
-              [
-                "DeepInfra",
-                "Pay-as-you-go API for dsv4-flash-0731",
-                "~$5-10",
-              ],
+              ["DeepInfra", "Pay-as-you-go API for dsv4-flash-0731", "~$5-10"],
               [
                 <strong key="total-label">Total</strong>,
                 "",
@@ -226,7 +235,7 @@ export default function AIStackPage() {
         </BlurFade>
 
         <BlurFade delay={BLUR_FADE_DELAY * 5}>
-          <p className="text-sm text-muted-foreground not-prose mt-8">
+          <p className="text-muted-foreground not-prose mt-8 text-sm">
             Last updated: Aug 07, 2026
           </p>
         </BlurFade>
