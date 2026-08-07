@@ -14,10 +14,16 @@ const getFontData = async () => {
   try {
     const [cabinetGrotesk, clashDisplay] = await Promise.all([
       fetch(
-        new URL("../../../public/fonts/CabinetGrotesk-Medium.ttf", import.meta.url)
+        new URL(
+          "../../../public/fonts/CabinetGrotesk-Medium.ttf",
+          import.meta.url,
+        ),
       ).then((res) => res.arrayBuffer()),
       fetch(
-        new URL("../../../public/fonts/ClashDisplay-Semibold.ttf", import.meta.url)
+        new URL(
+          "../../../public/fonts/ClashDisplay-Semibold.ttf",
+          import.meta.url,
+        ),
       ).then((res) => res.arrayBuffer()),
     ]);
     return { cabinetGrotesk, clashDisplay };
@@ -115,25 +121,23 @@ export default async function Image() {
       : undefined;
 
     return new ImageResponse(
-      (
-        <div style={styles.outerWrapper}>
-          <div style={styles.middleWrapper}>
-            <div style={styles.wrapper}>
-              {imageUrl && (
-                <div style={styles.imageSection}>
-                  <img src={imageUrl} alt="AI Stack" style={styles.image} />
-                </div>
-              )}
-              <div style={styles.mainContainer}>
-                <div style={styles.title}>{title}</div>
-                {description && (
-                  <div style={styles.description}>{description}</div>
-                )}
+      <div style={styles.outerWrapper}>
+        <div style={styles.middleWrapper}>
+          <div style={styles.wrapper}>
+            {imageUrl && (
+              <div style={styles.imageSection}>
+                <img src={imageUrl} alt="AI Stack" style={styles.image} />
               </div>
+            )}
+            <div style={styles.mainContainer}>
+              <div style={styles.title}>{title}</div>
+              {description && (
+                <div style={styles.description}>{description}</div>
+              )}
             </div>
           </div>
         </div>
-      ),
+      </div>,
       {
         ...size,
         fonts: fontData
@@ -158,7 +162,7 @@ export default async function Image() {
               },
             ]
           : undefined,
-      }
+      },
     );
   } catch (error) {
     console.error("Error generating OpenGraph image:", error);
@@ -166,7 +170,7 @@ export default async function Image() {
       `Failed to generate image: ${error instanceof Error ? error.message : "Unknown error"}`,
       {
         status: 500,
-      }
+      },
     );
   }
 }

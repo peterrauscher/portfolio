@@ -52,7 +52,11 @@ export function CodeBlock({ children, ...props }: CodeBlockProps) {
       })
       .catch((error) => {
         console.error("Failed to highlight code:", error);
-        setRenderState({ html: "", className: nextClassName, title: nextTitle });
+        setRenderState({
+          html: "",
+          className: nextClassName,
+          title: nextTitle,
+        });
       });
   }, [children]);
 
@@ -68,14 +72,14 @@ export function CodeBlock({ children, ...props }: CodeBlockProps) {
   };
 
   return (
-    <div className="group relative rounded-xl overflow-hidden border border-border">
+    <div className="group border-border relative overflow-hidden rounded-xl border">
       <pre
         ref={preRef}
         {...props}
-        className={cn("p-0! m-0! overflow-x-auto", props.className)}
+        className={cn("m-0! overflow-x-auto p-0!", props.className)}
       >
         {title && (
-          <div className="p-3 text-xs font-medium border-b border-border rounded-t-xl bg-muted/50 text-foreground">
+          <div className="border-border bg-muted/50 text-foreground rounded-t-xl border-b p-3 text-xs font-medium">
             {title}
           </div>
         )}
@@ -84,7 +88,11 @@ export function CodeBlock({ children, ...props }: CodeBlockProps) {
           onClick={handleCopy}
           variant="outline"
           size="icon"
-          className={cn("absolute size-8 text-primary cursor-pointer right-3 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity rounded-md border border-border shadow-none", title ? "top-13" : "top-3", props.className)}
+          className={cn(
+            "text-primary border-border absolute right-3 size-8 cursor-pointer rounded-md border opacity-100 shadow-none transition-opacity lg:opacity-0 lg:group-hover:opacity-100",
+            title ? "top-13" : "top-3",
+            props.className,
+          )}
           aria-label="Copy code"
         >
           {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
@@ -98,13 +106,8 @@ export function CodeBlock({ children, ...props }: CodeBlockProps) {
           </div>
         )}
 
-        {!html && (
-          <div className="p-4">
-            {children}
-          </div>
-        )}
-      </pre >
-    </div >
+        {!html && <div className="p-4">{children}</div>}
+      </pre>
+    </div>
   );
 }
-

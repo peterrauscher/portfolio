@@ -12,7 +12,7 @@ export const mdxComponents = {
   hr: (props: ComponentProps<"hr">) => (
     <div className="my-10 flex w-full items-center" {...props}>
       <div
-        className="flex-1 h-px bg-border"
+        className="bg-border h-px flex-1"
         style={{
           maskImage:
             "linear-gradient(90deg, transparent, black 8%, black 92%, transparent)",
@@ -23,7 +23,7 @@ export const mdxComponents = {
     </div>
   ),
   table: (props: ComponentProps<"table">) => (
-    <div className="my-6 border border-border rounded-xl overflow-hidden">
+    <div className="border-border my-6 overflow-hidden rounded-xl border">
       <div className="w-full overflow-x-auto">
         <table
           className="m-0! w-full min-w-full border-separate border-spacing-0"
@@ -38,7 +38,7 @@ export const mdxComponents = {
     }
     return (
       <code
-        className="px-1.5 py-0.5 rounded-md bg-muted/60 dark:bg-muted/40 text-sm font-mono text-foreground/90"
+        className="bg-muted/60 dark:bg-muted/40 text-foreground/90 rounded-md px-1.5 py-0.5 font-mono text-sm"
         {...props}
       >
         {children}
@@ -46,4 +46,3 @@ export const mdxComponents = {
     );
   },
 } as const;
-

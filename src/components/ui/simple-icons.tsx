@@ -8,7 +8,7 @@ type IconProps = {
 
 const createSimpleIcon = (
   slug: string,
-  label: string
+  label: string,
 ): ComponentType<IconProps> => {
   const Icon = ({ className }: IconProps) => (
     <img
@@ -32,7 +32,7 @@ export const ExpressSimpleIcon = createSimpleIcon("express", "Express");
 export const ReduxSimpleIcon = createSimpleIcon("redux", "Redux");
 export const TanStackQuerySimpleIcon = createSimpleIcon(
   "reactquery",
-  "TanStack Query"
+  "TanStack Query",
 );
 export const RedisSimpleIcon = createSimpleIcon("redis", "Redis");
 export const MongoDbSimpleIcon = createSimpleIcon("mongodb", "MongoDB");

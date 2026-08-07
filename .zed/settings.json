@@ -1,0 +1,42 @@
+{
+  // Format with the project's Prettier (.prettierrc.json, incl. tailwind plugin)
+  // whenever a buffer is saved.
+  "format_on_save": "on",
+  // Run eslint --fix first, then Prettier (Zed runs code actions before the formatter).
+  "languages": {
+    "JavaScript": {
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true
+      }
+    },
+    "JSX": {
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true
+      }
+    },
+    "TypeScript": {
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true
+      }
+    },
+    "TSX": {
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true
+      }
+    }
+  },
+  // Zed has no built-in MDX language; treat .mdx as Markdown so blog content
+  // gets Prettier formatting on save (Prettier picks the MDX parser by extension).
+  "file_types": {
+    "Markdown": ["mdx"]
+  },
+  "lsp": {
+    // Tailwind v4 IntelliSense (autocomplete, hover previews) + class detection
+    // inside cva()/cn()/clsx() calls. className in JSX is covered by defaults.
+    "tailwindcss-language-server": {
+      "settings": {
+        "classFunctions": ["cva", "cx", "cn", "clsx"]
+      }
+    }
+  }
+}

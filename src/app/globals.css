@@ -133,40 +133,41 @@
     background-color: transparent;
   }
 
-.prose pre {
-    @apply leading-relaxed bg-transparent! font-mono!;
+  .prose pre {
+    @apply bg-transparent! font-mono! leading-relaxed;
   }
 
   .prose code {
-    @apply m-0! mx-1! border rounded-md! px-1.5 py-0.5 bg-muted/60 dark:bg-muted/40 text-[13px]! font-mono text-foreground/90!;
+    @apply bg-muted/60 dark:bg-muted/40 text-foreground/90! m-0! mx-1! rounded-md! border px-1.5 py-0.5 font-mono text-[13px]!;
   }
 
-  .prose code::before, .prose code::after {
+  .prose code::before,
+  .prose code::after {
     @apply content-none!;
   }
 
   .prose h1 {
-    @apply text-2xl! font-semibold! tracking-tight! leading-tight!;
+    @apply text-2xl! leading-tight! font-semibold! tracking-tight!;
   }
 
   .prose h2 {
-    @apply text-xl! font-semibold! tracking-tight! leading-tight!;
+    @apply text-xl! leading-tight! font-semibold! tracking-tight!;
   }
 
   .prose h3 {
-    @apply text-lg! font-semibold! tracking-tight! leading-tight!;
+    @apply text-lg! leading-tight! font-semibold! tracking-tight!;
   }
 
   .prose h4 {
-    @apply text-base! font-medium! tracking-tight! leading-tight!;
+    @apply text-base! leading-tight! font-medium! tracking-tight!;
   }
 
   .prose h5 {
-    @apply text-base! font-medium! tracking-tight! leading-tight!;
+    @apply text-base! leading-tight! font-medium! tracking-tight!;
   }
 
   .prose h6 {
-    @apply text-base! font-medium! tracking-tight! leading-tight!;
+    @apply text-base! leading-tight! font-medium! tracking-tight!;
   }
 
   .prose a {
@@ -174,7 +175,7 @@
   }
 
   .prose blockquote {
-    @apply border-l-4 border-amber-500! pl-4 italic bg-muted/50 p-4 rounded-md rounded-l-none;
+    @apply bg-muted/50 rounded-md rounded-l-none border-l-4 border-amber-500! p-4 pl-4 italic;
   }
 
   .prose blockquote p {
@@ -209,28 +210,27 @@
 
   .prose :where(th):not(:where([class~="not-prose"] *)),
   .prose :where(td):not(:where([class~="not-prose"] *)) {
-    @apply px-6 py-4 align-middle m-0 whitespace-nowrap;
+    @apply m-0 px-6 py-4 align-middle whitespace-nowrap;
   }
 
-  .prose tr{
-    @apply hover:bg-accent/50! transition-colors! cursor-pointer! h-10!;
+  .prose tr {
+    @apply hover:bg-accent/50! h-10! cursor-pointer! transition-colors!;
   }
 
   .prose :where(th):not(:where([class~="not-prose"] *)) {
-    @apply text-left font-semibold text-foreground border-b border-border m-0! bg-muted/50 p-3! py-2!;
+    @apply text-foreground border-border bg-muted/50 m-0! border-b p-3! py-2! text-left font-semibold;
   }
 
   .prose :where(td):not(:where([class~="not-prose"] *)) {
-    @apply text-muted-foreground border-b border-border text-sm! p-2!;
+    @apply text-muted-foreground border-border border-b p-2! text-sm!;
   }
 
   .prose :where(th:not(:last-child)):not(:where([class~="not-prose"] *)),
   .prose :where(td:not(:last-child)):not(:where([class~="not-prose"] *)) {
-    @apply border-r border-border;
+    @apply border-border border-r;
   }
 
   .prose :where(tbody tr:last-child td):not(:where([class~="not-prose"] *)) {
     @apply border-b-0;
   }
-
 }

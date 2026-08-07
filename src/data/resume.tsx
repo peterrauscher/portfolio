@@ -72,7 +72,7 @@ export const DATA = {
     // Frontend
     { name: "Next.js", icon: NextjsIconDark },
     { name: "React", icon: ReactLight },
-    { name: "Redux", icon: ReduxSimpleIcon }
+    { name: "Redux", icon: ReduxSimpleIcon },
   ] as Skill[],
   navbar: [
     { href: "/", icon: HomeIcon, label: "Home" },

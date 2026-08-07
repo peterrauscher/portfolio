@@ -16,32 +16,30 @@ export default async function Icon() {
   const imageUrl = `${proto}://${host}/me.png`;
 
   return new ImageResponse(
-    (
-      <div
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <img
+        src={imageUrl}
+        alt=""
+        width={64}
+        height={64}
         style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          objectFit: "cover",
+          borderRadius: "50%",
+          border: "2px solid #ffffff",
+          boxShadow: "0 0 0 3px rgba(0,0,0,0.12)",
         }}
-      >
-        <img
-          src={imageUrl}
-          alt=""
-          width={64}
-          height={64}
-          style={{
-            objectFit: "cover",
-            borderRadius: "50%",
-            border: "2px solid #ffffff",
-            boxShadow: "0 0 0 3px rgba(0,0,0,0.12)",
-          }}
-        />
-      </div>
-    ),
+      />
+    </div>,
     {
       ...size,
-    }
+    },
   );
 }

@@ -24,7 +24,7 @@ export interface PaginationResult<T> {
  */
 export function paginate<T>(
   items: T[],
-  options: PaginationOptions
+  options: PaginationOptions,
 ): PaginationResult<T> {
   const { page, pageSize } = options;
   const totalItems = items.length;
@@ -52,7 +52,7 @@ export function paginate<T>(
  */
 export function getPaginationMeta(
   totalItems: number,
-  options: PaginationOptions
+  options: PaginationOptions,
 ) {
   const { page, pageSize } = options;
   const totalPages = Math.ceil(totalItems / pageSize);
@@ -70,7 +70,10 @@ export function getPaginationMeta(
 /**
  * Validate and normalize page number
  */
-export function normalizePage(page: number | string | undefined, maxPage: number): number {
+export function normalizePage(
+  page: number | string | undefined,
+  maxPage: number,
+): number {
   if (typeof page === "string") {
     const parsed = parseInt(page, 10);
     if (isNaN(parsed) || parsed < 1) return 1;
@@ -82,4 +85,3 @@ export function normalizePage(page: number | string | undefined, maxPage: number
   }
   return 1;
 }
-

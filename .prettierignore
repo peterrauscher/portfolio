@@ -1,0 +1,22 @@
+# build output
+.next
+out
+build
+
+# generated
+.content-collections
+next-env.d.ts
+
+# lockfiles
+bun.lock
+
+# vercel
+.vercel
+
+# env
+.env
+.env.*
+!.env.example
+
+# local settings
+.claude

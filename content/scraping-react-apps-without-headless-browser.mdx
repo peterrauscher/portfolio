@@ -9,7 +9,7 @@ If you've ever tried to build a web-scraping project, you've probably run into i
 
 Standard tools like BeautifulSoup just see the empty shell because they don't execute JS. The default fix is firing up a headless browser like Puppeteer or Selenium. That works, but it's slow, expensive, and uses a ton of memory.
 
-I found a way to scrape these apps without a headless browser, using just Python, the `requests` library, and regex. 
+I found a way to scrape these apps without a headless browser, using just Python, the `requests` library, and regex.
 
 ## The Trick
 
@@ -52,4 +52,4 @@ response = session.get('https://example.com/protected_data')
 
 That's it. No headless browser required.
 
-*I actually built a Chrome extension to quickly check if a page has this hidden JSON data before I write a scraper. [It's on the Web Store](https://chromewebstore.google.com/detail/nextscraper/kjlhnflincmlpkgahnidgebbngieobod).*
+_I actually built a Chrome extension to quickly check if a page has this hidden JSON data before I write a scraper. [It's on the Web Store](https://chromewebstore.google.com/detail/nextscraper/kjlhnflincmlpkgahnidgebbngieobod)._

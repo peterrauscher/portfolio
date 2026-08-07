@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+# Pre-push hook: block pushes that fail lint, typecheck, or formatting.
+bun run check

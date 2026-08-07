@@ -16,11 +16,11 @@ const BLUR_FADE_DELAY = 0.04;
 
 export default function Page() {
   return (
-    <main className="min-h-dvh flex flex-col gap-14 relative">
+    <main className="relative flex min-h-dvh flex-col gap-14">
       <section id="hero">
         <div className="mx-auto w-full max-w-2xl space-y-8">
-          <div className="gap-2 gap-y-6 flex flex-col md:flex-row justify-between">
-            <div className="gap-2 flex flex-col order-2 md:order-1">
+          <div className="flex flex-col justify-between gap-2 gap-y-6 md:flex-row">
+            <div className="order-2 flex flex-col gap-2 md:order-1">
               <BlurFadeText
                 delay={BLUR_FADE_DELAY}
                 className="text-3xl font-semibold tracking-tighter sm:text-4xl lg:text-5xl"
@@ -34,7 +34,7 @@ export default function Page() {
               />
             </div>
             <BlurFade delay={BLUR_FADE_DELAY} className="order-1 md:order-2">
-              <Avatar className="size-24 md:size-32 border rounded-full shadow-lg ring-4 ring-muted">
+              <Avatar className="ring-muted size-24 rounded-full border shadow-lg ring-4 md:size-32">
                 <AvatarImage
                   alt={DATA.name}
                   src={DATA.avatarUrl}
@@ -52,10 +52,8 @@ export default function Page() {
             <h2 className="text-xl font-bold">About</h2>
           </BlurFade>
           <BlurFade delay={BLUR_FADE_DELAY * 4}>
-            <div className="prose max-w-full text-pretty font-sans leading-relaxed text-muted-foreground dark:prose-invert">
-              <Markdown>
-                {DATA.summary}
-              </Markdown>
+            <div className="prose text-muted-foreground dark:prose-invert max-w-full font-sans leading-relaxed text-pretty">
+              <Markdown>{DATA.summary}</Markdown>
             </div>
           </BlurFade>
         </div>
@@ -85,29 +83,32 @@ export default function Page() {
                   href={education.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-x-3 justify-between group"
+                  className="group flex items-center justify-between gap-x-3"
                 >
-                  <div className="flex items-center gap-x-3 flex-1 min-w-0">
+                  <div className="flex min-w-0 flex-1 items-center gap-x-3">
                     {education.logoUrl ? (
                       <img
                         src={education.logoUrl}
                         alt={education.school}
-                        className="size-8 md:size-10 border rounded-full shadow ring-2 ring-border object-cover flex-none"
+                        className="ring-border size-8 flex-none rounded-full border object-cover shadow ring-2 md:size-10"
                       />
                     ) : (
-                      <div className="size-8 md:size-10 border rounded-full shadow ring-2 ring-border bg-muted flex-none" />
+                      <div className="ring-border bg-muted size-8 flex-none rounded-full border shadow ring-2 md:size-10" />
                     )}
-                    <div className="flex-1 min-w-0 flex flex-col gap-0.5">
-                      <div className="font-semibold leading-none flex items-center gap-2">
+                    <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+                      <div className="flex items-center gap-2 leading-none font-semibold">
                         {education.school}
-                        <ArrowUpRight className="h-3.5 w-3.5 text-muted-foreground opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" aria-hidden />
+                        <ArrowUpRight
+                          className="text-muted-foreground h-3.5 w-3.5 -translate-x-2 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100"
+                          aria-hidden
+                        />
                       </div>
-                      <div className="font-sans text-sm text-muted-foreground">
+                      <div className="text-muted-foreground font-sans text-sm">
                         {education.degree}
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1 text-xs tabular-nums text-muted-foreground text-right flex-none">
+                  <div className="text-muted-foreground flex flex-none items-center gap-1 text-right text-xs tabular-nums">
                     <span>
                       {education.start} - {education.end}
                     </span>
@@ -121,29 +122,40 @@ export default function Page() {
       <section id="skills">
         <div className="flex min-h-0 flex-col gap-y-8">
           <BlurFade delay={BLUR_FADE_DELAY * 9}>
-            <div className="flex flex-col gap-y-4 items-center justify-center">
-              <div className="flex items-center w-full">
-                <div className="flex-1 h-px bg-linear-to-r from-transparent from-5% via-border via-95% to-transparent" />
-                <div className="border bg-primary z-10 rounded-xl px-4 py-1">
-                  <span className="text-background text-sm font-medium">My Skills</span>
+            <div className="flex flex-col items-center justify-center gap-y-4">
+              <div className="flex w-full items-center">
+                <div className="via-border h-px flex-1 bg-linear-to-r from-transparent from-5% via-95% to-transparent" />
+                <div className="bg-primary z-10 rounded-xl border px-4 py-1">
+                  <span className="text-background text-sm font-medium">
+                    My Skills
+                  </span>
                 </div>
-                <div className="flex-1 h-px bg-linear-to-l from-transparent from-5% via-border via-95% to-transparent" />
+                <div className="via-border h-px flex-1 bg-linear-to-l from-transparent from-5% via-95% to-transparent" />
               </div>
-              <div className="flex flex-col gap-y-3 items-center justify-center">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">Technologies I work with</h2>
-                <p className="text-muted-foreground md:text-lg/relaxed lg:text-base/relaxed xl:text-lg/relaxed text-balance text-center">
-                  I&apos;ve worked with a variety of technologies across the full stack,
-                  from backend frameworks to cloud infrastructure.
+              <div className="flex flex-col items-center justify-center gap-y-3">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
+                  Technologies I work with
+                </h2>
+                <p className="text-muted-foreground text-center text-balance md:text-lg/relaxed lg:text-base/relaxed xl:text-lg/relaxed">
+                  I&apos;ve worked with a variety of technologies across the
+                  full stack, from backend frameworks to cloud infrastructure.
                 </p>
               </div>
             </div>
           </BlurFade>
           <div className="flex flex-wrap justify-center gap-2">
             {DATA.skills.map((skill, id) => (
-              <BlurFade key={skill.name} delay={BLUR_FADE_DELAY * 10 + id * 0.05}>
-                <div className="border bg-background dark:bg-muted/50 border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center gap-2">
-                  {skill.icon && <skill.icon className="size-4 rounded overflow-hidden object-contain" />}
-                  <span className="text-foreground text-sm font-medium">{skill.name}</span>
+              <BlurFade
+                key={skill.name}
+                delay={BLUR_FADE_DELAY * 10 + id * 0.05}
+              >
+                <div className="bg-background dark:bg-muted/50 border-border ring-border/20 flex h-8 w-fit items-center gap-2 rounded-xl border px-4 ring-2">
+                  {skill.icon && (
+                    <skill.icon className="size-4 overflow-hidden rounded object-contain" />
+                  )}
+                  <span className="text-foreground text-sm font-medium">
+                    {skill.name}
+                  </span>
                 </div>
               </BlurFade>
             ))}
