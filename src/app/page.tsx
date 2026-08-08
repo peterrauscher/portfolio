@@ -1,6 +1,5 @@
 import BlurFade from "@/components/magicui/blur-fade";
 import BlurFadeText from "@/components/magicui/blur-fade-text";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { DATA } from "@/data/resume";
 import Image from "next/image";
 import Link from "next/link";
@@ -37,18 +36,16 @@ export default function Page() {
               duration={0.28}
               className="order-1 md:order-2"
             >
-              <Avatar className="ring-muted relative size-24 overflow-hidden rounded-full border shadow-lg ring-4 md:size-32">
+              <div className="ring-muted relative size-24 shrink-0 overflow-hidden rounded-full border shadow-lg ring-4 md:size-32">
                 <Image
                   src={DATA.avatarUrl}
                   alt={DATA.name}
-                  width={128}
-                  height={128}
+                  fill
                   priority
                   sizes="(min-width: 768px) 128px, 96px"
                   className="object-cover object-center"
                 />
-                <AvatarFallback>{DATA.initials}</AvatarFallback>
-              </Avatar>
+              </div>
             </BlurFade>
           </div>
         </div>
@@ -198,8 +195,8 @@ export default function Page() {
           <NowSection />
         </BlurFade>
       </section>
-      <section id="contact" className="cv-auto scroll-mt-8">
-        <BlurFade inView>
+      <section id="contact" className="scroll-mt-8 overflow-visible pt-4">
+        <BlurFade inView className="overflow-visible">
           <ContactSection />
         </BlurFade>
       </section>

@@ -5,8 +5,8 @@ import { DATA } from "@/data/resume";
 
 export default function ContactSection() {
   return (
-    <div className="relative rounded-xl border p-10">
-      <div className="bg-primary absolute -top-4 left-1/2 z-10 -translate-x-1/2 rounded-xl border px-4 py-1">
+    <div className="relative overflow-visible rounded-xl border p-10 pt-12">
+      <div className="bg-primary absolute -top-3 left-1/2 z-10 -translate-x-1/2 rounded-xl border px-4 py-1">
         <span className="text-background text-sm font-medium">Contact</span>
       </div>
       <div className="absolute inset-0 top-0 right-0 left-0 h-1/2 overflow-hidden rounded-xl">
