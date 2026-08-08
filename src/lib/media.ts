@@ -134,6 +134,8 @@ export async function getLastFmTracks(
 
 // --- Trakt.tv ---
 
+const TRAKT_REVALIDATE_SECONDS = 900; // 15 minutes
+
 async function fetchTmdbPoster(
   tmdbId: number,
   type: "movie" | "tv",
@@ -144,11 +146,14 @@ async function fetchTmdbPoster(
       type === "movie"
         ? `https://api.themoviedb.org/3/movie/${tmdbId}?api_key=${apiKey}`
         : `https://api.themoviedb.org/3/tv/${tmdbId}?api_key=${apiKey}`;
-    const res = await fetch(endpoint, { next: { revalidate: 86400 } });
+    const res = await fetch(endpoint, {
+      next: { revalidate: 86400, tags: ["tmdb-poster"] },
+    });
     if (!res.ok) return null;
     const data = (await res.json()) as Record<string, unknown>;
     const path = String(data.poster_path ?? "");
-    return path ? `https://image.tmdb.org/t/p/w500${path}` : null;
+    // w185 is enough for 40px UI and lighter than w500
+    return path ? `https://image.tmdb.org/t/p/w185${path}` : null;
   } catch {
     return null;
   }
@@ -160,19 +165,33 @@ export async function getTraktHistory(
 ): Promise<TraktEntry[]> {
   const tmdbApiKey = process.env.TMDB_API_KEY ?? "";
   try {
+    // Public watch history — needs Trakt API app client id (not OAuth user token).
+    // Profile history must be public for unauthenticated reads.
     const res = await fetch(
-      `https://api.trakt.tv/users/${encodeURIComponent(username)}/history?limit=1`,
+      `https://api.trakt.tv/users/${encodeURIComponent(username)}/history?limit=10`,
       {
         headers: {
           "trakt-api-version": "2",
           "trakt-api-key": clientId,
-          "Content-Type": "application/json",
+          Accept: "application/json",
         },
-        next: { revalidate: 3600 },
+        next: {
+          revalidate: TRAKT_REVALIDATE_SECONDS,
+          tags: ["trakt-history"],
+        },
       },
     );
-    if (!res.ok) return [];
+    if (!res.ok) {
+      console.error(
+        `[trakt] history fetch failed: ${res.status} ${res.statusText} (user=${username})`,
+      );
+      return [];
+    }
     const data = (await res.json()) as Array<Record<string, unknown>>;
+    if (!Array.isArray(data) || data.length === 0) {
+      return [];
+    }
+
     const entries: TraktEntry[] = [];
     for (const item of data) {
       if (entries.length >= 1) break;
@@ -219,7 +238,8 @@ export async function getTraktHistory(
       }
     }
     return entries;
-  } catch {
+  } catch (err) {
+    console.error("[trakt] history fetch threw", err);
     return [];
   }
 }

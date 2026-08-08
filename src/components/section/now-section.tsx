@@ -216,10 +216,11 @@ function formatWatchedAt(iso: string): string {
 }
 
 async function TraktWidget() {
-  const username = process.env.TRAKT_USERNAME;
-  const clientId = process.env.TRAKT_CLIENT_ID;
+  const username = process.env.TRAKT_USERNAME?.trim() || "peterrauscher";
+  const clientId = process.env.TRAKT_CLIENT_ID?.trim();
+  const configured = Boolean(clientId);
   const history: TraktEntry[] =
-    username && clientId ? await getTraktHistory(username, clientId) : [];
+    configured && clientId ? await getTraktHistory(username, clientId) : [];
 
   return (
     <div className="animate-content-in flex h-full flex-col gap-2 rounded-xl border p-4">
@@ -228,20 +229,24 @@ async function TraktWidget() {
           <TraktIcon className="size-4 text-red-500" />
           <span className="text-sm font-semibold">Watching</span>
         </div>
-        {username && (
-          <Link
-            href={`https://trakt.tv/users/${username}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-foreground text-xs transition-colors"
-          >
-            Trakt →
-          </Link>
-        )}
+        <Link
+          href={`https://trakt.tv/users/${username}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-muted-foreground hover:text-foreground text-xs transition-colors"
+        >
+          Trakt →
+        </Link>
       </div>
-      {history.length === 0 ? (
+      {!configured ? (
         <p className="text-muted-foreground py-2 text-xs">
-          No recent watches — check back soon.
+          Set <code className="text-[10px]">TRAKT_CLIENT_ID</code> to load
+          history.
+        </p>
+      ) : history.length === 0 ? (
+        <p className="text-muted-foreground py-2 text-xs">
+          No public watch history yet. On Trakt, set history to public and
+          confirm scrobbles are syncing.
         </p>
       ) : (
         <ul className="flex flex-col gap-3">
@@ -274,6 +279,7 @@ async function TraktWidget() {
                         entry.type === "movie" ? entry.title : entry.showTitle
                       }
                       className="ring-border size-10 flex-none rounded object-cover shadow-sm ring-1"
+                      loading="lazy"
                     />
                   ) : (
                     <div className="bg-muted flex size-10 flex-none items-center justify-center rounded">

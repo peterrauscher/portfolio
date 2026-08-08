@@ -10,6 +10,9 @@ import ProjectsSection from "@/components/section/projects-section";
 import WorkSection from "@/components/section/work-section";
 import { ArrowUpRight } from "lucide-react";
 
+/** Refresh Now widgets (Trakt/Goodreads) at most hourly via ISR. */
+export const revalidate = 3600;
+
 export default function Page() {
   return (
     <main className="relative flex min-h-dvh flex-col gap-14">
