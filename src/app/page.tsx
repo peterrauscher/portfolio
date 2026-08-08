@@ -11,28 +11,32 @@ import ProjectsSection from "@/components/section/projects-section";
 import WorkSection from "@/components/section/work-section";
 import { ArrowUpRight } from "lucide-react";
 
-const BLUR_FADE_DELAY = 0.04;
-
 export default function Page() {
   return (
     <main className="relative flex min-h-dvh flex-col gap-14">
-      <section id="hero">
+      <section id="hero" className="scroll-mt-8">
         <div className="mx-auto w-full max-w-2xl space-y-8">
-          <div className="flex flex-col justify-between gap-2 gap-y-6 md:flex-row">
+          <div className="flex min-h-32 flex-col justify-between gap-2 gap-y-6 md:flex-row">
             <div className="order-2 flex flex-col gap-2 md:order-1">
               <BlurFadeText
-                delay={BLUR_FADE_DELAY}
+                delay={0}
+                duration={0.28}
                 className="text-3xl font-semibold tracking-tighter sm:text-4xl lg:text-5xl"
                 yOffset={8}
                 text={`Hi, I'm ${DATA.name.split(" ")[0]}`}
               />
               <BlurFadeText
                 className="text-muted-foreground max-w-[600px] md:text-lg lg:text-xl"
-                delay={BLUR_FADE_DELAY}
+                delay={0.06}
+                duration={0.28}
                 text={DATA.description}
               />
             </div>
-            <BlurFade delay={BLUR_FADE_DELAY} className="order-1 md:order-2">
+            <BlurFade
+              delay={0.1}
+              duration={0.28}
+              className="order-1 md:order-2"
+            >
               <Avatar className="ring-muted relative size-24 overflow-hidden rounded-full border shadow-lg ring-4 md:size-32">
                 <Image
                   src={DATA.avatarUrl}
@@ -49,8 +53,8 @@ export default function Page() {
           </div>
         </div>
       </section>
-      <section id="about">
-        <BlurFade delay={BLUR_FADE_DELAY * 3}>
+      <section id="about" className="scroll-mt-8">
+        <BlurFade inView>
           <div className="flex min-h-0 flex-col gap-y-4">
             <h2 className="text-xl font-bold">About</h2>
             <div className="prose text-muted-foreground dark:prose-invert max-w-full font-sans leading-relaxed text-pretty">
@@ -80,16 +84,16 @@ export default function Page() {
           </div>
         </BlurFade>
       </section>
-      <section id="work">
-        <BlurFade delay={BLUR_FADE_DELAY * 5}>
+      <section id="work" className="scroll-mt-8">
+        <BlurFade inView>
           <div className="flex min-h-0 flex-col gap-y-6">
             <h2 className="text-xl font-bold">Work Experience</h2>
             <WorkSection />
           </div>
         </BlurFade>
       </section>
-      <section id="education">
-        <BlurFade delay={BLUR_FADE_DELAY * 7}>
+      <section id="education" className="scroll-mt-8">
+        <BlurFade inView>
           <div className="flex min-h-0 flex-col gap-y-6">
             <h2 className="text-xl font-bold">Education</h2>
             <div className="flex flex-col gap-8">
@@ -138,8 +142,8 @@ export default function Page() {
           </div>
         </BlurFade>
       </section>
-      <section id="skills">
-        <BlurFade delay={BLUR_FADE_DELAY * 9}>
+      <section id="skills" className="cv-auto scroll-mt-8">
+        <BlurFade inView>
           <div className="flex min-h-0 flex-col gap-y-8">
             <div className="flex flex-col items-center justify-center gap-y-4">
               <div className="flex w-full items-center">
@@ -179,23 +183,23 @@ export default function Page() {
           </div>
         </BlurFade>
       </section>
-      <section id="projects">
-        <BlurFade delay={BLUR_FADE_DELAY * 13}>
+      <section id="projects" className="cv-auto scroll-mt-8">
+        <BlurFade inView>
           <ProjectsSection />
         </BlurFade>
       </section>
-      <section id="hackathons">
-        <BlurFade delay={BLUR_FADE_DELAY * 15}>
+      <section id="hackathons" className="cv-auto scroll-mt-8">
+        <BlurFade inView>
           <HackathonsSection />
         </BlurFade>
       </section>
-      <section id="now">
-        <BlurFade delay={BLUR_FADE_DELAY * 17}>
+      <section id="now" className="cv-auto scroll-mt-8">
+        <BlurFade inView>
           <NowSection />
         </BlurFade>
       </section>
-      <section id="contact">
-        <BlurFade delay={BLUR_FADE_DELAY * 18}>
+      <section id="contact" className="cv-auto scroll-mt-8">
+        <BlurFade inView>
           <ContactSection />
         </BlurFade>
       </section>

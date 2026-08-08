@@ -9,19 +9,24 @@ import { useState } from "react";
 
 function ProjectImage({ src, alt }: { src: string; alt: string }) {
   const [imageError, setImageError] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   if (!src || imageError) {
     return <div className="bg-muted h-48 w-full" />;
   }
 
   return (
-    <div className="relative h-48 w-full">
+    <div className="bg-muted relative h-48 w-full overflow-hidden">
       <Image
         src={src}
         alt={alt}
         fill
         sizes="(min-width: 640px) 40vw, 100vw"
-        className="object-cover"
+        className={cn(
+          "object-cover transition-[opacity,transform] duration-500 ease-out group-hover:scale-[1.03]",
+          loaded ? "opacity-100" : "opacity-0",
+        )}
+        onLoad={() => setLoaded(true)}
         onError={() => setImageError(true)}
       />
     </div>
@@ -60,7 +65,7 @@ export function ProjectCard({
   return (
     <div
       className={cn(
-        "border-border hover:ring-muted flex h-full cursor-pointer flex-col overflow-hidden rounded-xl border transition-all duration-200 hover:ring-2",
+        "border-border hover:ring-muted/80 group flex h-full cursor-pointer flex-col overflow-hidden rounded-xl border shadow-none transition-[transform,box-shadow,ring] duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md hover:ring-2",
         className,
       )}
     >
@@ -78,7 +83,7 @@ export function ProjectCard({
               loop
               muted
               playsInline
-              className="h-48 w-full object-cover"
+              className="h-48 w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
             />
           ) : image ? (
             <ProjectImage src={image} alt={title} />
@@ -88,9 +93,9 @@ export function ProjectCard({
         </Link>
         {links && links.length > 0 && (
           <div className="absolute top-2 right-2 flex flex-wrap gap-2">
-            {links.map((link, idx) => (
+            {links.map((item, idx) => (
               <Link
-                href={link.href}
+                href={item.href}
                 key={idx}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -100,8 +105,8 @@ export function ProjectCard({
                   className="flex items-center gap-1.5 bg-black text-xs text-white hover:bg-black/90"
                   variant="default"
                 >
-                  {link.icon}
-                  {link.type}
+                  {item.icon}
+                  {item.type}
                 </Badge>
               </Link>
             ))}
@@ -112,7 +117,6 @@ export function ProjectCard({
         <div className="flex items-start justify-between gap-2">
           <div className="flex flex-col gap-1">
             <h3 className="font-semibold">{title}</h3>
-            {/* Dates hidden for projects */}
           </div>
           <Link
             href={href || "#"}
@@ -121,7 +125,10 @@ export function ProjectCard({
             className="text-muted-foreground hover:text-foreground focus-visible:ring-ring rounded-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
             aria-label={`Open ${title}`}
           >
-            <ArrowUpRight className="h-4 w-4" aria-hidden />
+            <ArrowUpRight
+              className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              aria-hidden
+            />
           </Link>
         </div>
         <p className="text-muted-foreground flex-1 text-xs leading-relaxed text-pretty">

@@ -22,7 +22,7 @@ const BlurFadeText = ({
   text,
   className,
   variant,
-  duration = 0.4,
+  duration = 0.28,
   characterDelay = 0.03,
   delay = 0,
   yOffset = 8,

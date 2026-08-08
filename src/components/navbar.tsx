@@ -8,6 +8,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { DATA } from "@/data/resume";
+import Link from "next/link";
 
 export default function Navbar() {
   return (
@@ -15,18 +16,23 @@ export default function Navbar() {
       <Dock className="bg-card/90 shadow-primary/5 pointer-events-auto relative z-50 mx-auto flex h-14 w-fit gap-2 border p-2 shadow-[0_0_10px_3px] backdrop-blur-md">
         {DATA.navbar.map((item) => {
           const isExternal = item.href.startsWith("http");
+          const icon = (
+            <DockIcon className="bg-background text-muted-foreground hover:text-foreground hover:bg-muted border-border size-full cursor-pointer rounded-3xl border p-0 transition-colors">
+              <item.icon className="size-full overflow-hidden rounded-sm object-contain" />
+            </DockIcon>
+          );
           return (
             <Tooltip key={item.href}>
               <TooltipTrigger asChild>
-                <a
-                  href={item.href}
-                  target={isExternal ? "_blank" : undefined}
-                  rel={isExternal ? "noopener noreferrer" : undefined}
-                >
-                  <DockIcon className="bg-background text-muted-foreground hover:text-foreground hover:bg-muted border-border size-full cursor-pointer rounded-3xl border p-0 transition-colors">
-                    <item.icon className="size-full overflow-hidden rounded-sm object-contain" />
-                  </DockIcon>
-                </a>
+                {isExternal ? (
+                  <a href={item.href} target="_blank" rel="noopener noreferrer">
+                    {icon}
+                  </a>
+                ) : (
+                  <Link href={item.href} prefetch>
+                    {icon}
+                  </Link>
+                )}
               </TooltipTrigger>
               <TooltipContent
                 side="top"

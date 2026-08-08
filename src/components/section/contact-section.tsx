@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FlickeringGrid } from "@/components/magicui/flickering-grid";
+import { Button } from "@/components/ui/button";
 import { DATA } from "@/data/resume";
 
 export default function ContactSection() {
@@ -25,24 +26,23 @@ export default function ContactSection() {
           Get in Touch
         </h2>
         <p className="text-muted-foreground mx-auto max-w-lg text-balance">
-          Want to chat? Feel free to reach out via{" "}
-          <Link
-            href={`mailto:${DATA.contact.email}`}
-            className="focus-visible:ring-ring rounded-sm text-blue-500 underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
-          >
-            email
-          </Link>{" "}
-          or connect with me on{" "}
-          <Link
-            href={DATA.contact.social.LinkedIn.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="focus-visible:ring-ring rounded-sm text-blue-500 underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
-          >
-            LinkedIn
-          </Link>
-          . I&apos;ll respond whenever I can.
+          Want to chat? I&apos;ll respond whenever I can — email is best, or
+          find me on LinkedIn.
         </p>
+        <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
+          <Button asChild size="lg" className="rounded-xl">
+            <Link href={`mailto:${DATA.contact.email}`}>Email me</Link>
+          </Button>
+          <Button asChild variant="outline" size="lg" className="rounded-xl">
+            <Link
+              href={DATA.contact.social.LinkedIn.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LinkedIn
+            </Link>
+          </Button>
+        </div>
       </div>
     </div>
   );

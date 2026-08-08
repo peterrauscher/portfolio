@@ -61,15 +61,14 @@ function WidgetSkeleton() {
         <div className="bg-muted size-4 animate-pulse rounded" />
         <div className="bg-muted h-4 w-24 animate-pulse rounded" />
       </div>
-      {[...Array(1)].map((_, i) => (
-        <div key={i} className="flex items-center gap-3">
-          <div className="bg-muted size-10 flex-none animate-pulse rounded" />
-          <div className="flex min-w-0 flex-1 flex-col gap-1.5">
-            <div className="bg-muted h-3 w-3/4 animate-pulse rounded" />
-            <div className="bg-muted h-3 w-1/2 animate-pulse rounded" />
-          </div>
+      <div className="flex items-center gap-3">
+        <div className="bg-muted size-10 flex-none animate-pulse rounded" />
+        <div className="flex min-w-0 flex-1 flex-col gap-1.5">
+          <div className="bg-muted h-3 w-3/4 animate-pulse rounded" />
+          <div className="bg-muted h-3 w-1/2 animate-pulse rounded" />
         </div>
-      ))}
+      </div>
+      <span className="sr-only">Loading…</span>
     </div>
   );
 }
@@ -81,7 +80,7 @@ async function GoodreadsWidget() {
   const books: GoodreadsBook[] = userId ? await getGoodreadsBooks(userId) : [];
 
   return (
-    <div className="flex h-full flex-col gap-2 rounded-xl border p-4">
+    <div className="animate-content-in flex h-full flex-col gap-2 rounded-xl border p-4">
       <div className="flex items-center justify-between gap-2 border-b pb-2">
         <div className="flex items-center gap-2">
           <GoodreadsIcon className="size-4 text-amber-500" />
@@ -100,7 +99,7 @@ async function GoodreadsWidget() {
       </div>
       {books.length === 0 ? (
         <p className="text-muted-foreground py-2 text-xs">
-          Nothing to show yet.
+          No recent reads — check back soon.
         </p>
       ) : (
         <ul className="flex flex-col gap-3">
@@ -154,7 +153,7 @@ const LISTENING_TRACK = {
 
 function ListeningWidget() {
   return (
-    <div className="flex h-full flex-col gap-2 rounded-xl border p-4">
+    <div className="animate-content-in flex h-full flex-col gap-2 rounded-xl border p-4">
       <div className="flex items-center justify-between gap-2 border-b pb-2">
         <div className="flex items-center gap-2">
           <YoutubeMusicIcon className="size-4 text-red-500" />
@@ -223,7 +222,7 @@ async function TraktWidget() {
     username && clientId ? await getTraktHistory(username, clientId) : [];
 
   return (
-    <div className="flex h-full flex-col gap-2 rounded-xl border p-4">
+    <div className="animate-content-in flex h-full flex-col gap-2 rounded-xl border p-4">
       <div className="flex items-center justify-between gap-2 border-b pb-2">
         <div className="flex items-center gap-2">
           <TraktIcon className="size-4 text-red-500" />
@@ -242,7 +241,7 @@ async function TraktWidget() {
       </div>
       {history.length === 0 ? (
         <p className="text-muted-foreground py-2 text-xs">
-          Nothing to show yet.
+          No recent watches — check back soon.
         </p>
       ) : (
         <ul className="flex flex-col gap-3">

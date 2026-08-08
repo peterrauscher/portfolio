@@ -28,18 +28,18 @@ const BlurFade = ({
   children,
   className,
   variant,
-  duration = 0.4,
+  duration = 0.28,
   delay = 0,
-  yOffset = 6,
+  yOffset = 8,
   inView = false,
-  inViewMargin = "-50px",
+  inViewMargin = "-10% 0px",
   blur: _blur,
 }: BlurFadeProps) => {
   const ref = useRef(null);
   const shouldReduceMotion = useReducedMotion();
   const inViewResult = useInView(ref, {
     once: true,
-    ...(inViewMargin ? { margin: inViewMargin as `${number}px` } : {}),
+    margin: inViewMargin as unknown as `${number}px`,
   });
   const isInView = !inView || inViewResult;
   const defaultVariants: Variants = {
@@ -63,7 +63,7 @@ const BlurFade = ({
       animate={isInView ? "visible" : "hidden"}
       variants={combinedVariants}
       transition={{
-        delay: 0.04 + delay,
+        delay,
         duration,
         ease: [0.16, 1, 0.3, 1],
       }}
