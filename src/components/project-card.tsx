@@ -6,7 +6,6 @@ import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import Markdown from "react-markdown";
 
 function ProjectImage({ src, alt }: { src: string; alt: string }) {
   const [imageError, setImageError] = useState(false);
@@ -125,9 +124,9 @@ export function ProjectCard({
             <ArrowUpRight className="h-4 w-4" aria-hidden />
           </Link>
         </div>
-        <div className="prose text-muted-foreground dark:prose-invert max-w-full flex-1 font-sans text-xs leading-relaxed text-pretty">
-          <Markdown>{description}</Markdown>
-        </div>
+        <p className="text-muted-foreground flex-1 text-xs leading-relaxed text-pretty">
+          {description}
+        </p>
         {tags && tags.length > 0 && (
           <div className="mt-auto flex flex-wrap gap-1">
             {tags.map((tag) => (

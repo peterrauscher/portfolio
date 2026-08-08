@@ -1,5 +1,3 @@
-"use client";
-import { useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -10,28 +8,6 @@ import { DATA } from "@/data/resume";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-
-function LogoImage({ src, alt }: { src: string; alt: string }) {
-  const [imageError, setImageError] = useState(false);
-
-  if (!src || imageError) {
-    return (
-      <div className="ring-border bg-muted size-8 flex-none rounded-full border shadow ring-2 md:size-10" />
-    );
-  }
-
-  return (
-    <Image
-      src={src}
-      alt={alt}
-      width={40}
-      height={40}
-      sizes="40px"
-      className="ring-border size-8 flex-none rounded-full border object-cover shadow ring-2 md:size-10"
-      onError={() => setImageError(true)}
-    />
-  );
-}
 
 export default function WorkSection() {
   return (
@@ -45,7 +21,18 @@ export default function WorkSection() {
           <AccordionTrigger className="group cursor-pointer rounded-none p-0 transition-colors hover:no-underline [&>svg]:hidden">
             <div className="flex w-full items-center justify-between gap-x-3 text-left">
               <div className="flex min-w-0 flex-1 items-center gap-x-3">
-                <LogoImage src={work.logoUrl} alt={work.company} />
+                {work.logoUrl ? (
+                  <Image
+                    src={work.logoUrl}
+                    alt={work.company}
+                    width={40}
+                    height={40}
+                    sizes="40px"
+                    className="ring-border size-8 flex-none rounded-full border object-cover shadow ring-2 md:size-10"
+                  />
+                ) : (
+                  <div className="ring-border bg-muted size-8 flex-none rounded-full border shadow ring-2 md:size-10" />
+                )}
                 <div className="flex min-w-0 flex-1 flex-col gap-0.5">
                   <div className="flex items-center gap-2 leading-none font-semibold">
                     {work.company}

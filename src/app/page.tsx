@@ -4,7 +4,6 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { DATA } from "@/data/resume";
 import Image from "next/image";
 import Link from "next/link";
-import Markdown from "react-markdown";
 import ContactSection from "@/components/section/contact-section";
 import HackathonsSection from "@/components/section/hackathons-section";
 import NowSection from "@/components/section/now-section";
@@ -51,39 +50,52 @@ export default function Page() {
         </div>
       </section>
       <section id="about">
-        <div className="flex min-h-0 flex-col gap-y-4">
-          <BlurFade delay={BLUR_FADE_DELAY * 3}>
+        <BlurFade delay={BLUR_FADE_DELAY * 3}>
+          <div className="flex min-h-0 flex-col gap-y-4">
             <h2 className="text-xl font-bold">About</h2>
-          </BlurFade>
-          <BlurFade delay={BLUR_FADE_DELAY * 4}>
             <div className="prose text-muted-foreground dark:prose-invert max-w-full font-sans leading-relaxed text-pretty">
-              <Markdown>{DATA.summary}</Markdown>
+              <p>
+                I&apos;m currently a senior software engineer at{" "}
+                <a
+                  href="https://www.govividly.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Vividly
+                </a>
+                , where I work on the all-in-one platform for CPG brands.{" "}
+                <Link href="/#education">
+                  I studied computer science at Stevens Institute of Technology
+                </Link>{" "}
+                and have spent the years since deep in backend and infra —
+                distributed systems, data pipelines, cloud cost curves. I care a
+                lot about the boring wins: snappier pages, leaner services,
+                smaller bills. The throughline has always been the
+                puzzle-solving: finding the messy problem, untangling it, and
+                shipping pragmatic solutions. In my free time, I tinker with
+                building custom harnesses, eval loops, and my own software
+                factory.
+              </p>
             </div>
-          </BlurFade>
-        </div>
+          </div>
+        </BlurFade>
       </section>
       <section id="work">
-        <div className="flex min-h-0 flex-col gap-y-6">
-          <BlurFade delay={BLUR_FADE_DELAY * 5}>
+        <BlurFade delay={BLUR_FADE_DELAY * 5}>
+          <div className="flex min-h-0 flex-col gap-y-6">
             <h2 className="text-xl font-bold">Work Experience</h2>
-          </BlurFade>
-          <BlurFade delay={BLUR_FADE_DELAY * 6}>
             <WorkSection />
-          </BlurFade>
-        </div>
+          </div>
+        </BlurFade>
       </section>
       <section id="education">
-        <div className="flex min-h-0 flex-col gap-y-6">
-          <BlurFade delay={BLUR_FADE_DELAY * 7}>
+        <BlurFade delay={BLUR_FADE_DELAY * 7}>
+          <div className="flex min-h-0 flex-col gap-y-6">
             <h2 className="text-xl font-bold">Education</h2>
-          </BlurFade>
-          <div className="flex flex-col gap-8">
-            {DATA.education.map((education, index) => (
-              <BlurFade
-                key={education.school}
-                delay={BLUR_FADE_DELAY * 8 + index * 0.05}
-              >
+            <div className="flex flex-col gap-8">
+              {DATA.education.map((education) => (
                 <Link
+                  key={education.school}
                   href={education.href}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -121,14 +133,14 @@ export default function Page() {
                     </span>
                   </div>
                 </Link>
-              </BlurFade>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        </BlurFade>
       </section>
       <section id="skills">
-        <div className="flex min-h-0 flex-col gap-y-8">
-          <BlurFade delay={BLUR_FADE_DELAY * 9}>
+        <BlurFade delay={BLUR_FADE_DELAY * 9}>
+          <div className="flex min-h-0 flex-col gap-y-8">
             <div className="flex flex-col items-center justify-center gap-y-4">
               <div className="flex w-full items-center">
                 <div className="via-border h-px flex-1 bg-linear-to-r from-transparent from-5% via-95% to-transparent" />
@@ -149,14 +161,12 @@ export default function Page() {
                 </p>
               </div>
             </div>
-          </BlurFade>
-          <div className="flex flex-wrap justify-center gap-2">
-            {DATA.skills.map((skill, id) => (
-              <BlurFade
-                key={skill.name}
-                delay={BLUR_FADE_DELAY * 10 + id * 0.05}
-              >
-                <div className="bg-background dark:bg-muted/50 border-border ring-border/20 flex h-8 w-fit items-center gap-2 rounded-xl border px-4 ring-2">
+            <div className="flex flex-wrap justify-center gap-2">
+              {DATA.skills.map((skill) => (
+                <div
+                  key={skill.name}
+                  className="bg-background dark:bg-muted/50 border-border ring-border/20 flex h-8 w-fit items-center gap-2 rounded-xl border px-4 ring-2"
+                >
                   {skill.icon && (
                     <skill.icon className="size-4 overflow-hidden rounded object-contain" />
                   )}
@@ -164,10 +174,10 @@ export default function Page() {
                     {skill.name}
                   </span>
                 </div>
-              </BlurFade>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        </BlurFade>
       </section>
       <section id="projects">
         <BlurFade delay={BLUR_FADE_DELAY * 13}>
