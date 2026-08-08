@@ -12,7 +12,7 @@ import { DATA } from "@/data/resume";
 export default function Navbar() {
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-4 z-30">
-      <Dock className="bg-card/90 shadow-primary/5 pointer-events-auto relative z-50 mx-auto flex h-14 w-fit gap-2 border p-2 shadow-[0_0_10px_3px] backdrop-blur-3xl">
+      <Dock className="bg-card/90 shadow-primary/5 pointer-events-auto relative z-50 mx-auto flex h-14 w-fit gap-2 border p-2 shadow-[0_0_10px_3px] backdrop-blur-md">
         {DATA.navbar.map((item) => {
           const isExternal = item.href.startsWith("http");
           return (
@@ -23,7 +23,7 @@ export default function Navbar() {
                   target={isExternal ? "_blank" : undefined}
                   rel={isExternal ? "noopener noreferrer" : undefined}
                 >
-                  <DockIcon className="bg-background text-muted-foreground hover:text-foreground hover:bg-muted border-border size-full cursor-pointer rounded-3xl border p-0 backdrop-blur-3xl transition-colors">
+                  <DockIcon className="bg-background text-muted-foreground hover:text-foreground hover:bg-muted border-border size-full cursor-pointer rounded-3xl border p-0 transition-colors">
                     <item.icon className="size-full overflow-hidden rounded-sm object-contain" />
                   </DockIcon>
                 </a>
@@ -56,7 +56,7 @@ export default function Navbar() {
                     target={isExternal ? "_blank" : undefined}
                     rel={isExternal ? "noopener noreferrer" : undefined}
                   >
-                    <DockIcon className="bg-background text-muted-foreground hover:text-foreground hover:bg-muted border-border size-full cursor-pointer rounded-3xl border p-0 backdrop-blur-3xl transition-colors">
+                    <DockIcon className="bg-background text-muted-foreground hover:text-foreground hover:bg-muted border-border size-full cursor-pointer rounded-3xl border p-0 transition-colors">
                       <IconComponent className="size-full overflow-hidden rounded-sm object-contain" />
                     </DockIcon>
                   </a>
@@ -78,7 +78,7 @@ export default function Navbar() {
         />
         <Tooltip>
           <TooltipTrigger asChild>
-            <DockIcon className="bg-background text-muted-foreground hover:text-foreground hover:bg-muted border-border size-full cursor-pointer rounded-3xl border p-0 backdrop-blur-3xl transition-colors">
+            <DockIcon className="bg-background text-muted-foreground hover:text-foreground hover:bg-muted border-border size-full cursor-pointer rounded-3xl border p-0 transition-colors">
               <ModeToggle className="size-full cursor-pointer" />
             </DockIcon>
           </TooltipTrigger>

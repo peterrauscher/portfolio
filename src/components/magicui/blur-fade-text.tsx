@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { motion, Variants } from "motion/react";
+import { motion, useReducedMotion, type Variants } from "motion/react";
 import { useMemo } from "react";
 
 interface BlurFadeTextProps {
@@ -17,6 +17,7 @@ interface BlurFadeTextProps {
   yOffset?: number;
   animateByCharacter?: boolean;
 }
+
 const BlurFadeText = ({
   text,
   className,
@@ -27,20 +28,29 @@ const BlurFadeText = ({
   yOffset = 8,
   animateByCharacter = false,
 }: BlurFadeTextProps) => {
+  const shouldReduceMotion = useReducedMotion();
   const defaultVariants: Variants = {
-    hidden: { y: -yOffset, opacity: 0, filter: "blur(8px)" },
-    visible: { y: 0, opacity: 1, filter: "blur(0px)" },
+    hidden: { y: yOffset, opacity: 0 },
+    visible: { y: 0, opacity: 1 },
   };
   const combinedVariants = variant || defaultVariants;
   const characters = useMemo(() => Array.from(text), [text]);
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="flex">
+        <span className={cn("inline-block", className)}>{text}</span>
+      </div>
+    );
+  }
 
   if (animateByCharacter) {
     return (
       <div className="flex">
         {characters.map((char, i) => {
           const charVariants: Variants = {
-            hidden: { y: -yOffset, opacity: 0, filter: "blur(8px)" },
-            visible: { y: 0, opacity: 1, filter: "blur(0px)" },
+            hidden: { y: yOffset, opacity: 0 },
+            visible: { y: 0, opacity: 1 },
           };
           return (
             <motion.span
@@ -51,7 +61,7 @@ const BlurFadeText = ({
               transition={{
                 duration,
                 delay: delay + i * characterDelay,
-                ease: "easeOut",
+                ease: [0.16, 1, 0.3, 1],
               }}
               className={cn("inline-block", className)}
               style={{ width: char.trim() === "" ? "0.2em" : "auto" }}
@@ -73,7 +83,7 @@ const BlurFadeText = ({
         transition={{
           duration,
           delay,
-          ease: "easeOut",
+          ease: [0.16, 1, 0.3, 1],
         }}
         className={cn("inline-block", className)}
       >

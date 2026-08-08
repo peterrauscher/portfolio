@@ -21,10 +21,17 @@ interface FlickeringGridProps extends React.HTMLAttributes<HTMLDivElement> {
   maxOpacity?: number;
 }
 
+interface GridParams {
+  cols: number;
+  rows: number;
+  squares: Float32Array;
+  dpr: number;
+}
+
 export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
   squareSize = 4,
-  gridGap = 6,
-  flickerChance = 0.3,
+  gridGap = 4,
+  flickerChance = 0.15,
   color,
   width,
   height,
@@ -37,6 +44,10 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
   const [isInView, setIsInView] = useState(false);
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
   const [resolvedColor, setResolvedColor] = useState<string>("rgb(0, 0, 0)");
+  const prefersReducedMotion = useMemo(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }, []);
 
   const resolveColor = useCallback((colorValue: string | undefined): string => {
     if (typeof window === "undefined") {
@@ -102,7 +113,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
 
   const setupCanvas = useCallback(
     (canvas: HTMLCanvasElement, width: number, height: number) => {
-      const dpr = window.devicePixelRatio || 1;
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       canvas.width = width * dpr;
       canvas.height = height * dpr;
       canvas.style.width = `${width}px`;
@@ -169,8 +180,10 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let animationFrameId: number;
-    let gridParams: ReturnType<typeof setupCanvas>;
+    let animationFrameId: number | undefined;
+    let gridParams: GridParams;
+    let lastTime = 0;
+    let running = false;
 
     const updateCanvasSize = () => {
       const newWidth = width || container.clientWidth;
@@ -179,11 +192,29 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
       gridParams = setupCanvas(canvas, newWidth, newHeight);
     };
 
-    updateCanvasSize();
+    const drawStaticFrame = () => {
+      if (!gridParams) return;
+      drawGrid(
+        ctx,
+        canvas.width,
+        canvas.height,
+        gridParams.cols,
+        gridParams.rows,
+        gridParams.squares,
+        gridParams.dpr,
+      );
+    };
 
-    let lastTime = 0;
+    const stopAnimation = () => {
+      running = false;
+      if (animationFrameId !== undefined) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = undefined;
+      }
+    };
+
     const animate = (time: number) => {
-      if (!isInView) return;
+      if (!running) return;
 
       const deltaTime = (time - lastTime) / 1000;
       lastTime = time;
@@ -201,8 +232,27 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
       animationFrameId = requestAnimationFrame(animate);
     };
 
+    const startAnimation = () => {
+      if (prefersReducedMotion || !isInView || document.hidden || running) {
+        return;
+      }
+      running = true;
+      lastTime = performance.now();
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    updateCanvasSize();
+    drawStaticFrame();
+
+    if (prefersReducedMotion) {
+      // Static frame only — no rAF loop.
+    } else if (isInView && !document.hidden) {
+      startAnimation();
+    }
+
     const resizeObserver = new ResizeObserver(() => {
       updateCanvasSize();
+      drawStaticFrame();
     });
 
     resizeObserver.observe(container);
@@ -216,16 +266,31 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
 
     intersectionObserver.observe(canvas);
 
-    if (isInView) {
-      animationFrameId = requestAnimationFrame(animate);
-    }
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        stopAnimation();
+      } else if (isInView && !prefersReducedMotion) {
+        startAnimation();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      stopAnimation();
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [setupCanvas, updateSquares, drawGrid, width, height, isInView]);
+  }, [
+    setupCanvas,
+    updateSquares,
+    drawGrid,
+    width,
+    height,
+    isInView,
+    prefersReducedMotion,
+  ]);
 
   return (
     <div

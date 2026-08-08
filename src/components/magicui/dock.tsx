@@ -3,12 +3,21 @@
 import { cn } from "@/lib/utils";
 import {
   motion,
-  type MotionValue,
   useMotionValue,
+  useReducedMotion,
   useSpring,
   useTransform,
+  type MotionValue,
 } from "motion/react";
-import { createContext, useContext, useRef, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 
 interface DockProps {
   className?: string;
@@ -33,6 +42,7 @@ interface DockContextValue {
   mouseX: MotionValue<number>;
   magnification: number;
   distance: number;
+  enableMagnification: boolean;
 }
 
 const DockContext = createContext<DockContextValue | null>(null);
@@ -44,12 +54,39 @@ const Dock = ({
   distance = DEFAULT_DISTANCE,
 }: DockProps) => {
   const mouseX = useMotionValue(Infinity);
+  const shouldReduceMotion = useReducedMotion();
+  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(pointer: coarse)");
+    const update = () => setIsCoarsePointer(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  const enableMagnification = !shouldReduceMotion && !isCoarsePointer;
+
+  const contextValue = useMemo(
+    () => ({
+      mouseX,
+      magnification,
+      distance,
+      enableMagnification,
+    }),
+    [mouseX, magnification, distance, enableMagnification],
+  );
 
   return (
-    <DockContext.Provider value={{ mouseX, magnification, distance }}>
+    <DockContext.Provider value={contextValue}>
       <motion.div
-        onMouseMove={(e) => mouseX.set(e.pageX)}
-        onMouseLeave={() => mouseX.set(Infinity)}
+        onMouseMove={
+          enableMagnification ? (e) => mouseX.set(e.pageX) : undefined
+        }
+        onMouseLeave={
+          enableMagnification ? () => mouseX.set(Infinity) : undefined
+        }
         className={cn(
           "mx-auto flex h-full w-max items-end justify-center overflow-visible rounded-full border",
           className,
@@ -63,17 +100,40 @@ const Dock = ({
 
 const DockIcon = ({ className, children }: DockIconProps) => {
   const ref = useRef<HTMLDivElement>(null);
+  const boundsRef = useRef({ x: 0, width: 0 });
   const context = useContext(DockContext);
 
   if (!context) {
     throw new Error("DockIcon must be used within a Dock component");
   }
 
-  const { mouseX, magnification, distance } = context;
+  const { mouseX, magnification, distance, enableMagnification } = context;
+
+  useEffect(() => {
+    if (!enableMagnification) return;
+    const el = ref.current;
+    if (!el) return;
+
+    const update = () => {
+      const b = el.getBoundingClientRect();
+      boundsRef.current = { x: b.x, width: b.width };
+    };
+
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [enableMagnification]);
 
   const distanceCalc = useTransform(mouseX, (val: number) => {
-    const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
-    return val - bounds.x - bounds.width / 2;
+    const { x, width } = boundsRef.current;
+    return val - x - width / 2;
   });
 
   const containerSize = useSpring(
@@ -92,6 +152,25 @@ const DockIcon = ({ className, children }: DockIconProps) => {
     ),
     SPRING,
   );
+
+  if (!enableMagnification) {
+    return (
+      <div
+        className={cn(
+          "relative flex aspect-square shrink-0 items-center justify-center rounded-full",
+          className,
+        )}
+        style={{ width: BASE_SIZE, height: BASE_SIZE }}
+      >
+        <div
+          className="flex items-center justify-center"
+          style={{ width: BASE_ICON_SIZE, height: BASE_ICON_SIZE }}
+        >
+          {children}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <motion.div
