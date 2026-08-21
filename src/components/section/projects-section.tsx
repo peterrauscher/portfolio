@@ -17,11 +17,10 @@ export default function ProjectsSection() {
           </div>
           <div className="flex flex-col items-center justify-center gap-y-3">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
-              Check out my latest work
+              Side projects
             </h2>
             <p className="text-muted-foreground text-center text-balance md:text-lg/relaxed lg:text-base/relaxed xl:text-lg/relaxed">
-              I&apos;ve worked on a variety of projects, from simple websites to
-              complex web applications. Here are a few of my favorites.
+              These are a few I&apos;m still happy I built.
             </p>
           </div>
         </div>

@@ -24,12 +24,11 @@ export default function HackathonsSection() {
           </div>
           <div className="flex flex-col items-center justify-center gap-y-3">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
-              Building under pressure
+              Hackathons
             </h2>
             <p className="text-muted-foreground text-center text-balance md:text-lg/relaxed lg:text-base/relaxed xl:text-lg/relaxed">
-              I love the challenge of building something meaningful in a short
-              timeframe. Hackathons push you to focus on what really matters and
-              ship fast—which is exactly how I like to work.
+              I like the challenge of building something in a short timeframe,
+              forcing you to focus on only what really matters.
             </p>
           </div>
         </div>

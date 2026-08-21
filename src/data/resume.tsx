@@ -44,9 +44,9 @@ export const DATA = {
   location: "Philadelphia, PA",
   locationLink: "https://www.google.com/maps/place/philadelphia",
   description:
-    "I like to make sites faster and cloud bills lower. Performance is a feature too! Currently spending my time optimizing @ Vividly.",
+    "I like making sites faster and cloud bills smaller. Right now, that's mostly at Vividly!",
   summary:
-    "I'm currently a senior software engineer at [Vividly](https://www.govividly.com), where I work on the all-in-one platform for CPG brands. [I studied computer science at Stevens Institute of Technology](/#education) and have spent the years since deep in backend and infra — distributed systems, data pipelines, cloud cost curves. I care a lot about the boring wins: snappier pages, leaner services, smaller bills. The throughline has always been the puzzle-solving: finding the messy problem, untangling it, and shipping pragmatic solutions. In my free time, I tinker with building custom harnesses, eval loops, and my own software factory.",
+    "Senior software engineer at [Vividly](https://www.govividly.com), working on tools for CPG brands. [CS at Stevens](/#education). Most of my career has been backend and infra working on distributed systems, data pipelines, cloud spend. I like the less visible wins: apps that feel instant, services that are cheap to run, and systems that are painless to scale. Off hours I tinker with custom agent harnesses, eval loops, and a small software factory of my own.",
   avatarUrl: "/me.webp",
   skills: [
     // Languages
@@ -118,7 +118,7 @@ export const DATA = {
       start: "May 2026",
       end: "Present",
       description:
-        "I get to touch a lot of interesting problems here — building performant Rust services and improving the UX for a traditionally bloated workflow.",
+        "Building Rust services and cleaning up workflows that used to be bloated. Lots of performance tuning and query optimization work.",
     },
     {
       company: "Perpay",
@@ -130,7 +130,7 @@ export const DATA = {
       start: "Apr 2025",
       end: "May 2026",
       description:
-        "Architected the only scalable full-suite e-commerce platform powered by your paycheck. Went deep down the backend rabbit hole.",
+        "Architected a scalable full-suite e-commerce application with BNPL loans built in. Went deep down a backend rabbit hole.",
     },
     {
       company: "Perpay",
@@ -142,7 +142,7 @@ export const DATA = {
       start: "Apr 2024",
       end: "Apr 2025",
       description:
-        "Turned a legacy Magento instance into a snappy React storefront — with the conversion bump to show for it. Rebuilt the vendor integration layer in the reverse direction.",
+        "Rebuilt a crappy Magento instance into a snappy React storefront. Conversion went up, EKS bill went down. Overhauled our vendor integrations so they could actually scale with us.",
     },
     {
       company: "Almo Corporation",
@@ -154,7 +154,7 @@ export const DATA = {
       start: "Jul 2023",
       end: "Apr 2024",
       description:
-        "Built the integration layer connecting enterprise e-commerce clients to our warehouses, then abstracted it to make each new vendor's onboarding quicker.",
+        "Built the warehouse integration layer for enterprise e-commerce clients, then generalized it so new vendors onboarded faster.",
     },
     {
       company: "Almo Corporation",
@@ -166,7 +166,7 @@ export const DATA = {
       start: "May 2019",
       end: "Aug 2019",
       description:
-        "Shipped some real-time inventory APIs and internal analytics tooling. Got my feet wet with full-stack development.",
+        "Real-time inventory APIs and internal analytics. First real full-stack work.",
     },
   ],
   education: [
@@ -236,7 +236,7 @@ export const DATA = {
       dates: "2023",
       location: "",
       description:
-        "Won grand prize for developing Neighborly, a React app and serverless API to connect neighbors looking to share resources using MongoDB Atlas.",
+        "Won the grand prize for developing Neighborly, a full-stack app allowing neighbors to buy, sell, and trade within their community.",
       image: "/hackathon-grand-prize.webp",
       win: "Grand Prize Winner",
       links: [

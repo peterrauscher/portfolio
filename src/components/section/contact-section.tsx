@@ -23,11 +23,11 @@ export default function ContactSection() {
       </div>
       <div className="relative flex flex-col items-center gap-4 text-center">
         <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-          Get in Touch
+          Contact
         </h2>
         <p className="text-muted-foreground mx-auto max-w-lg text-balance">
-          Want to chat? I&apos;ll respond whenever I can — email is best, or
-          find me on LinkedIn.
+          Want to chat? Email is best, LinkedIn works too. I&apos;ll reply when
+          I can!
         </p>
         <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
           <Button asChild size="lg" className="rounded-xl">

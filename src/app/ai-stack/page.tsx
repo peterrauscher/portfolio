@@ -92,8 +92,8 @@ export default function AIStackPage() {
           My AI stack
         </h1>
         <p className="text-muted-foreground mb-8 text-sm">
-          The industry is moving so fast now I make tweaks, changes, and try new
-          tools every day, but I try and keep this up-to-date.
+          The industry moves so fast now I tweak this almost every day. But I
+          try my best to keep the page updated!
         </p>
       </BlurFade>
 
@@ -104,8 +104,7 @@ export default function AIStackPage() {
             This covers the setup I use when working on{" "}
             <strong>personal projects and open-source contributions</strong>. My
             setup at my day job is similar but I use more industry standard
-            tools (like Figma) and models that are withing our data-retention
-            policy.
+            tools (like Figma) and models that fit our data-retention policy.
           </p>
           <StackTable
             headers={["Tool", "Role"]}
@@ -141,7 +140,7 @@ export default function AIStackPage() {
                 >
                   Zed
                 </Link>,
-                "My primary IDE. Super fast and fully open sourced.",
+                "My primary IDE. Super fast, open source, and very active development team.",
               ],
               [
                 <Link
@@ -185,7 +184,7 @@ export default function AIStackPage() {
                 >
                   Tailscale
                 </Link>,
-                "Use to tunnel into my homelab server rack, where I deploy my own projects and software.",
+                "Tunnels me into my homelab rack, where I deploy my own software and agents.",
               ],
               [
                 <Link
@@ -196,7 +195,7 @@ export default function AIStackPage() {
                 >
                   Termius
                 </Link>,
-                "Let's me SSH into my Macbook (also via Tailscale) and continue working on the go, accessing omp sessions and local git branches from my phone.",
+                "SSHs me into my MacBook over Tailscale so I can pick up omp sessions and local branches from my phone and work on the go.",
               ],
             ]}
           />

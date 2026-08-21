@@ -7,15 +7,18 @@ import { ChevronRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Blog",
-  description: "Thoughts on software development, life, and more.",
+  description:
+    "Thoughts on software, reflections on work, and lessons from my life and travels.",
   openGraph: {
     title: "Blog",
-    description: "Thoughts on software development, life, and more.",
+    description:
+      "Thoughts on software, reflections on work, and lessons from my life and travels.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Blog",
-    description: "Thoughts on software development, life, and more.",
+    description:
+      "Thoughts on software, reflections on work, and lessons from my life and travels.",
   },
 };
 
@@ -54,7 +57,8 @@ export default async function BlogPage({
           </span>
         </h1>
         <p className="text-muted-foreground mb-8 text-sm">
-          My thoughts on software development, life, and more.
+          Thoughts on software, reflections on work, and lessons from my life
+          and travels.
         </p>
       </BlurFade>
 
@@ -136,7 +140,7 @@ export default async function BlogPage({
         <BlurFade delay={BLUR_FADE_DELAY * 2}>
           <div className="border-border flex flex-col items-center justify-center rounded-xl border px-4 py-12">
             <p className="text-muted-foreground text-center">
-              No blog posts yet. Check back soon!
+              Nothing published yet.
             </p>
           </div>
         </BlurFade>

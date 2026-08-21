@@ -114,7 +114,8 @@ export default async function Image() {
   try {
     const fontData = await getFontData();
     const title = "Blog";
-    const description = "Thoughts on software development, life, and more.";
+    const description =
+      "Notes on software, musings on work, and insights from my life experiences and travels.";
     const imageUrl = DATA.avatarUrl
       ? new URL(DATA.avatarUrl, DATA.url).toString()
       : undefined;

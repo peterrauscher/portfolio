@@ -67,18 +67,14 @@ export default function Page() {
                 >
                   Vividly
                 </a>
-                , where I work on the all-in-one platform for CPG brands.{" "}
-                <Link href="/#education">
-                  I studied computer science at Stevens Institute of Technology
-                </Link>{" "}
-                and have spent the years since deep in backend and infra —
-                distributed systems, data pipelines, cloud cost curves. I care a
-                lot about the boring wins: snappier pages, leaner services,
-                smaller bills. The throughline has always been the
-                puzzle-solving: finding the messy problem, untangling it, and
-                shipping pragmatic solutions. In my free time, I tinker with
-                building custom harnesses, eval loops, and my own software
-                factory.
+                , working on tools for CPG brands.{" "}
+                <Link href="/#education">CS at Stevens</Link>. Most of my career
+                has been backend and infra: distributed systems, query
+                optimization, cloud spend. I like the unshiny wins that move
+                graphs in the right direction. I like to make apps that feel
+                instant, services that are cheap to run, and systems that are
+                painless to scale. Off hours I tinker with custom agent
+                harnesses, eval loops, and a small software factory of my own.
               </p>
             </div>
           </div>
@@ -157,11 +153,11 @@ export default function Page() {
               </div>
               <div className="flex flex-col items-center justify-center gap-y-3">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
-                  Technologies I work with
+                  Tech I use
                 </h2>
                 <p className="text-muted-foreground text-center text-balance md:text-lg/relaxed lg:text-base/relaxed xl:text-lg/relaxed">
-                  I&apos;ve worked with a variety of technologies across the
-                  full stack, from backend frameworks to cloud infrastructure.
+                  Mostly backend and infra, with enough frontend sprinkled in to
+                  ship features end-to-end.
                 </p>
               </div>
             </div>
