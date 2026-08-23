@@ -1,8 +1,16 @@
 import { defineCollection, defineConfig } from "@content-collections/core";
 import { compileMDX } from "@content-collections/mdx";
+import rehypePrettyCode, { type Options } from "rehype-pretty-code";
 import remarkGfm from "remark-gfm";
 import { z } from "zod";
-import { remarkCodeMeta } from "./src/lib/remark-code-meta";
+
+const rehypeCodeOptions: Options = {
+  theme: {
+    light: "github-light",
+    dark: "github-dark",
+  },
+  keepBackground: false,
+};
 
 const posts = defineCollection({
   name: "posts",
@@ -19,7 +27,8 @@ const posts = defineCollection({
   }),
   transform: async (document, context) => {
     const mdx = await compileMDX(context, document, {
-      remarkPlugins: [remarkGfm, remarkCodeMeta],
+      remarkPlugins: [remarkGfm],
+      rehypePlugins: [[rehypePrettyCode, rehypeCodeOptions]],
     });
     return {
       ...document,

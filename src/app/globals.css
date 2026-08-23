@@ -169,14 +169,14 @@
   }
 
   /* Shiki dual theme support */
-  .shiki,
-  .shiki span {
+  code[data-theme*=" "],
+  code[data-theme*=" "] span {
     color: var(--shiki-light);
     background-color: transparent;
   }
 
-  .dark .shiki,
-  .dark .shiki span {
+  .dark code[data-theme*=" "],
+  .dark code[data-theme*=" "] span {
     color: var(--shiki-dark);
     background-color: transparent;
   }
