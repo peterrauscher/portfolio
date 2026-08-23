@@ -10,16 +10,6 @@ export type GoodreadsBook = {
   shelf: "currently-reading" | "read";
 };
 
-export type LastFmTrack = {
-  name: string;
-  artist: string;
-  album: string;
-  albumArtUrl: string;
-  url: string;
-  nowPlaying: boolean;
-  playedAt: string | null;
-};
-
 export type TraktEntry =
   | {
       type: "movie";
@@ -89,47 +79,6 @@ export async function getGoodreadsBooks(
 
   // prefer currently-reading; fall back to most recently read
   return (current.length > 0 ? current : recent).slice(0, 1);
-}
-
-// --- Last.fm ---
-
-export async function getLastFmTracks(
-  username: string,
-  apiKey: string,
-): Promise<LastFmTrack[]> {
-  try {
-    const res = await fetch(
-      `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${encodeURIComponent(username)}&api_key=${apiKey}&format=json&limit=1`,
-      { next: { revalidate: 3600 } },
-    );
-    if (!res.ok) return [];
-    const data = await res.json();
-    const tracks: unknown[] = data?.recenttracks?.track ?? [];
-    const arr = Array.isArray(tracks) ? tracks : [tracks];
-    return arr.slice(0, 1).map((t) => {
-      const track = t as Record<string, unknown>;
-      const attrs = track["@attr"] as Record<string, string> | undefined;
-      const images = track.image as Array<Record<string, string>> | undefined;
-      const mediumImg =
-        images?.find((img) => img.size === "medium")?.["#text"] ?? "";
-      const largeImg =
-        images?.find((img) => img.size === "large")?.["#text"] ?? "";
-      const artist = track.artist as Record<string, string> | undefined;
-      const album = track.album as Record<string, string> | undefined;
-      const date = track.date as Record<string, string> | undefined;
-      return {
-        name: String(track.name ?? ""),
-        artist: artist?.["#text"] ?? "",
-        album: album?.["#text"] ?? "",
-        albumArtUrl: largeImg || mediumImg,
-        url: String(track.url ?? ""),
-        nowPlaying: attrs?.nowplaying === "true",
-        playedAt: date?.["#text"] ?? null,
-      };
-    });
-  } catch {
-    return [];
-  }
 }
 
 // --- Trakt.tv ---
