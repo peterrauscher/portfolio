@@ -7,7 +7,7 @@ on:
 
 jobs:
   checks:
-    name: lint, typecheck, format
+    name: lint, typecheck, format, build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,3 +22,5 @@ jobs:
         run: bun run typecheck
       - name: Format check
         run: bun run format:check
+      - name: Build
+        run: bun run build

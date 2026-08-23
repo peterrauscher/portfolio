@@ -1,3 +1,4 @@
+import { sortPostsByDate } from "@/lib/posts";
 import { allPosts } from "content-collections";
 import { formatDate } from "@/lib/utils";
 import { DATA } from "@/data/resume";
@@ -9,12 +10,7 @@ import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 function getSortedPosts() {
-  return [...allPosts].sort((a, b) => {
-    if (new Date(a.publishedAt) > new Date(b.publishedAt)) {
-      return -1;
-    }
-    return 1;
-  });
+  return sortPostsByDate(allPosts);
 }
 
 export async function generateStaticParams() {

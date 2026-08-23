@@ -59,7 +59,6 @@ export const GcpSimpleIcon = ({ className }: IconProps) => (
 export const HonoSimpleIcon = createSimpleIcon("hono", "Hono");
 export const TerraformSimpleIcon = createSimpleIcon("terraform", "Terraform");
 export const PulumiSimpleIcon = createSimpleIcon("pulumi", "Pulumi");
-export const CelerySimpleIcon = createSimpleIcon("celery", "Celery");
 export const KafkaSimpleIcon = createSimpleIcon("apachekafka", "Kafka");
 export const RabbitMqSimpleIcon = createSimpleIcon("rabbitmq", "RabbitMQ");
 export const DotNetSimpleIcon = createSimpleIcon("dotnet", ".NET");

@@ -1,113 +1,162 @@
 "use client";
 
-import { useState, useRef, useEffect, type ComponentProps } from "react";
-import { Copy, Check } from "lucide-react";
+import {
+  Children,
+  type ComponentProps,
+  isValidElement,
+  useRef,
+  useState,
+  type ReactElement,
+  type ReactNode,
+} from "react";
+import { Check, Copy } from "lucide-react";
 import { Button } from "../ui/button";
-import { codeToHtml } from "shiki/bundle/web";
 import { cn } from "@/lib/utils";
 
-type CodeBlockProps = ComponentProps<"pre">;
+type CodeBlockProps = ComponentProps<"pre"> & {
+  "data-language"?: string;
+  "data-theme"?: string;
+  "data-title"?: string;
+};
+type CodeFigureProps = ComponentProps<"figure"> & {
+  "data-rehype-pretty-code-figure"?: string;
+};
+type TitleProps = ComponentProps<"figcaption"> & {
+  "data-rehype-pretty-code-title"?: string;
+};
+const COPY_RESET_MS = 2000;
 
-function extractLanguage(className?: string): string {
-  if (!className) return "plaintext";
-  const match = className.match(/language-([a-z0-9-]+)/i);
-  return match ? match[1] : "plaintext";
+function isShikiPre(props: CodeBlockProps) {
+  return Boolean(props["data-language"]) || Boolean(props["data-theme"]);
+}
+
+function hasTitleNode(child: ReactNode): child is ReactElement<TitleProps> {
+  if (!isValidElement(child)) return false;
+  if (child.props == null) return false;
+  if (typeof child.props !== "object") return false;
+  return "data-rehype-pretty-code-title" in child.props;
+}
+
+async function copyCodeFromElement(
+  element: HTMLElement | null,
+  setCopied: (copied: boolean) => void,
+) {
+  if (!element) return;
+
+  const code = element.textContent ?? "";
+  try {
+    await navigator.clipboard.writeText(code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), COPY_RESET_MS);
+  } catch (error) {
+    console.error("Failed to copy code:", error);
+  }
+}
+
+export function CodeFigure({ children, ...props }: CodeFigureProps) {
+  const [copied, setCopied] = useState(false);
+  const figureRef = useRef<HTMLElement>(null);
+
+  if (props["data-rehype-pretty-code-figure"] === undefined) {
+    return (
+      <figure {...props} ref={figureRef}>
+        {children}
+      </figure>
+    );
+  }
+
+  const childNodes = Children.toArray(children);
+  const titleNode = childNodes.find(hasTitleNode);
+  const title = titleNode?.props.children ?? null;
+  const content = titleNode
+    ? childNodes.filter((child) => child !== titleNode)
+    : childNodes;
+
+  const handleCopy = async () => {
+    const pre = figureRef.current?.querySelector(
+      "pre",
+    ) as HTMLPreElement | null;
+    await copyCodeFromElement(pre, setCopied);
+  };
+
+  return (
+    <figure
+      ref={figureRef}
+      {...props}
+      className={cn(
+        "group border-border relative overflow-hidden rounded-xl border",
+        props.className,
+      )}
+    >
+      <Button
+        onClick={handleCopy}
+        variant="outline"
+        size="icon"
+        className={cn(
+          "text-primary border-border absolute right-3 size-8 cursor-pointer rounded-md border opacity-100 shadow-none transition-opacity lg:opacity-0 lg:group-hover:opacity-100",
+          title ? "top-13" : "top-3",
+        )}
+        aria-label="Copy code"
+      >
+        {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
+      </Button>
+      {title && (
+        <div className="border-border bg-muted/50 text-foreground rounded-t-xl border-b p-3 text-xs font-medium">
+          {title}
+        </div>
+      )}
+      <div className="p-3">{content}</div>
+    </figure>
+  );
 }
 
 export function CodeBlock({ children, ...props }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
-  const [{ html, className, title }, setRenderState] = useState<{
-    html: string;
-    className: string;
-    title: string | null;
-  }>({ html: "", className: "", title: null });
   const preRef = useRef<HTMLPreElement>(null);
+  const title = props["data-title"] as string | undefined;
 
-  useEffect(() => {
-    const pre = preRef.current;
-    const codeEl = pre?.querySelector("code");
-    if (!pre || !codeEl) return;
-
-    const codeText = codeEl.textContent || "";
-    const lang = extractLanguage(codeEl.className);
-    const nextTitle = codeEl.getAttribute("data-title");
-    const nextClassName = codeEl.className || "";
-
-    void codeToHtml(codeText, {
-      lang: lang as any,
-      themes: {
-        light: "github-light",
-        dark: "github-dark",
-      },
-      defaultColor: false,
-    })
-      .then((html) => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, "text/html");
-        setRenderState({
-          html: doc.querySelector("code")?.innerHTML ?? "",
-          className: nextClassName,
-          title: nextTitle,
-        });
-      })
-      .catch((error) => {
-        console.error("Failed to highlight code:", error);
-        setRenderState({
-          html: "",
-          className: nextClassName,
-          title: nextTitle,
-        });
-      });
-  }, [children]);
-
-  const handleCopy = async () => {
-    const code = preRef.current?.textContent || "";
-    try {
-      await navigator.clipboard.writeText(code);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (error) {
-      console.error("Failed to copy code:", error);
-    }
-  };
-
-  return (
-    <div className="group border-border relative overflow-hidden rounded-xl border">
+  if (isShikiPre(props)) {
+    return (
       <pre
         ref={preRef}
         {...props}
         className={cn("m-0! overflow-x-auto p-0!", props.className)}
       >
-        {title && (
-          <div className="border-border bg-muted/50 text-foreground rounded-t-xl border-b p-3 text-xs font-medium">
-            {title}
-          </div>
-        )}
-
-        <Button
-          onClick={handleCopy}
-          variant="outline"
-          size="icon"
-          className={cn(
-            "text-primary border-border absolute right-3 size-8 cursor-pointer rounded-md border opacity-100 shadow-none transition-opacity lg:opacity-0 lg:group-hover:opacity-100",
-            title ? "top-13" : "top-3",
-            props.className,
-          )}
-          aria-label="Copy code"
-        >
-          {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
-        </Button>
-        {html && (
-          <div className="p-3">
-            <code
-              className={`shiki ${className}`}
-              dangerouslySetInnerHTML={{ __html: html }}
-            />
-          </div>
-        )}
-
-        {!html && <div className="p-4">{children}</div>}
+        {children}
       </pre>
+    );
+  }
+
+  const handleCopy = async () => {
+    await copyCodeFromElement(preRef.current, setCopied);
+  };
+
+  return (
+    <div className="group border-border relative overflow-hidden rounded-xl border">
+      {title && (
+        <div className="border-border bg-muted/50 text-foreground rounded-t-xl border-b p-3 text-xs font-medium">
+          {title}
+        </div>
+      )}
+      <pre
+        ref={preRef}
+        {...props}
+        className={cn("m-0! overflow-x-auto p-0!", props.className)}
+      >
+        {children}
+      </pre>
+      <Button
+        onClick={handleCopy}
+        variant="outline"
+        size="icon"
+        className={cn(
+          "text-primary border-border absolute right-3 size-8 cursor-pointer rounded-md border opacity-100 shadow-none transition-opacity lg:opacity-0 lg:group-hover:opacity-100",
+          title ? "top-13" : "top-3",
+        )}
+        aria-label="Copy code"
+      >
+        {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
+      </Button>
     </div>
   );
 }
