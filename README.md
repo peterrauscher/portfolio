@@ -1,6 +1,6 @@
 # peterrauscher.com
 
-My personal portfolio and blog built with Next.js, and Magic UI, deployed on Cloudflare.
+My personal portfolio and blog built with Next.js, and Magic UI, deployed on Vercel.
 
 ## Stack
 
