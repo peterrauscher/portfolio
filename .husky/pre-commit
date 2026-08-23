@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+# Pre-commit hook: same gates as CI (lint, typecheck, format).
+bun run check

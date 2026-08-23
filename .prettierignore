@@ -20,3 +20,5 @@ bun.lock
 
 # local settings
 .claude
+# local planning notes
+plans
