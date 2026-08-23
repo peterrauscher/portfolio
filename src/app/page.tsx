@@ -67,9 +67,10 @@ export default function Page() {
                 >
                   Vividly
                 </a>
-                , working on tools for CPG brands.{" "}
-                <Link href="/#education">CS at Stevens</Link>. Most of my career
-                has been backend and infra: distributed systems, query
+                , working on tools for CPG brands. Studied{" "}
+                <Link href="/#education">CS @ Stevens</Link>, started working
+                for startups in the e-commerce and fintech spaces. Most of my
+                career has been backend and infra: distributed systems, query
                 optimization, cloud spend. I like the unshiny wins that move
                 graphs in the right direction. I like to make apps that feel
                 instant, services that are cheap to run, and systems that are
