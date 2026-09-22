@@ -18,7 +18,7 @@ export default function Page() {
     <main className="relative flex min-h-dvh flex-col gap-14">
       <section id="hero" className="scroll-mt-8">
         <div className="mx-auto w-full max-w-2xl space-y-8">
-          <div className="flex min-h-32 flex-col justify-between gap-2 gap-y-6 md:flex-row">
+          <div className="flex min-h-32 flex-col justify-between gap-2 gap-y-6 md:flex-row md:gap-x-4">
             <div className="order-2 flex flex-col gap-2 md:order-1">
               <BlurFadeText
                 delay={0}
