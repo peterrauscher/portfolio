@@ -10,7 +10,6 @@ const nextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "i.gr-assets.com" },
       { protocol: "https", hostname: "images.gr-assets.com" },
-      { protocol: "https", hostname: "image.tmdb.org" },
     ],
   },
   async headers() {

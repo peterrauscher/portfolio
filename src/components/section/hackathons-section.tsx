@@ -16,16 +16,13 @@ export default function HackathonsSection() {
           <div className="flex w-full items-center">
             <div className="via-border h-px flex-1 bg-linear-to-r from-transparent from-5% via-95% to-transparent" />
             <div className="bg-primary z-10 rounded-xl border px-4 py-1">
-              <span className="text-background text-sm font-medium">
+              <span className="text-background text-3xl font-medium">
                 Hackathons
               </span>
             </div>
             <div className="via-border h-px flex-1 bg-linear-to-l from-transparent from-5% via-95% to-transparent" />
           </div>
           <div className="flex flex-col items-center justify-center gap-y-3">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
-              Hackathons
-            </h2>
             <p className="text-muted-foreground text-center text-balance md:text-lg/relaxed lg:text-base/relaxed xl:text-lg/relaxed">
               I like the challenge of building something in a short timeframe,
               forcing you to focus on only what really matters.

@@ -2,7 +2,6 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Tv } from "lucide-react";
 
 function GoodreadsIcon({ className }: { className?: string }) {
   return (
@@ -14,20 +13,6 @@ function GoodreadsIcon({ className }: { className?: string }) {
       xmlns="http://www.w3.org/2000/svg"
     >
       <path d="M17.346.026c.422-.083.859.037 1.179.325.346.284.55.705.557 1.153-.023.457-.247.88-.612 1.156l-2.182 1.748a.601.601 0 0 0-.255.43.52.52 0 0 0 .11.424 5.886 5.886 0 0 1 .832 6.58c-1.394 2.79-4.503 3.99-7.501 2.927a.792.792 0 0 0-.499-.01c-.224.07-.303.18-.453.383l-.014.02-.941 1.254s-.792.985.457.935c3.027-.119 3.817-.119 5.439-.01 2.641.18 3.806 1.903 3.806 3.275 0 1.623-1.036 3.383-3.809 3.383a117.46 117.46 0 0 0-5.517-.03c-.31.005-.597.013-.835.02-.228.006-.41.011-.52.011-.712 0-1.648-.186-1.66-1.068-.008-.729.624-1.12 1.11-1.172.43-.045.815.007 1.24.064.252.034.518.07.815.088.185.011.366.025.552.038.53.038 1.102.08 1.926.087.427.005.759.01 1.025.015.695.012.941.016 1.28-.015 1.248-.112 1.832-.61 1.832-1.376 0-.805-.584-1.264-1.698-1.414-1.564-.213-2.33-.163-3.72-.074a87.66 87.66 0 0 1-1.669.095c-.608.029-2.449.026-2.682-1.492-.053-.416-.073-1.116.807-2.325l.75-1.003c.36-.49.582-.898.053-1.559 0 0-.39-.468-.52-.638-1.215-1.587-1.512-4.08-.448-6.114 1.577-3.011 5.4-4.26 8.37-2.581.253.143.438.203.655.163.201-.032.27-.167.363-.344.02-.04.042-.082.067-.126.004-.01.241-.465.535-1.028l.734-1.41a1.493 1.493 0 0 1 1.041-.785ZM9.193 13.243c1.854.903 3.912.208 5.254-2.47 1.352-2.699.827-5.11-1.041-6.023C10.918 3.537 8.81 5.831 8.017 7.41c-1.355 2.698-.717 4.886 1.147 5.818Z" />
-    </svg>
-  );
-}
-
-function TraktIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      role="img"
-      viewBox="0 0 24 24"
-      className={className}
-      fill="currentColor"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="m15.082 15.107-.73-.73 9.578-9.583a4.499 4.499 0 0 0-.115-.575L13.662 14.382l1.08 1.08-.73.73-1.81-1.81L23.422 3.144c-.075-.15-.155-.3-.25-.44L11.508 14.377l2.154 2.155-.73.73-7.193-7.199.73-.73 4.309 4.31L22.546 1.86A5.618 5.618 0 0 0 18.362 0H5.635A5.637 5.637 0 0 0 0 5.634V18.37A5.632 5.632 0 0 0 5.635 24h12.732C21.477 24 24 21.48 24 18.37V6.19l-8.913 8.918zm-4.314-2.155L6.814 8.988l.73-.73 3.954 3.96zm1.075-1.084-3.954-3.96.73-.73 3.959 3.96zm9.853 5.688a4.141 4.141 0 0 1-4.14 4.14H6.438a4.144 4.144 0 0 1-4.139-4.14V6.438A4.141 4.141 0 0 1 6.44 2.3h10.387v1.04H6.438c-1.71 0-3.099 1.39-3.099 3.1V17.55c0 1.71 1.39 3.105 3.1 3.105h11.117c1.71 0 3.1-1.395 3.1-3.105v-1.754h1.04v1.754z" />
     </svg>
   );
 }
@@ -45,12 +30,7 @@ function YoutubeMusicIcon({ className }: { className?: string }) {
     </svg>
   );
 }
-import {
-  getGoodreadsBooks,
-  getTraktHistory,
-  type GoodreadsBook,
-  type TraktEntry,
-} from "@/lib/media";
+import { getGoodreadsBooks, type GoodreadsBook } from "@/lib/media";
 
 // --- Skeleton ---
 
@@ -199,114 +179,6 @@ function ListeningWidget() {
   );
 }
 
-// --- Trakt Widget ---
-
-function formatWatchedAt(iso: string): string {
-  try {
-    const d = new Date(iso);
-    const now = Date.now();
-    const diff = Math.floor((now - d.getTime()) / 1000);
-    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
-    if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
-    if (diff < 7 * 86400) return `${Math.floor(diff / 86400)}d ago`;
-    return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-  } catch {
-    return "";
-  }
-}
-
-async function TraktWidget() {
-  const username = process.env.TRAKT_USERNAME?.trim() || "peterrauscher";
-  const clientId = process.env.TRAKT_CLIENT_ID?.trim();
-  const configured = Boolean(clientId);
-  const history: TraktEntry[] =
-    configured && clientId ? await getTraktHistory(username, clientId) : [];
-
-  return (
-    <div className="animate-content-in flex h-full flex-col gap-2 rounded-xl border p-4">
-      <div className="flex items-center justify-between gap-2 border-b pb-2">
-        <div className="flex items-center gap-2">
-          <TraktIcon className="size-4 text-red-500" />
-          <span className="text-sm font-semibold">Watching</span>
-        </div>
-        <Link
-          href={`https://trakt.tv/users/${username}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-muted-foreground hover:text-foreground text-xs transition-colors"
-        >
-          Trakt →
-        </Link>
-      </div>
-      {!configured ? (
-        <p className="text-muted-foreground py-2 text-xs">
-          Set <code className="text-[10px]">TRAKT_CLIENT_ID</code> to load
-          history.
-        </p>
-      ) : history.length === 0 ? (
-        <p className="text-muted-foreground py-2 text-xs">
-          No public watch history yet. On Trakt, set history to public and
-          confirm scrobbles are syncing.
-        </p>
-      ) : (
-        <ul className="flex flex-col gap-3">
-          {history.map((entry, i) => {
-            const href =
-              entry.type === "movie"
-                ? `https://trakt.tv/movies/${entry.slug}`
-                : `https://trakt.tv/shows/${entry.slug}`;
-            const title =
-              entry.type === "movie"
-                ? `${entry.title} (${entry.year})`
-                : entry.showTitle;
-            const subtitle =
-              entry.type === "movie"
-                ? "movie"
-                : `S${String(entry.season).padStart(2, "0")}E${String(entry.episode).padStart(2, "0")} · ${entry.episodeTitle}`;
-
-            return (
-              <li key={i}>
-                <Link
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-3"
-                >
-                  {entry.posterUrl ? (
-                    <img
-                      src={entry.posterUrl}
-                      alt={
-                        entry.type === "movie" ? entry.title : entry.showTitle
-                      }
-                      className="ring-border size-10 flex-none rounded object-cover shadow-sm ring-1"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="bg-muted flex size-10 flex-none items-center justify-center rounded">
-                      <Tv className="text-muted-foreground size-4" />
-                    </div>
-                  )}
-                  <div className="flex min-w-0 flex-1 flex-col">
-                    <span className="truncate text-sm leading-tight font-medium underline-offset-2 group-hover:underline">
-                      {title}
-                    </span>
-                    <span className="text-muted-foreground truncate text-xs">
-                      {subtitle}
-                    </span>
-                    <span className="text-muted-foreground mt-0.5 text-[10px]">
-                      {formatWatchedAt(entry.watchedAt)}
-                    </span>
-                  </div>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      )}
-    </div>
-  );
-}
-
 // --- Section ---
 
 export default function NowSection() {
@@ -317,14 +189,11 @@ export default function NowSection() {
         <h2 className="text-xl font-bold whitespace-nowrap">Now</h2>
         <div className="via-border h-px flex-1 bg-linear-to-l from-transparent from-5% via-95% to-transparent" />
       </div>
-      <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
         <Suspense fallback={<WidgetSkeleton />}>
           <GoodreadsWidget />
         </Suspense>
         <ListeningWidget />
-        <Suspense fallback={<WidgetSkeleton />}>
-          <TraktWidget />
-        </Suspense>
       </div>
     </div>
   );

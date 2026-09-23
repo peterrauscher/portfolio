@@ -7,7 +7,7 @@ export default function ContactSection() {
   return (
     <div className="relative overflow-visible rounded-xl border p-10 pt-12">
       <div className="bg-primary absolute -top-3 left-1/2 z-10 -translate-x-1/2 rounded-xl border px-4 py-1">
-        <span className="text-background text-sm font-medium">Contact</span>
+        <span className="text-background text-3xl font-medium">Contact</span>
       </div>
       <div className="absolute inset-0 top-0 right-0 left-0 h-1/2 overflow-hidden rounded-xl">
         <FlickeringGrid
@@ -22,9 +22,6 @@ export default function ContactSection() {
         />
       </div>
       <div className="relative flex flex-col items-center gap-4 text-center">
-        <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-          Contact
-        </h2>
         <p className="text-muted-foreground mx-auto max-w-lg text-balance">
           Want to chat? Email is best, LinkedIn works too. I&apos;ll reply when
           I can!
