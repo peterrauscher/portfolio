@@ -208,11 +208,20 @@ export default function AIStackPage() {
             headers={["Provider", "Plan", "Monthly"]}
             nowrapLast
             rows={[
-              ["OpenAI", "ChatGPT Pro 20x", "$200"],
+              [
+                "Anthropic",
+                "Claude ($200/mo), main driver with Opus 5.5",
+                "$200",
+              ],
+              [
+                "OpenAI",
+                "Codex ($100/mo), Sol-6.1 subagents for Opus 5.5 plans & image gen for design iteration",
+                "$100",
+              ],
               [
                 "xAI",
-                "SuperGrok, grok-4.5-high is great at design in pen.dev",
-                "$30",
+                "Included with X Premium, grok-4.7 is great at design in pen.dev",
+                "$8",
               ],
               [
                 "OpenCode Go",
@@ -223,19 +232,19 @@ export default function AIStackPage() {
               [
                 <strong key="total-label">Total</strong>,
                 "",
-                <strong key="total-value">~$245-250/mo</strong>,
+                <strong key="total-value">~$323-328/mo</strong>,
               ],
             ]}
           />
           <p>
-            My employer also covers a Codex plan and unlimited Cursor usage,
-            which I use for job-related development work.
+            My employer also covers unlimited Cursor usage, which I use for
+            job-related development work.
           </p>
         </BlurFade>
 
         <BlurFade delay={BLUR_FADE_DELAY * 5}>
           <p className="text-muted-foreground not-prose mt-8 text-sm">
-            Last updated: Aug 07, 2026
+            Last updated: Sep 29, 2026
           </p>
         </BlurFade>
       </article>
