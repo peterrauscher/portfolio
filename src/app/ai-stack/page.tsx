@@ -133,36 +133,17 @@ export default function AIStackPage() {
               ],
               [
                 <Link
-                  key="zed"
-                  href="https://zed.dev"
+                  key="tern"
+                  href="https://stencil.so/tern"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Zed
+                  Tern
                 </Link>,
-                "My primary IDE. Super fast, open source, and very active development team.",
-              ],
-              [
-                <Link
-                  key="hermes"
-                  href="https://hermes-agent.nousresearch.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Hermes (via Slack)
-                </Link>,
-                "Creates and monitors recurring agent tasks and PR reviews from Slack.",
-              ],
-              [
-                <Link
-                  key="rtk"
-                  href="https://github.com/rtk-ai/rtk"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  rtk
-                </Link>,
-                "Nice little CLI proxy that strips noisy command outputs so agents burn less tokens.",
+                <>
+                  My terminal multiplexer, IDE, and agentic development harness.
+                  Integrates perfectly with omp. <strong>MUST TRY.</strong>
+                </>,
               ],
               [
                 <Link
@@ -225,10 +206,14 @@ export default function AIStackPage() {
               ],
               [
                 "OpenCode Go",
-                "Gives $60 of DeepSeek V4 Flash usage, GREAT deal",
+                "Gives $60 of deepseek-v4.1-flash usage, GREAT deal",
                 "$10",
               ],
-              ["DeepInfra", "Pay-as-you-go API for dsv4-flash-0731", "~$5-10"],
+              [
+                "DeepInfra",
+                "Pay-as-you-go API for deepseek-v4.1-flash",
+                "~$5-10",
+              ],
               [
                 <strong key="total-label">Total</strong>,
                 "",
