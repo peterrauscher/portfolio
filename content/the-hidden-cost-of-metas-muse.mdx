@@ -1,0 +1,28 @@
+---
+title: "The hidden cost of Meta's $8,000 free tier"
+publishedAt: "2026-10-04"
+author: "Peter Rauscher"
+summary: "Meta is giving away 100 million tokens a week AND a dedicated Linux VM. Take a guess how you're paying for it."
+---
+
+Meta just launched Muse, its personal AI agent. It handles everyday chores like emails, flights, bill disputes, and Facebook Marketplace haggling.
+
+The wild part isn't what it does. It's the free tier: **100 million tokens per week**, plus a dedicated Linux VM in Meta's cloud running headless Chromium.
+
+Run the numbers against Meta's standalone API pricing for Muse Spark 1.3 ($1.25/M input, $4.25/M output). An agent mostly reads context, so let's assume a (generous) 90/10 input-output split:
+
+- 90M input tokens: $112.50
+- 10M output tokens: $42.50
+- **Total: $155 a week ($8,060 a year per user)**
+
+Even if you price it at Meta's bottom-dollar "contributor" tier ($0.10/$0.20), you're still looking at ~$570 a year in raw inference, before paying to keep tens of millions of persistent virtual machines alive around the clock.
+
+Nobody hands out an $8,000 annual compute subsidy out of charity.
+
+The old Web 2.0 adage still holds: **if it's free, you are the product.**
+
+Only the product has changed. Meta makes roughly $67 a year per user on ads. That doesn't come close to balancing an $8,000 compute ledger. They aren't monetizing eyeball impressions anymore. They are after your intent, your transaction stream, and your life graph.
+
+Look at the pricing structure: Meta gives a 92% discount if you let them train on your data ($0.10 vs $1.25). On the free tier, your household tasks, support negotiations, and habits are the training flywheel for the next model. At the same time, executing inside Meta's datacenter instead of on your phone neatly routes around Apple's App Tracking Transparency and App Store cuts. Your iPhone gets demoted to a dumb approval screen while Meta takes a cut of the checkout.
+
+Use the free compute if it buys you time. Just remember what is paying the bill.
