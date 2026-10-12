@@ -2,14 +2,16 @@
 title: "Running GitHub Actions on a randomized schedule"
 publishedAt: "2023-03-30"
 author: "Peter Rauscher"
-summary: "Use a lightweight Bash helper to rewrite cron entries at runtime so scheduled GitHub Actions avoid predictable execution windows."
+summary: "Bash + sed to rewrite a workflow cron so scheduled Actions don't always fire on the same minute."
 ---
 
-GitHub Actions provide a powerful automation platform that allows developers to build, test, and deploy their projects with ease. By default, workflows are scheduled at fixed times using the cron syntax. However, sometimes it can be beneficial to run actions at random intervals to avoid predictable patterns or distribute resource usage. Let's explore a method I whipped up to run GitHub Actions on a randomized schedule by randomizing crontab string with the `date` and `sed` commands.
+GitHub Actions cron is fixed. Sometimes you don't want that — scraping, rate limits, or just not stacking with everyone else on the hour.
 
-## Setting up the Randomized Workflow
+Here's a small bash trick: each run picks a new minute and commits it back into the workflow file.
 
-To implement a randomized GitHub Actions workflow, we will create a bash script named `randomize-workflow.sh`. This script will generate a random minute value and update the workflow's cron schedule accordingly.
+## Setting up the randomized workflow
+
+Create `randomize-workflow.sh`. It generates a random minute and updates the workflow's cron line.
 
 ```bash
 #!/bin/bash
@@ -22,15 +24,15 @@ cron_string="$minute * * * *"
 sed -i "s/^    - cron:.*/    - cron: $cron_string/" "$workflow_file"
 ```
 
-The script first defines the location of the workflow file and then generates a random minute value between 0 and 58 using `shuf`. Next, it constructs a new cron string with the randomized minute value and uses `sed` to update the corresponding line in the workflow file.
+The script points at the workflow file, picks a minute between 0 and 58 with `shuf`, builds a cron string, and uses `sed` to swap the line.
 
-In the example workflow file `example.yml`, we have a job named "download" that runs on a fixed schedule every hour (at the 1st minute of each hour). We will replace this fixed cron schedule with our randomized cron schedule using the `randomize-workflow.sh` script.
+In `example.yml`, say you have a job that currently runs every hour at minute 1. This script replaces that fixed schedule on each run.
 
-Before using this script, make sure to add a secret named `COMMIT_TOKEN` to your GitHub repository. The `COMMIT_TOKEN` should contain an access token with read/write permissions to the repository running the GitHub Actions workflow. This token will be used to commit and push the changes made by the script.
+Before using it, add a repo secret named `COMMIT_TOKEN` with read/write access to the repo. The workflow needs it to commit and push the updated cron.
 
-## Modifying the GitHub Workflow
+## Modifying the GitHub workflow
 
-The `example.yml` GitHub Actions workflow needs a few adjustments to integrate the randomization script and use the secret token. Here's the modified workflow:
+Wire the script and token into the workflow:
 
 ```yaml
 name: Example Random Workflow
@@ -65,12 +67,6 @@ jobs:
           git push
 ```
 
-In the updated workflow, we added a new step named "Randomize time for next run." This step runs the `randomize-workflow.sh` script, which modifies the workflow's cron schedule.
+The "Randomize time for next run" step runs the script, which rewrites the cron for next time.
 
-## Conclusion
-
-Randomizing GitHub Actions' cron schedule can be a useful approach to distribute resource usage and avoid predictable patterns (especially for scraping/rate limited IO operations). By using a simple bash script with `date`, `sed`, and the appropriate secret token, we can update the cron schedule of the workflow programmatically.
-
-Remember that while randomizing the schedule can reduce resource contention, it may also introduce challenges in coordination and monitoring. It's essential to strike a balance between "randomization" and predictable workflow execution based on your project's requirements.
-
-Now you have the knowledge to implement randomized GitHub Actions workflows to enhance the automation and scheduling capabilities of your projects. Happy automating!
+Useful when you care more about not being predictable than about firing at :00. Monitoring gets slightly harder; trade off accordingly. You'll need a `COMMIT_TOKEN` that can push to the repo.

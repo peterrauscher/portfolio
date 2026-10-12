@@ -2,12 +2,12 @@
 title: "Building a flat-file CMS with Angular"
 publishedAt: "2023-08-21"
 author: "Peter Rauscher"
-summary: "How I wired Markdown, Node, and Angular together so this blog can run entirely from flat files on S3."
+summary: "Markdown, Node, and Angular wired so a blog can run as flat files on S3."
 ---
 
-A flat-file CMS allows you to manage content for your website without a database backend. Instead, store your pages as regular text files (or in this case, Markdown files), build, and publish! If you're reading this right now, you know what the result of this looks like. I spent the last two days building my own flat-file CMS for my site, and now I'd love to walk you through how I did it.
+Flat-file CMS: Markdown in a folder, no database. Build step turns posts into HTML and the site stays static. I spent two days wiring this for an earlier version of this site. Walkthrough below — mostly the build pipeline, not the CSS.
 
-Though I'll skip most of the stylistic choices (because they're mostly irrelevant) this framework can be used to build a custom blog on your own Angular website, without the need to individually create new components for each post, manage a database, or write your posts in HTML format. Let's get started!
+I'll skip most of the styling. The point is a custom Angular blog without a new component per post, a database, or writing posts in raw HTML.
 
 ## Converting posts from Markdown to HTML
 
@@ -344,6 +344,6 @@ artifacts:
 
 ## Wrapping up
 
-And that's about it! We've covered all of the logic needed to set up a flat-file blog on your own Angular site. Feel free to tweak things like the routing/paths, stylistic choices, or removing features you don't intend to use, but I'm quite happy with how this worked out and happy that I was able to implement it statically so I could still run it purely on S3. I hope you enjoyed the read and learned something you can apply on your own!
+That's the whole loop: Markdown → Node build → Angular routes → S3 + CloudFront. Tweak paths and drop features you don't need.
 
-> 💡 Note: This is no longer the setup I use for my personal site. It was a project I took on to get familiar with Angular prior to an interview. I'm rocking [Hugo](https://gohugo.io/) now.
+> Note: I don't run this setup anymore. It was an Angular warm-up before an interview. Site's on something else now; keeping the post because the pipeline still holds up as a pattern.

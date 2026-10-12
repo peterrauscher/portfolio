@@ -1,44 +1,20 @@
-import Link from "next/link";
-import { FlickeringGrid } from "@/components/magicui/flickering-grid";
-import { Button } from "@/components/ui/button";
 import { DATA } from "@/data/resume";
-
 export default function ContactSection() {
   return (
-    <div className="relative overflow-visible rounded-xl border p-10 pt-12">
-      <div className="bg-primary absolute -top-3 left-1/2 z-10 -translate-x-1/2 rounded-xl border px-4 py-1">
-        <span className="text-background text-3xl font-medium">Contact</span>
-      </div>
-      <div className="absolute inset-0 top-0 right-0 left-0 h-1/2 overflow-hidden rounded-xl">
-        <FlickeringGrid
-          className="h-full w-full"
-          squareSize={4}
-          gridGap={4}
-          flickerChance={0.2}
-          style={{
-            maskImage: "linear-gradient(to bottom, black, transparent)",
-            WebkitMaskImage: "linear-gradient(to bottom, black, transparent)",
-          }}
-        />
-      </div>
-      <div className="relative flex flex-col items-center gap-4 text-center">
-        <p className="text-muted-foreground mx-auto max-w-lg text-balance">
-          Want to chat? Email is best, LinkedIn works too. I&apos;ll reply when
-          I can!
-        </p>
-        <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
-          <Button asChild size="lg" className="rounded-xl">
-            <Link href={`mailto:${DATA.contact.email}`}>Email me</Link>
-          </Button>
-          <Button asChild variant="outline" size="lg" className="rounded-xl">
-            <Link
-              href={DATA.contact.social.LinkedIn.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              LinkedIn
-            </Link>
-          </Button>
+    <div className="relative overflow-visible">
+      <div className="bg-muted/40 border-border relative overflow-hidden rounded-[28px] border p-6 sm:p-8">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-foreground text-[36px] leading-[0.95] font-semibold tracking-[-0.035em] sm:text-[48px] md:text-[54px]">
+            SAY
+            <br />
+            HELLO.
+          </p>
+          <a
+            href={`mailto:${DATA.contact.email}`}
+            className="bg-foreground text-background hover:bg-foreground/90 inline-flex items-center justify-center rounded-full px-6 py-3.5 text-[14px] font-medium transition-colors sm:text-[15px]"
+          >
+            {DATA.contact.email}
+          </a>
         </div>
       </div>
     </div>

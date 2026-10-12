@@ -1,0 +1,210 @@
+---
+title: "How I reliably manage 20+ coding agents with OMP"
+publishedAt: "2026-08-06"
+author: "Peter Rauscher"
+summary: "The OMP role map, fallback chains, and delegation rules I use to keep a 20-agent coding session manageable."
+---
+
+Once I have more than a few coding agents working on the same repository, the hard part is no longer finding a model that can write code. It is keeping the work from turning into a pile of overlapping edits.
+
+Which model should think about the architecture? Which one should rename a variable? Who is allowed to touch a file? What happens when a provider is slow? And after a fallback, which model actually handled the turn?
+
+I use [Oh My Pi](https://omp.sh/) (OMP) to answer those questions with roles. I give each kind of work a name, assign a model to that role, and let the model change later without rewriting the whole workflow.
+
+## My model roster
+
+This is the relevant part of my current configuration:
+
+| Role              | Configured model                           | What I use it for                           |
+| ----------------- | ------------------------------------------ | ------------------------------------------- |
+| `default`         | `cursor/cursor-grok-4.5-medium`            | Normal interactive coding and coordination  |
+| `task`            | `xai-oauth/grok-4.5:high`                  | Larger implementation tasks                 |
+| `advisor`         | `openai-codex/gpt-5.6-terra:medium`        | Review notes, concerns, and blockers        |
+| `plan`            | `openai-codex/gpt-5.6-sol:high`            | Breaking down work before implementation    |
+| `slow`            | `openai-codex/gpt-5.6-sol:high`            | Decisions that deserve deliberate reasoning |
+| `smol`            | `opencode-go/deepseek-v4-flash`            | Fast scouting and small subagent work       |
+| `commit` / `tiny` | `@smol`                                    | Small changes and commit-sized tasks        |
+| `vision`          | `opencode-go/glm-5.2:high`                 | Image and visual inspection                 |
+| `designer`        | `google-antigravity/gemini-3.6-flash:high` | Design work                                 |
+
+I am not claiming these models are the best choice for everyone. The useful part is the separation. I do not use the fast model for an architectural decision, and I do not spend a slow model on a rename.
+
+The actual YAML looks like this:
+
+```yaml
+modelRoles:
+  slow: openai-codex/gpt-5.6-sol:high
+  smol: opencode-go/deepseek-v4-flash
+  vision: opencode-go/glm-5.2:high
+  plan: openai-codex/gpt-5.6-sol:high
+  default: cursor/cursor-grok-4.5-medium
+  designer: google-antigravity/gemini-3.6-flash:high
+  commit: "@smol"
+  tiny: "@smol"
+  task: xai-oauth/grok-4.5:high
+  advisor: openai-codex/gpt-5.6-terra:medium
+```
+
+The aliases are the part I care about. If I move small tasks to a local model later, I can change `smol` once. The rest of my instructions can keep saying "use smol."
+
+## I start cheap and escalate
+
+OMP cycles through these roles in my config:
+
+```yaml
+cycleOrder:
+  - smol
+  - default
+  - slow
+  - plan
+  - commit
+  - task
+```
+
+The order is a rough reminder to spend model capability where it helps. I usually start with `smol` for a narrow search or a quick check, use `default` for normal work, and switch to `plan` when the change crosses a few modules. `task` handles an isolated implementation slice. `slow` is for the decision I really do not want to get wrong.
+
+`commit` and `tiny` are there for the small stuff. Cleanup, metadata, a focused change, a commit that does not need a committee meeting.
+
+## The advisor is a second pair of eyes
+
+The advisor is one of the more useful parts of the setup because it does not need to become another implementer. It watches the active turn and points out the thing I might be about to miss.
+
+The best notes are short:
+
+- "This changes an exported type. Check every caller."
+- "The retry path can duplicate the side effect."
+- "The cache is not scoped to the tenant."
+- "This test only checks the happy path."
+
+I do not want a second essay about the same task. I want the warning while the code is still easy to change.
+
+## I plan before I unleash agents
+
+For a small change, I can start coding immediately. For a change that crosses a package boundary or touches an exported API, I switch to `plan`.
+
+The planner reads the repository and gives me a map before anyone edits the working tree. I want to know which files are involved, which callers need to move, what can happen in parallel, and how I will verify the result.
+
+This pause saves a surprising amount of time. Without it, several agents can discover the same architecture independently while one of them is already changing it.
+
+Once the plan is clear, the implementation agents get a narrow assignment. "Fix the feature" is not an assignment.
+
+## Smol is for throughput
+
+The `smol` role is not a worse version of the lead agent. It is where I put work that is frequent and easy to check:
+
+- locating callsites
+- reading a narrow convention
+- checking existing tests
+- collecting documentation
+- making a small transformation
+
+I usually make these agents read-only. A good task tells them exactly what to inspect:
+
+```text
+Inspect the authentication middleware and list every caller that depends on its return type.
+Do not edit files. Report file paths, symbols, and any tests covering the behavior.
+```
+
+That is a useful subagent task. "Improve authentication" is how I end up with a new problem to review.
+
+When multiple agents are running, OMP gives them a bus for status and handoffs instead of making every update travel through the main chat. That helps, but it does not replace ownership. Agents still need to know which files they can change.
+
+## Parallel work needs boundaries
+
+Twenty agents editing the same file is not parallel work. It is a merge queue with worse visibility.
+
+I split work by real boundaries. One agent investigates the API contract. Another checks the tests. A third handles the UI slice. Someone else can review the resulting diff. These tasks can happen together because they do not all need to write to the same place.
+
+The lead agent owns integration. Subagents provide evidence and implementation slices, then get out of the way.
+
+A handoff usually contains:
+
+1. the exact files or symbols to inspect
+2. the change that is expected
+3. what the agent must leave alone
+4. the observable result that proves the slice is finished
+
+That last part is easy to skip and usually the most important one.
+
+## Fallbacks keep the workflow moving
+
+Provider failures happen at inconvenient times. If the planner has one hard-coded model and that provider is unavailable, the whole workflow waits for it.
+
+I give the important roles explicit fallback chains:
+
+```yaml
+retry:
+  fallbackChains:
+    slow:
+      - xai-oauth/grok-4.5
+    plan:
+      - xai-oauth/grok-4.5
+      - cursor/cursor-grok-4.5-high
+    default:
+      - xai-oauth/grok-4.5
+      - openai-codex/gpt-5.6-terra
+      - opencode-go/glm-5.2
+    task:
+      - xai-oauth/grok-composer-2.5-fast
+      - openai-codex/gpt-5.6-sol:low
+    advisor:
+      - cursor/composer-2.5
+      - xai-oauth/grok-composer-2.5-fast
+```
+
+The fallback should preserve the job. A planner still needs to plan. An advisor still needs to review. A small agent should not suddenly become the main architect because the first provider had a bad afternoon.
+
+I also show the resolved model and token usage:
+
+```yaml
+task:
+  showResolvedModelBadge: true
+
+display:
+  showTokenUsage: true
+```
+
+When a fallback is used, I want to see it. Otherwise I am left guessing why a routine task suddenly cost more or produced a very different answer.
+
+## How a feature moves through the setup
+
+For a real feature, I usually work through the roles in this order:
+
+1. `default` reads the request and the repository. It identifies the parts that are still unclear.
+2. `plan` breaks the work into slices if the change is larger than one small edit.
+3. `smol` agents inspect conventions, references, and tests without changing files.
+4. `task` agents implement the isolated slices.
+5. `slow` gets the architectural decision if the implementation exposes one.
+6. The advisor points out missing callers, risky assumptions, or weak tests.
+7. `commit` or `tiny` handles the final mechanical cleanup.
+
+The lead agent stays focused on intent and integration. That is the part I want to keep in one context.
+
+## Where a local model fits
+
+The hybrid setup from the tweets has the right instinct: use a capable model for judgment and a fast local model for high-volume work.
+
+The config I am using today points both categories at hosted models. If I move `smol`, `commit`, and `tiny` to a local model running through LM Studio, those are the slots I would use first. Repository search, small transformations, and repetitive checks do not need to wait behind the main agent.
+
+The routing boundary matters more than the provider. If a local model is quick, private, and good enough for a bounded task, it has a useful job.
+
+## The rules that keep this manageable
+
+I keep coming back to a few boring rules:
+
+- plans stay separate from edits
+- small-agent tasks are read-only by default
+- parallel work must have non-overlapping boundaries
+- every delegation gets an acceptance criterion
+- one agent owns final integration
+- important roles get fallback chains
+- the resolved model stays visible
+- slow reasoning is reserved for decisions that deserve it
+
+Twenty agents do not make a project twenty times faster. They make vague instructions much more expensive.
+
+OMP gives me the routing, plan mode, subagents, fallbacks, and coordination bus. The rest is deciding what each agent is allowed to do before I start it.
+
+That is how I keep a 20-agent coding session from becoming a repository where nobody knows who changed what.
+
+For the full configuration surface, see the [OMP documentation](https://omp.sh/docs).

@@ -222,8 +222,8 @@ export default function AIStackPage() {
             ]}
           />
           <p>
-            My employer also covers unlimited Cursor usage, which I use for
-            job-related development work.
+            My employer also covers unlimited Cursor, Claude, and Codex usage,
+            which I use for job-related development work.
           </p>
         </BlurFade>
 

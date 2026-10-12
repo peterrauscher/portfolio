@@ -2,18 +2,14 @@
 title: "The secret to scraping React apps without a headless browser"
 publishedAt: "2024-01-22"
 author: "Peter Rauscher"
-summary: "You can scrape data-rich React and Next.js apps by leaning on the JSON payloads they already ship to the browser instead of running a headless browser yourself."
+summary: "Skip Puppeteer. A lot of React/Next apps already embed the JSON you want in the HTML."
 ---
 
-If you've ever tried to build a web-scraping project, you've probably run into issues with dynamically rendered content, common in things like single-page applications (SPAs). Powered by technologies like Next.js and React, these SPAs offer seamless user experiences but pose unique challenges for web scrapers.
+Scraping SPAs is annoying. BeautifulSoup sees an empty shell. Puppeteer and Selenium work, but they're slow, pricey, and heavy on memory.
 
-Standard tools like BeautifulSoup just see the empty shell because they don't execute JS. The default fix is firing up a headless browser like Puppeteer or Selenium. That works, but it's slow, expensive, and uses a ton of memory.
+You often don't need them. Many React/Next apps dump initial state into a `<script>` tag for hydration. Pull that JSON with `requests` and a little parsing.
 
-I found a way to scrape these apps without a headless browser, using just Python, the `requests` library, and regex.
-
-## The Trick
-
-When a React or Next.js app loads, it often ships the initial state data as a JSON blob right in the HTML `<script>` tags, so the frontend can hydrate without extra API calls. We just need to grab that JSON.
+## The trick
 
 Make a standard GET request:
 
@@ -25,7 +21,7 @@ response = requests.get(url)
 html_content = response.text
 ```
 
-Now, extract the JSON. SPAs usually put this inside a specific script tag. You can use regex to find it and slice out the JSON payload.
+Now extract the JSON. SPAs usually put it inside a specific script tag. Regex finds it; a slice pulls out the payload.
 
 ```python
 import re
@@ -42,7 +38,7 @@ def extractor(html_content: str) -> str:
 react_data = json.loads(extractor(html_content))
 ```
 
-If the data is behind a login, just use a `requests.Session()` to handle cookies and auth, then fetch the page.
+If the data is behind a login, use a `requests.Session()` for cookies and auth, then fetch the page.
 
 ```python
 session = requests.Session()
@@ -52,4 +48,4 @@ response = session.get('https://example.com/protected_data')
 
 That's it. No headless browser required.
 
-_I actually built a Chrome extension to quickly check if a page has this hidden JSON data before I write a scraper. [It's on the Web Store](https://chromewebstore.google.com/detail/nextscraper/kjlhnflincmlpkgahnidgebbngieobod)._
+_I built a Chrome extension to check whether a page has this hidden JSON before I write a scraper. [It's on the Web Store](https://chromewebstore.google.com/detail/nextscraper/kjlhnflincmlpkgahnidgebbngieobod)._

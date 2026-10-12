@@ -1,0 +1,272 @@
+[
+  {
+    "rawFile": "IMG_0977.jpeg",
+    "src": "/photos/img_0977.webp",
+    "caption": "dr. seuss ahh flower",
+    "year": "2026",
+    "favorite": true,
+    "width": 900,
+    "height": 1200,
+    "aspect": "portrait"
+  },
+  {
+    "rawFile": "IMG_0490.jpeg",
+    "src": "/photos/img_0490.webp",
+    "caption": "golden gardens",
+    "year": "2026",
+    "favorite": true,
+    "width": 1200,
+    "height": 900,
+    "aspect": "landscape"
+  },
+  {
+    "rawFile": "IMG_5922.jpeg",
+    "src": "/photos/img_5922.webp",
+    "caption": "imagine sledding",
+    "year": "2026",
+    "favorite": false,
+    "width": 1200,
+    "height": 900,
+    "aspect": "landscape"
+  },
+  {
+    "rawFile": "IMG_0642.jpeg",
+    "src": "/photos/img_0642.webp",
+    "caption": "foxgloves near lake 22",
+    "year": "2026",
+    "favorite": true,
+    "width": 900,
+    "height": 1200,
+    "aspect": "portrait"
+  },
+  {
+    "rawFile": "IMG_6309.jpeg",
+    "src": "/photos/img_6309.webp",
+    "caption": "winter wonderland",
+    "year": "2026",
+    "favorite": false,
+    "width": 900,
+    "height": 1200,
+    "aspect": "portrait"
+  },
+  {
+    "rawFile": "IMG_0789.jpeg",
+    "src": "/photos/img_0789.webp",
+    "caption": "the beach from twilight",
+    "year": "2026",
+    "favorite": true,
+    "width": 900,
+    "height": 1200,
+    "aspect": "portrait"
+  },
+  {
+    "rawFile": "IMG_0336.jpeg",
+    "src": "/photos/img_0336.webp",
+    "caption": "sunset at sunset park",
+    "year": "2026",
+    "favorite": false,
+    "width": 1200,
+    "height": 900,
+    "aspect": "landscape"
+  },
+  {
+    "rawFile": "IMG_4231.jpeg",
+    "src": "/photos/img_4231.webp",
+    "caption": "how my grandpa got to school",
+    "year": "2026",
+    "favorite": false,
+    "width": 900,
+    "height": 1200,
+    "aspect": "portrait"
+  },
+  {
+    "rawFile": "IMG_8896.jpeg",
+    "src": "/photos/img_8896.webp",
+    "caption": "highway 10 in west texas",
+    "year": "2026",
+    "favorite": true,
+    "width": 1200,
+    "height": 900,
+    "aspect": "landscape"
+  },
+  {
+    "rawFile": "IMG_7962.jpeg",
+    "src": "/photos/img_7962.webp",
+    "caption": "seattle waterfront",
+    "year": "2026",
+    "favorite": false,
+    "width": 1200,
+    "height": 900,
+    "aspect": "landscape"
+  },
+  {
+    "rawFile": "IMG_1855.jpeg",
+    "src": "/photos/img_1855.webp",
+    "caption": "fall colors in the PNW",
+    "year": "2026",
+    "favorite": true,
+    "width": 900,
+    "height": 1200,
+    "aspect": "portrait"
+  },
+  {
+    "rawFile": "IMG_8991.jpeg",
+    "src": "/photos/img_8991.webp",
+    "caption": "mirror puddle",
+    "year": "2026",
+    "favorite": false,
+    "width": 1200,
+    "height": 900,
+    "aspect": "landscape"
+  },
+  {
+    "rawFile": "IMG_1533.jpeg",
+    "src": "/photos/img_1533.webp",
+    "caption": "side of a highway, OR",
+    "year": "2026",
+    "favorite": false,
+    "width": 900,
+    "height": 1200,
+    "aspect": "portrait"
+  },
+  {
+    "rawFile": "DSCF5679.JPG",
+    "src": "/photos/dscf5679.webp",
+    "caption": "best swimming in seattle",
+    "year": "2026",
+    "favorite": true,
+    "width": 1200,
+    "height": 896,
+    "aspect": "landscape"
+  },
+  {
+    "rawFile": "IMG_0773.jpeg",
+    "src": "/photos/img_0773.webp",
+    "caption": "bro is an ent",
+    "year": "2026",
+    "favorite": false,
+    "width": 900,
+    "height": 1200,
+    "aspect": "portrait"
+  },
+  {
+    "rawFile": "IMG_0266.jpeg",
+    "src": "/photos/img_0266.webp",
+    "caption": "stumbling home",
+    "year": "2026",
+    "favorite": false,
+    "width": 900,
+    "height": 1200,
+    "aspect": "portrait"
+  },
+  {
+    "rawFile": "IMG_1123.jpeg",
+    "src": "/photos/img_1123.webp",
+    "caption": "first hike in the PNW",
+    "year": "2026",
+    "favorite": false,
+    "width": 1200,
+    "height": 900,
+    "aspect": "landscape"
+  },
+  {
+    "rawFile": "IMG_1820.jpeg",
+    "src": "/photos/img_1820.webp",
+    "caption": "shockingly cheap coffee",
+    "year": "2026",
+    "favorite": false,
+    "width": 900,
+    "height": 1200,
+    "aspect": "portrait"
+  },
+  {
+    "rawFile": "IMG_0616.jpeg",
+    "src": "/photos/img_0616.webp",
+    "caption": "should i try them lol",
+    "year": "2026",
+    "favorite": true,
+    "width": 1200,
+    "height": 900,
+    "aspect": "landscape"
+  },
+  {
+    "rawFile": "IMG_1962.jpeg",
+    "src": "/photos/img_1962.webp",
+    "caption": "looks so drinkable",
+    "year": "2026",
+    "favorite": false,
+    "width": 900,
+    "height": 1200,
+    "aspect": "portrait"
+  },
+  {
+    "rawFile": "80289276858__1AF72E3E-8809-449D-9BE6-B5DFDB4C9C1C.jpeg",
+    "src": "/photos/80289276858_1af72e3e-8809-449d-9be6-b5dfdb4c9c1c.webp",
+    "caption": "best friends",
+    "year": "2026",
+    "favorite": false,
+    "width": 900,
+    "height": 1200,
+    "aspect": "portrait"
+  },
+  {
+    "rawFile": "IMG_1411.jpeg",
+    "src": "/photos/img_1411.webp",
+    "caption": "showered here",
+    "year": "2026",
+    "favorite": true,
+    "width": 1200,
+    "height": 900,
+    "aspect": "landscape"
+  },
+  {
+    "rawFile": "IMG_0997.jpeg",
+    "src": "/photos/img_0997.webp",
+    "caption": "sunset from gasworks",
+    "year": "2026",
+    "favorite": false,
+    "width": 1200,
+    "height": 900,
+    "aspect": "landscape"
+  },
+  {
+    "rawFile": "IMG_9919.jpeg",
+    "src": "/photos/img_9919.webp",
+    "caption": "zion road trip",
+    "year": "2026",
+    "favorite": true,
+    "width": 1200,
+    "height": 900,
+    "aspect": "landscape"
+  },
+  {
+    "rawFile": "IMG_1579.jpeg",
+    "src": "/photos/img_1579.webp",
+    "caption": "oregon sand dunes",
+    "year": "2026",
+    "favorite": false,
+    "width": 1200,
+    "height": 900,
+    "aspect": "landscape"
+  },
+  {
+    "rawFile": "IMG_1518.jpeg",
+    "src": "/photos/img_1518.webp",
+    "caption": "sf-level fog",
+    "year": "2026",
+    "favorite": true,
+    "width": 900,
+    "height": 1200,
+    "aspect": "portrait"
+  },
+  {
+    "rawFile": "IMG_0276.jpeg",
+    "src": "/photos/img_0276.webp",
+    "caption": "turbo",
+    "year": "2026",
+    "favorite": false,
+    "width": 900,
+    "height": 1200,
+    "aspect": "portrait"
+  }
+]

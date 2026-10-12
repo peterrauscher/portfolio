@@ -1,197 +1,179 @@
 import BlurFade from "@/components/magicui/blur-fade";
-import BlurFadeText from "@/components/magicui/blur-fade-text";
 import { DATA } from "@/data/resume";
 import Image from "next/image";
 import Link from "next/link";
 import ContactSection from "@/components/section/contact-section";
-import HackathonsSection from "@/components/section/hackathons-section";
-import NowSection from "@/components/section/now-section";
+import PhotosSection from "@/components/section/photos-section";
 import ProjectsSection from "@/components/section/projects-section";
 import WorkSection from "@/components/section/work-section";
-import { ArrowUpRight } from "lucide-react";
+import { SmartStack } from "@/components/smart-stack";
+import { allPosts } from "content-collections";
+import { sortPostsByDate } from "@/lib/posts";
+import { ArrowUpRight, MapPin } from "lucide-react";
 
-/** Refresh Now widgets at most hourly via ISR. */
-export const revalidate = 3600;
+const heading =
+  "text-[28px] leading-none font-semibold tracking-[-0.03em] sm:text-[34px]";
 
 export default function Page() {
+  const latest = sortPostsByDate(allPosts)[0];
+  const latestPost = {
+    title: latest?.title ?? "Latest writing",
+    slug: latest?._meta.path.replace(/\.mdx$/, "") ?? "",
+    date: latest
+      ? new Date(latest.publishedAt).toLocaleDateString("en-US", {
+          month: "short",
+          year: "numeric",
+          timeZone: "UTC",
+        })
+      : "",
+  };
+
   return (
-    <main className="relative flex min-h-dvh flex-col gap-14">
+    <main className="relative flex min-h-dvh flex-col gap-16">
       <section id="hero" className="scroll-mt-8">
-        <div className="mx-auto w-full max-w-2xl space-y-8">
-          <div className="flex min-h-32 flex-col justify-between gap-2 gap-y-6 md:flex-row md:gap-x-4">
-            <div className="order-2 flex flex-col gap-2 md:order-1">
-              <BlurFadeText
-                delay={0}
-                duration={0.28}
-                className="text-3xl font-semibold tracking-tighter sm:text-4xl lg:text-5xl"
-                yOffset={8}
-                text={`Hi, I'm ${DATA.name.split(" ")[0]}`}
-              />
-              <BlurFadeText
-                className="text-muted-foreground max-w-[600px] md:text-lg lg:text-xl"
-                delay={0.06}
-                duration={0.28}
-                text={DATA.description}
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between sm:gap-5">
+          <div className="min-w-0 sm:pt-1">
+            <h1 className="text-[44px] leading-[0.96] font-semibold tracking-[-0.04em] sm:text-[60px]">
+              Hi, I&apos;m {DATA.name.split(" ")[0]}
+            </h1>
+            <p className="text-muted-foreground mt-4 max-w-full text-[19px] leading-snug sm:max-w-[22ch] sm:text-[22px]">
+              {DATA.description}
+            </p>
+          </div>
+          <div className="flex h-auto w-full shrink-0 gap-2.5 sm:h-[250px] sm:w-auto">
+            <div className="relative aspect-[4/5] w-[56%] overflow-hidden rounded-[18px] sm:h-full sm:w-[200px]">
+              <Image
+                src={DATA.avatarUrl}
+                alt={DATA.name}
+                fill
+                priority
+                unoptimized
+                className="object-cover object-center"
               />
             </div>
-            <BlurFade
-              delay={0.1}
-              duration={0.28}
-              className="order-1 md:order-2"
-            >
-              <div className="ring-muted relative size-24 shrink-0 overflow-hidden rounded-full border shadow-lg ring-4 md:size-32">
+            <div className="flex min-w-0 flex-1 flex-col gap-2.5 sm:h-full sm:w-[148px] sm:flex-initial">
+              <a
+                href={DATA.locationLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative min-h-0 flex-1 overflow-hidden rounded-[18px]"
+              >
                 <Image
-                  src={DATA.avatarUrl}
-                  alt={DATA.name}
+                  src="/photos/img_0997.webp"
+                  alt="Lake Union view of Seattle skyline and Space Needle"
                   fill
-                  priority
-                  sizes="(min-width: 768px) 128px, 96px"
-                  className="object-cover object-center"
+                  sizes="148px"
+                  className="object-cover"
                 />
-              </div>
-            </BlurFade>
+                <span className="absolute top-1.5 left-1.5 flex items-center gap-1.5">
+                  <span
+                    aria-hidden
+                    className="grid size-7 shrink-0 place-items-center rounded-full bg-white text-black"
+                  >
+                    <MapPin className="size-3.5" strokeWidth={1.75} />
+                  </span>
+                  <span className="text-[12px] font-medium text-white [text-shadow:0_1px_6px_rgba(0,0,0,0.7)]">
+                    {DATA.location}
+                  </span>
+                </span>
+              </a>
+              <SmartStack
+                latestPost={latestPost}
+                githubUrl={DATA.contact.social.GitHub.url}
+              />
+            </div>
           </div>
         </div>
       </section>
+
       <section id="about" className="scroll-mt-8">
         <BlurFade inView>
-          <div className="flex min-h-0 flex-col gap-y-4">
-            <h2 className="text-xl font-bold">About</h2>
-            <div className="prose text-muted-foreground dark:prose-invert max-w-full font-sans leading-relaxed text-pretty">
-              <p>
-                I&apos;m currently a senior software engineer at{" "}
-                <a
-                  href="https://www.govividly.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Vividly
-                </a>
-                , working on tools for CPG brands. Studied{" "}
-                <Link href="/#education">CS @ Stevens</Link>, started working
-                for startups in the e-commerce and fintech spaces. Most of my
-                career has been backend and infra: distributed systems, query
-                optimization, cloud spend. I like the unshiny wins that move
-                graphs in the right direction. I like to make apps that feel
-                instant, services that are cheap to run, and systems that are
-                painless to scale. Off hours I tinker with custom agent
-                harnesses, eval loops, and a small software factory of my own.
-              </p>
-            </div>
+          <h2 className={heading}>About</h2>
+          <div className="prose text-muted-foreground dark:prose-invert mt-5 max-w-full font-sans text-[15px] leading-relaxed text-pretty">
+            <p>
+              I&apos;m a senior software engineer based in Seattle, WA. Most of
+              my career has been backend and infrastructure: distributed
+              systems, query optimization, and slashing cloud spend. I care
+              about the unshiny wins that move graphs in the right direction:
+              building apps that feel instant, services that cost pennies to
+              run, and systems that scale without drama. Outside work, I tinker
+              with custom agent harnesses, eval loops, and a personal software
+              factory.
+            </p>
           </div>
         </BlurFade>
       </section>
+
       <section id="work" className="scroll-mt-8">
         <BlurFade inView>
-          <div className="flex min-h-0 flex-col gap-y-6">
-            <h2 className="text-xl font-bold">Work Experience</h2>
+          <h2 className={heading}>Work</h2>
+          <div className="mt-6">
             <WorkSection />
           </div>
         </BlurFade>
       </section>
+
       <section id="education" className="scroll-mt-8">
         <BlurFade inView>
-          <div className="flex min-h-0 flex-col gap-y-6">
-            <h2 className="text-xl font-bold">Education</h2>
-            <div className="flex flex-col gap-8">
-              {DATA.education.map((education) => (
-                <Link
-                  key={education.school}
-                  href={education.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-between gap-x-3"
-                >
-                  <div className="flex min-w-0 flex-1 items-center gap-x-3">
-                    {education.logoUrl ? (
-                      <Image
-                        src={education.logoUrl}
-                        alt={education.school}
-                        width={40}
-                        height={40}
-                        sizes="40px"
-                        className="ring-border size-8 flex-none rounded-full border object-cover shadow ring-2 md:size-10"
+          <h2 className={heading}>Education</h2>
+          <div className="mt-6 flex flex-col gap-8">
+            {DATA.education.map((education) => (
+              <Link
+                key={education.school}
+                href={education.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center justify-between gap-x-3"
+              >
+                <div className="flex min-w-0 flex-1 items-center gap-x-3">
+                  {education.logoUrl ? (
+                    <Image
+                      src={education.logoUrl}
+                      alt={education.school}
+                      width={40}
+                      height={40}
+                      sizes="40px"
+                      className="ring-border size-8 flex-none rounded-full border object-cover shadow ring-2 md:size-10"
+                    />
+                  ) : (
+                    <div className="ring-border bg-muted size-8 flex-none rounded-full border shadow ring-2 md:size-10" />
+                  )}
+                  <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+                    <div className="flex items-center gap-2 leading-none font-semibold">
+                      {education.school}
+                      <ArrowUpRight
+                        className="text-muted-foreground h-3.5 w-3.5 -translate-x-2 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100"
+                        aria-hidden
                       />
-                    ) : (
-                      <div className="ring-border bg-muted size-8 flex-none rounded-full border shadow ring-2 md:size-10" />
-                    )}
-                    <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-                      <div className="flex items-center gap-2 leading-none font-semibold">
-                        {education.school}
-                        <ArrowUpRight
-                          className="text-muted-foreground h-3.5 w-3.5 -translate-x-2 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100"
-                          aria-hidden
-                        />
-                      </div>
-                      <div className="text-muted-foreground font-sans text-sm">
-                        {education.degree}
-                      </div>
+                    </div>
+                    <div className="text-muted-foreground font-sans text-sm">
+                      {education.degree}
                     </div>
                   </div>
-                  <div className="text-muted-foreground flex flex-none items-center gap-1 text-right text-xs tabular-nums">
-                    <span>
-                      {education.start} - {education.end}
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
+                </div>
+                <div className="text-muted-foreground flex flex-none items-center gap-1 text-right text-xs tabular-nums">
+                  <span>
+                    {education.start} - {education.end}
+                  </span>
+                </div>
+              </Link>
+            ))}
           </div>
         </BlurFade>
       </section>
-      <section id="skills" className="cv-auto scroll-mt-8">
-        <BlurFade inView>
-          <div className="flex min-h-0 flex-col gap-y-8">
-            <div className="flex flex-col items-center justify-center gap-y-4">
-              <div className="flex w-full items-center">
-                <div className="via-border h-px flex-1 bg-linear-to-r from-transparent from-5% via-95% to-transparent" />
-                <div className="bg-primary z-10 rounded-xl border px-4 py-1">
-                  <span className="text-background text-3xl font-medium">
-                    My Skills
-                  </span>
-                </div>
-                <div className="via-border h-px flex-1 bg-linear-to-l from-transparent from-5% via-95% to-transparent" />
-              </div>
-              <div className="flex flex-col items-center justify-center gap-y-3">
-                <p className="text-muted-foreground text-center text-balance md:text-lg/relaxed lg:text-base/relaxed xl:text-lg/relaxed">
-                  Mostly backend and infra, with enough frontend sprinkled in to
-                  ship features end-to-end.
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-wrap justify-center gap-2">
-              {DATA.skills.map((skill) => (
-                <div
-                  key={skill.name}
-                  className="bg-background dark:bg-muted/50 border-border ring-border/20 flex h-8 w-fit items-center gap-2 rounded-xl border px-4 ring-2"
-                >
-                  {skill.icon && (
-                    <skill.icon className="size-4 overflow-hidden rounded object-contain" />
-                  )}
-                  <span className="text-foreground text-sm font-medium">
-                    {skill.name}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </BlurFade>
-      </section>
+
       <section id="projects" className="cv-auto scroll-mt-8">
         <BlurFade inView>
           <ProjectsSection />
         </BlurFade>
       </section>
-      <section id="hackathons" className="cv-auto scroll-mt-8">
+
+      <section id="photos" className="scroll-mt-8">
         <BlurFade inView>
-          <HackathonsSection />
+          <PhotosSection />
         </BlurFade>
       </section>
-      <section id="now" className="cv-auto scroll-mt-8">
-        <BlurFade inView>
-          <NowSection />
-        </BlurFade>
-      </section>
+
       <section id="contact" className="scroll-mt-8 overflow-visible pt-4">
         <BlurFade inView className="overflow-visible">
           <ContactSection />
