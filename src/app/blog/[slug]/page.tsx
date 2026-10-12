@@ -12,6 +12,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 function getSortedPosts() {
   return sortPostsByDate(allPosts);
 }
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({
@@ -32,7 +33,7 @@ export async function generateMetadata({
   );
 
   if (!post) {
-    return undefined;
+    notFound();
   }
 
   let { title, publishedAt: publishedTime, summary: description, image } = post;
