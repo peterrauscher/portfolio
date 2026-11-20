@@ -20,7 +20,6 @@ export type PhotoManifestEntry = {
   favorite?: boolean;
 };
 
-// 1. Load or create manifest
 let manifest: PhotoManifestEntry[] = [];
 if (fs.existsSync(MANIFEST_PATH)) {
   try {
@@ -34,7 +33,6 @@ const existingByFile = new Map<string, PhotoManifestEntry>(
   manifest.map((item) => [item.file, item]),
 );
 
-// 2. Discover all raw images in content/photos/
 const supportedExts = new Set([
   ".jpg",
   ".jpeg",
@@ -50,10 +48,8 @@ const rawFiles = fs.readdirSync(RAW_DIR).filter((f) => {
 
 console.log(`📸 Processing ${rawFiles.length} photos in content/photos/ ...`);
 
-// Helper to sanitize filename into clean webp basename
 function toWebpBasename(filename: string): string {
   const parsed = path.parse(filename);
-  // Clean special chars, timestamps, guids into clean lowercase identifier
   const clean = parsed.name
     .replace(/[^\w-]/g, "_")
     .replace(/_+/g, "_")
@@ -61,7 +57,6 @@ function toWebpBasename(filename: string): string {
   return `${clean}.webp`;
 }
 
-// 3. Process each photo with sharp (auto-rotate EXIF, resize max 1200px, WebP quality 84)
 const processedList = [];
 
 for (const rawFile of rawFiles) {
@@ -89,7 +84,6 @@ for (const rawFile of rawFiles) {
     const img = sharp(rawPath);
     const meta = await img.metadata();
 
-    // Auto-extract year from EXIF if not set
     if (!existing.year && meta.exif) {
       const exifStr = meta.exif.toString("latin1");
       const match = exifStr.match(/(\d{4}):\d{2}:\d{2}/);

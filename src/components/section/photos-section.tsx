@@ -36,7 +36,6 @@ export default function PhotosSection() {
     return customB - customA;
   });
 
-  // Top 6 photos on the homepage
   const homepagePhotos = allGalleryPhotos.slice(0, 6);
 
   // Lightbox state
