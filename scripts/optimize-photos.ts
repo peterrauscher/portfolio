@@ -5,12 +5,14 @@ import sharp from "sharp";
 const RAW_DIR = path.join(process.cwd(), "content/photos");
 const OUT_DIR = path.join(process.cwd(), "public/photos");
 const MANIFEST_PATH = path.join(RAW_DIR, "manifest.json");
+
 const GENERATED_DATA_PATH = path.join(
   process.cwd(),
   "src/data/photos-manifest.json",
 );
 
 fs.mkdirSync(RAW_DIR, { recursive: true });
+
 fs.mkdirSync(OUT_DIR, { recursive: true });
 
 export type PhotoManifestEntry = {
@@ -21,6 +23,7 @@ export type PhotoManifestEntry = {
 };
 
 let manifest: PhotoManifestEntry[] = [];
+
 if (fs.existsSync(MANIFEST_PATH)) {
   try {
     manifest = JSON.parse(fs.readFileSync(MANIFEST_PATH, "utf-8"));
@@ -41,8 +44,10 @@ const supportedExts = new Set([
   ".heic",
   ".tiff",
 ]);
+
 const rawFiles = fs.readdirSync(RAW_DIR).filter((f) => {
   if (f.startsWith(".") || f === "manifest.json") return false;
+
   return supportedExts.has(path.extname(f).toLowerCase());
 });
 
@@ -50,10 +55,12 @@ console.log(`📸 Processing ${rawFiles.length} photos in content/photos/ ...`);
 
 function toWebpBasename(filename: string): string {
   const parsed = path.parse(filename);
+
   const clean = parsed.name
     .replace(/[^\w-]/g, "_")
     .replace(/_+/g, "_")
     .toLowerCase();
+
   return `${clean}.webp`;
 }
 
@@ -65,6 +72,7 @@ for (const rawFile of rawFiles) {
   const outPath = path.join(OUT_DIR, outWebpName);
 
   let existing = existingByFile.get(rawFile);
+
   if (!existing) {
     // Generate clean placeholder caption from filename or EXIF
     existing = {
@@ -87,6 +95,7 @@ for (const rawFile of rawFiles) {
     if (!existing.year && meta.exif) {
       const exifStr = meta.exif.toString("latin1");
       const match = exifStr.match(/(\d{4}):\d{2}:\d{2}/);
+
       if (match && match[1]) {
         existing.year = match[1];
       }
@@ -94,9 +103,11 @@ for (const rawFile of rawFiles) {
 
     // Process & write to public/photos if missing or raw is newer
     let needsProcess = true;
+
     if (fs.existsSync(outPath)) {
       const rawMtime = fs.statSync(rawPath).mtimeMs;
       const outMtime = fs.statSync(outPath).mtimeMs;
+
       if (outMtime > rawMtime) {
         needsProcess = false;
       }
@@ -143,6 +154,7 @@ for (const rawFile of rawFiles) {
 // 4. Update manifest.json with all files (preserving existing human edits)
 const updatedManifest: PhotoManifestEntry[] = rawFiles.map((file) => {
   const entry = existingByFile.get(file)!;
+
   return {
     file: entry.file,
     caption: entry.caption || "",
@@ -153,21 +165,23 @@ const updatedManifest: PhotoManifestEntry[] = rawFiles.map((file) => {
 
 fs.writeFileSync(
   MANIFEST_PATH,
-  JSON.stringify(updatedManifest, null, 2),
+  `${JSON.stringify(updatedManifest, null, 2)}\n`,
   "utf-8",
 );
 
 // 5. Write generated data file for the Next.js app to import cleanly
 fs.mkdirSync(path.dirname(GENERATED_DATA_PATH), { recursive: true });
+
 fs.writeFileSync(
   GENERATED_DATA_PATH,
-  JSON.stringify(processedList, null, 2),
+  `${JSON.stringify(processedList, null, 2)}\n`,
   "utf-8",
 );
 
 console.log(
   `\n✨ Success: ${processedList.length} photos synced and optimized in public/photos/`,
 );
+
 console.log(
   `📝 Manifest updated at ${path.relative(process.cwd(), MANIFEST_PATH)}`,
 );

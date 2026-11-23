@@ -42,13 +42,19 @@ export function SmartStack({
   useEffect(() => {
     const run = () => {
       try {
+        // SAFETY: each document has exactly one navigation entry, always a
+        // PerformanceNavigationTiming.
         const nav = performance.getEntriesByType("navigation")[0] as
           PerformanceNavigationTiming | undefined;
+
+        // SAFETY: every entry of type "resource" is a PerformanceResourceTiming
+        // per the Performance API spec.
         const resources = performance.getEntriesByType(
           "resource",
         ) as PerformanceResourceTiming[];
 
         let bytes = nav?.transferSize || nav?.encodedBodySize || 0;
+
         for (const r of resources) {
           bytes += r.transferSize || r.encodedBodySize || 0;
         }
@@ -62,6 +68,7 @@ export function SmartStack({
         const loadMs = Math.round(
           fcp ?? (nav ? nav.domContentLoadedEventEnd - nav.startTime : 38),
         );
+
         const kb = Math.max(1, Math.round(bytes / 1024));
 
         setMetrics({ loadMs, kb });
@@ -100,7 +107,9 @@ export function SmartStack({
   const getCardStyle = (cardIdx: number) => {
     // Distance in a circular stack of 3
     let diff = cardIdx - index;
+
     if (diff === 2) diff = -1;
+
     if (diff === -2) diff = 1;
 
     if (diff === 0) {

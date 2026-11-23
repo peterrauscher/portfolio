@@ -16,11 +16,13 @@ export default function Navbar() {
       <Dock className="bg-card/90 shadow-primary/5 pointer-events-auto relative z-50 mx-auto flex h-14 w-fit gap-2 border p-2 shadow-[0_0_10px_3px] backdrop-blur-md">
         {DATA.navbar.map((item) => {
           const isExternal = item.href.startsWith("http");
+
           const icon = (
             <DockIcon className="bg-background text-muted-foreground hover:text-foreground hover:bg-muted border-border size-full cursor-pointer rounded-3xl border p-0 transition-colors">
               <item.icon className="size-full overflow-hidden rounded-sm object-contain" />
             </DockIcon>
           );
+
           return (
             <Tooltip key={item.href}>
               <TooltipTrigger asChild>
@@ -54,6 +56,7 @@ export default function Navbar() {
           .map(([name, social], index) => {
             const isExternal = social.url.startsWith("http");
             const IconComponent = social.icon;
+
             return (
               <Tooltip key={`social-${name}-${index}`}>
                 <TooltipTrigger asChild>

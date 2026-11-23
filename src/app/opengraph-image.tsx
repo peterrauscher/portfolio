@@ -4,10 +4,12 @@ import { DATA } from "@/data/resume";
 export const runtime = "edge";
 
 export const alt = DATA.name;
+
 export const size = {
   width: 1200,
   height: 630,
 };
+
 export const contentType = "image/png";
 
 const getFontData = async () => {
@@ -26,9 +28,11 @@ const getFontData = async () => {
         ),
       ).then((res) => res.arrayBuffer()),
     ]);
+
     return { cabinetGrotesk, clashDisplay };
   } catch (error) {
     console.error("Failed to load fonts:", error);
+
     return null;
   }
 };
@@ -113,6 +117,7 @@ const styles = {
 export default async function Image() {
   try {
     const fontData = await getFontData();
+
     const imageUrl = DATA.avatarUrl
       ? new URL(DATA.avatarUrl, DATA.url).toString()
       : undefined;
@@ -163,6 +168,7 @@ export default async function Image() {
     );
   } catch (error) {
     console.error("Error generating OpenGraph image:", error);
+
     return new Response(
       `Failed to generate image: ${error instanceof Error ? error.message : "Unknown error"}`,
       {

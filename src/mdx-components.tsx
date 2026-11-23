@@ -37,6 +37,7 @@ export const mdxComponents = {
     if (props["data-language"]) {
       return <code {...props}>{children}</code>;
     }
+
     return (
       <code
         className="bg-muted/60 dark:bg-muted/40 text-foreground/90 rounded-md px-1.5 py-0.5 font-mono text-sm"

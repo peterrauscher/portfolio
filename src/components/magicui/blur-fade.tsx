@@ -8,6 +8,16 @@ import {
 } from "motion/react";
 import { useRef } from "react";
 
+// Mirror of motion's unexported IntersectionObserver rootMargin contract
+// (MarginValue | up to four space-separated MarginValues).
+type MarginValue = `${number}${"px" | "%"}`;
+
+type MarginType =
+  | MarginValue
+  | `${MarginValue} ${MarginValue}`
+  | `${MarginValue} ${MarginValue} ${MarginValue}`
+  | `${MarginValue} ${MarginValue} ${MarginValue} ${MarginValue}`;
+
 interface BlurFadeProps {
   children: React.ReactNode;
   className?: string;
@@ -19,7 +29,7 @@ interface BlurFadeProps {
   delay?: number;
   yOffset?: number;
   inView?: boolean;
-  inViewMargin?: string;
+  inViewMargin?: MarginType;
   /** Kept for API compat; filter blur is intentionally not applied. */
   blur?: string;
 }
@@ -37,15 +47,19 @@ const BlurFade = ({
 }: BlurFadeProps) => {
   const ref = useRef(null);
   const shouldReduceMotion = useReducedMotion();
+
   const inViewResult = useInView(ref, {
     once: true,
-    margin: inViewMargin as unknown as `${number}px`,
+    margin: inViewMargin,
   });
+
   const isInView = !inView || inViewResult;
+
   const defaultVariants: Variants = {
     hidden: { y: yOffset, opacity: 0 },
     visible: { y: 0, opacity: 1 },
   };
+
   const combinedVariants = variant || defaultVariants;
 
   if (shouldReduceMotion) {

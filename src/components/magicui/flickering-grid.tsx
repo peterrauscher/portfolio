@@ -44,8 +44,10 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
   const [isInView, setIsInView] = useState(false);
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
   const [resolvedColor, setResolvedColor] = useState<string>("rgb(0, 0, 0)");
+
   const prefersReducedMotion = useMemo(() => {
     if (typeof window === "undefined") return false;
+
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   }, []);
 
@@ -64,6 +66,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
       document.body.appendChild(tempEl);
       const computedColor = window.getComputedStyle(tempEl).color;
       document.body.removeChild(tempEl);
+
       return computedColor || "rgb(0, 0, 0)";
     }
 
@@ -99,15 +102,19 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
       if (typeof window === "undefined") {
         return `rgba(0, 0, 0,`;
       }
+
       const canvas = document.createElement("canvas");
       canvas.width = canvas.height = 1;
       const ctx = canvas.getContext("2d");
+
       if (!ctx) return "rgba(255, 0, 0,";
       ctx.fillStyle = colorValue;
       ctx.fillRect(0, 0, 1, 1);
       const [r, g, b] = Array.from(ctx.getImageData(0, 0, 1, 1).data);
+
       return `rgba(${r}, ${g}, ${b},`;
     };
+
     return toRGBA(resolvedColor);
   }, [resolvedColor]);
 
@@ -122,6 +129,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
       const rows = Math.floor(height / (squareSize + gridGap));
 
       const squares = new Float32Array(cols * rows);
+
       for (let i = 0; i < squares.length; i++) {
         squares[i] = Math.random() * maxOpacity;
       }
@@ -175,9 +183,11 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
   useEffect(() => {
     const canvas = canvasRef.current;
     const container = containerRef.current;
+
     if (!canvas || !container) return;
 
     const ctx = canvas.getContext("2d");
+
     if (!ctx) return;
 
     let animationFrameId: number | undefined;
@@ -207,6 +217,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
 
     const stopAnimation = () => {
       running = false;
+
       if (animationFrameId !== undefined) {
         cancelAnimationFrame(animationFrameId);
         animationFrameId = undefined;
@@ -236,6 +247,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
       if (prefersReducedMotion || !isInView || document.hidden || running) {
         return;
       }
+
       running = true;
       lastTime = performance.now();
       animationFrameId = requestAnimationFrame(animate);

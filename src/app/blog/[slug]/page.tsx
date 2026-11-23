@@ -12,6 +12,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 function getSortedPosts() {
   return sortPostsByDate(allPosts);
 }
+
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
@@ -28,6 +29,7 @@ export async function generateMetadata({
   }>;
 }): Promise<Metadata | undefined> {
   const { slug } = await params;
+
   const post = allPosts.find(
     (p) => p._meta.path.replace(/\.mdx$/, "") === slug,
   );
@@ -75,9 +77,11 @@ export default async function Blog({
 }) {
   const { slug } = await params;
   const sortedPosts = getSortedPosts();
+
   const currentIndex = sortedPosts.findIndex(
     (p) => p._meta.path.replace(/\.mdx$/, "") === slug,
   );
+
   const post = sortedPosts[currentIndex];
 
   if (!post) {
@@ -85,6 +89,7 @@ export default async function Blog({
   }
 
   const previousPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
+
   const nextPost =
     currentIndex < sortedPosts.length - 1
       ? sortedPosts[currentIndex + 1]

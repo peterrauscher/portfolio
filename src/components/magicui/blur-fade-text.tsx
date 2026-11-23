@@ -29,10 +29,12 @@ const BlurFadeText = ({
   animateByCharacter = false,
 }: BlurFadeTextProps) => {
   const shouldReduceMotion = useReducedMotion();
+
   const defaultVariants: Variants = {
     hidden: { y: yOffset, opacity: 0 },
     visible: { y: 0, opacity: 1 },
   };
+
   const combinedVariants = variant || defaultVariants;
   const characters = useMemo(() => Array.from(text), [text]);
 
@@ -52,6 +54,7 @@ const BlurFadeText = ({
             hidden: { y: yOffset, opacity: 0 },
             visible: { y: 0, opacity: 1 },
           };
+
           return (
             <motion.span
               key={i}

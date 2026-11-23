@@ -20,19 +20,23 @@ export default function PhotosSection() {
   // Ordered gallery of all 27 photos
   const allGalleryPhotos = [...ALL_PHOTOS].sort((a, b) => {
     if (a.favorite && !b.favorite) return -1;
+
     if (!a.favorite && b.favorite) return 1;
+
     const customA =
       a.caption &&
       !a.caption.startsWith("IMG_") &&
       !a.caption.startsWith("8028")
         ? 1
         : 0;
+
     const customB =
       b.caption &&
       !b.caption.startsWith("IMG_") &&
       !b.caption.startsWith("8028")
         ? 1
         : 0;
+
     return customB - customA;
   });
 
@@ -72,11 +76,13 @@ export default function PhotosSection() {
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setLightboxIndex(null);
+
       if (e.key === "ArrowRight") {
         setLightboxIndex((prev) =>
           prev === null ? null : (prev + 1) % allGalleryPhotos.length,
         );
       }
+
       if (e.key === "ArrowLeft") {
         setLightboxIndex((prev) =>
           prev === null
@@ -87,6 +93,7 @@ export default function PhotosSection() {
     };
 
     window.addEventListener("keydown", handleKeyDown);
+
     return () => {
       document.body.style.overflow = originalOverflow;
       window.removeEventListener("keydown", handleKeyDown);
@@ -101,10 +108,12 @@ export default function PhotosSection() {
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (touchStartX.current === null) return;
     const diff = touchStartX.current - e.changedTouches[0].clientX;
+
     if (Math.abs(diff) > 40) {
       if (diff > 0) nextPhoto();
       else prevPhoto();
     }
+
     touchStartX.current = null;
   };
 
@@ -133,6 +142,7 @@ export default function PhotosSection() {
               const galleryIdx = allGalleryPhotos.findIndex(
                 (p) => p.src === photo.src,
               );
+
               setLightboxIndex(galleryIdx !== -1 ? galleryIdx : i);
             }}
             className={cn(

@@ -16,6 +16,7 @@ const heading =
 
 export default function Page() {
   const latest = sortPostsByDate(allPosts)[0];
+
   const latestPost = {
     title: latest?.title ?? "Latest writing",
     slug: latest?._meta.path.replace(/\.mdx$/, "") ?? "",

@@ -18,12 +18,15 @@ type CodeBlockProps = ComponentProps<"pre"> & {
   "data-theme"?: string;
   "data-title"?: string;
 };
+
 type CodeFigureProps = ComponentProps<"figure"> & {
   "data-rehype-pretty-code-figure"?: string;
 };
+
 type TitleProps = ComponentProps<"figcaption"> & {
   "data-rehype-pretty-code-title"?: string;
 };
+
 const COPY_RESET_MS = 2000;
 
 function isShikiPre(props: CodeBlockProps) {
@@ -32,8 +35,11 @@ function isShikiPre(props: CodeBlockProps) {
 
 function hasTitleNode(child: ReactNode): child is ReactElement<TitleProps> {
   if (!isValidElement(child)) return false;
+
   if (child.props == null) return false;
-  if (typeof child.props !== "object") return false;
+
+  if (!(child.props instanceof Object)) return false;
+
   return "data-rehype-pretty-code-title" in child.props;
 }
 
@@ -44,6 +50,7 @@ async function copyCodeFromElement(
   if (!element) return;
 
   const code = element.textContent ?? "";
+
   try {
     await navigator.clipboard.writeText(code);
     setCopied(true);
@@ -68,14 +75,17 @@ export function CodeFigure({ children, ...props }: CodeFigureProps) {
   const childNodes = Children.toArray(children);
   const titleNode = childNodes.find(hasTitleNode);
   const title = titleNode?.props.children ?? null;
+
   const content = titleNode
     ? childNodes.filter((child) => child !== titleNode)
     : childNodes;
 
   const handleCopy = async () => {
+    // SAFETY: the figure wraps exactly one <pre>, the shiki-rendered code block.
     const pre = figureRef.current?.querySelector(
       "pre",
     ) as HTMLPreElement | null;
+
     await copyCodeFromElement(pre, setCopied);
   };
 
@@ -113,7 +123,7 @@ export function CodeFigure({ children, ...props }: CodeFigureProps) {
 export function CodeBlock({ children, ...props }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
   const preRef = useRef<HTMLPreElement>(null);
-  const title = props["data-title"] as string | undefined;
+  const title = props["data-title"];
 
   if (isShikiPre(props)) {
     return (

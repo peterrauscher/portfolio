@@ -37,6 +37,7 @@ export default async function BlogPage({
 
   const totalPages = Math.ceil(sortedPosts.length / PAGE_SIZE);
   const currentPage = normalizePage(pageParam, totalPages);
+
   const { items: paginatedPosts, pagination } = paginate(sortedPosts, {
     page: currentPage,
     pageSize: PAGE_SIZE,
@@ -64,6 +65,7 @@ export default async function BlogPage({
               {paginatedPosts.map((post, id) => {
                 const slug = post._meta.path.replace(/\.mdx$/, "");
                 const indexNumber = (pagination.page - 1) * PAGE_SIZE + id + 1;
+
                 return (
                   <BlurFade delay={BLUR_FADE_DELAY * 3 + id * 0.05} key={slug}>
                     <Link

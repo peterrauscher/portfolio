@@ -30,6 +30,7 @@ const posts = defineCollection({
       remarkPlugins: [remarkGfm],
       rehypePlugins: [[rehypePrettyCode, rehypeCodeOptions]],
     });
+
     return {
       ...document,
       mdx,

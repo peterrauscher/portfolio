@@ -56,6 +56,7 @@ function StackTable({
                 {row.map((cell, cellIndex) => {
                   const isFirst = cellIndex === 0;
                   const isLast = cellIndex === row.length - 1;
+
                   return (
                     <td
                       key={cellIndex}

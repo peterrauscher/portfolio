@@ -56,14 +56,11 @@ export function normalizePage(
 ): number {
   const normalizedMaxPage = maxPage < 1 ? 1 : maxPage;
 
-  if (typeof page === "string") {
-    const parsed = parseInt(page, 10);
-    if (isNaN(parsed) || parsed < 1) return 1;
-    return Math.min(parsed, normalizedMaxPage);
-  }
-  if (typeof page === "number") {
-    if (page < 1) return 1;
-    return Math.min(page, normalizedMaxPage);
-  }
-  return 1;
+  // Page values are integers by domain: search params parse as integers,
+  // numeric page counts are already integers; anything unparseable is page 1.
+  const parsed = page === undefined ? 1 : parseInt(String(page), 10);
+
+  if (isNaN(parsed) || parsed < 1) return 1;
+
+  return Math.min(parsed, normalizedMaxPage);
 }

@@ -1,4 +1,5 @@
 import { DATA } from "@/data/resume";
+
 export default function ContactSection() {
   return (
     <div className="relative overflow-visible">

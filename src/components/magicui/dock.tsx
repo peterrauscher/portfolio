@@ -63,6 +63,7 @@ const Dock = ({
     const update = () => setIsCoarsePointer(mq.matches);
     update();
     mq.addEventListener("change", update);
+
     return () => mq.removeEventListener("change", update);
   }, []);
 
@@ -112,6 +113,7 @@ const DockIcon = ({ className, children }: DockIconProps) => {
   useEffect(() => {
     if (!enableMagnification) return;
     const el = ref.current;
+
     if (!el) return;
 
     const update = () => {
@@ -124,6 +126,7 @@ const DockIcon = ({ className, children }: DockIconProps) => {
     ro.observe(el);
     window.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
+
     return () => {
       ro.disconnect();
       window.removeEventListener("scroll", update);
@@ -133,6 +136,7 @@ const DockIcon = ({ className, children }: DockIconProps) => {
 
   const distanceCalc = useTransform(mouseX, (val: number) => {
     const { x, width } = boundsRef.current;
+
     return val - x - width / 2;
   });
 
@@ -144,6 +148,7 @@ const DockIcon = ({ className, children }: DockIconProps) => {
     ),
     SPRING,
   );
+
   const iconSize = useSpring(
     useTransform(
       distanceCalc,
@@ -192,4 +197,5 @@ const DockIcon = ({ className, children }: DockIconProps) => {
 };
 
 export { Dock, DockIcon };
+
 export type { DockProps, DockIconProps };

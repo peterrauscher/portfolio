@@ -25,6 +25,7 @@ const TooltipContent = React.forwardRef<
     {...props}
   />
 ));
+
 TooltipContent.displayName = TooltipPrimitive.Content.displayName;
 
 const TooltipArrow = React.forwardRef<
@@ -37,6 +38,7 @@ const TooltipArrow = React.forwardRef<
     {...props}
   />
 ));
+
 TooltipArrow.displayName = TooltipPrimitive.Arrow.displayName;
 
 export {

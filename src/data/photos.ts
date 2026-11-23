@@ -21,5 +21,10 @@ export const ALL_PHOTOS: Photo[] = manifestList.map((item) => ({
   favorite: item.favorite || false,
   width: item.width,
   height: item.height,
-  aspect: item.aspect as "landscape" | "portrait",
+  aspect:
+    item.aspect === "landscape"
+      ? "landscape"
+      : item.aspect === "portrait"
+        ? "portrait"
+        : undefined,
 }));

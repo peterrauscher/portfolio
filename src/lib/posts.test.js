@@ -46,6 +46,7 @@ describe("sortPostsByDate", () => {
       { publishedAt: "2024-01-01", _meta: { path: "second.mdx" } },
       { publishedAt: "2024-02-01", _meta: { path: "first.mdx" } },
     ];
+
     const originalCopy = [...posts];
 
     const sorted = sortPostsByDate(posts);
