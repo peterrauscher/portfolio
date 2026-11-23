@@ -21,7 +21,7 @@ response = requests.get(url)
 html_content = response.text
 ```
 
-Now extract the JSON. SPAs usually put it inside a specific script tag. Regex finds it; a slice pulls out the payload.
+Now extract the JSON. SPAs usually put it inside a specific script tag. Regex finds it. A slice pulls out the payload.
 
 ```python
 import re
@@ -46,6 +46,6 @@ session.post('https://example.com/login', data={'user': 'me', 'pass': 'secret'})
 response = session.get('https://example.com/protected_data')
 ```
 
-That's it. No headless browser required.
+No headless browser required.
 
 _I built a Chrome extension to check whether a page has this hidden JSON before I write a scraper. [It's on the Web Store](https://chromewebstore.google.com/detail/nextscraper/kjlhnflincmlpkgahnidgebbngieobod)._

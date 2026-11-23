@@ -5,9 +5,9 @@ author: "Peter Rauscher"
 summary: "Bash + sed to rewrite a workflow cron so scheduled Actions don't always fire on the same minute."
 ---
 
-GitHub Actions cron is fixed. Sometimes you don't want that — scraping, rate limits, or just not stacking with everyone else on the hour.
+GitHub Actions cron is fixed. Sometimes you don't want that: scraping, rate limits, or just not stacking with everyone else on the hour.
 
-Here's a small bash trick: each run picks a new minute and commits it back into the workflow file.
+Each run picks a new minute and commits it back into the workflow file.
 
 ## Setting up the randomized workflow
 
@@ -69,4 +69,4 @@ jobs:
 
 The "Randomize time for next run" step runs the script, which rewrites the cron for next time.
 
-Useful when you care more about not being predictable than about firing at :00. Monitoring gets slightly harder; trade off accordingly. You'll need a `COMMIT_TOKEN` that can push to the repo.
+Useful when you care more about not being predictable than about firing at :00. Monitoring gets slightly harder. Trade off accordingly. You'll need a `COMMIT_TOKEN` that can push to the repo.
