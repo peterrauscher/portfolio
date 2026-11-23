@@ -93,8 +93,9 @@ export default function AIStackPage() {
           My AI stack
         </h1>
         <p className="text-muted-foreground mb-8 text-sm">
-          The industry moves so fast now I tweak this almost every day. But I
-          try my best to keep the page updated!
+          The AI coding tools, infrastructure, and subscriptions I use day to
+          day. I update this page as the tools change (last updated Sep 29,
+          2026).
         </p>
       </BlurFade>
 
@@ -120,7 +121,8 @@ export default function AIStackPage() {
                   omp
                 </Link>,
                 <>
-                  The best coding harness (
+                  A coding harness for agent orchestration, subagent messaging,
+                  and role maps. My daily driver (
                   <Link
                     href="https://x.com/composio/status/2085330847951970801"
                     target="_blank"
@@ -128,8 +130,7 @@ export default function AIStackPage() {
                   >
                     verified
                   </Link>
-                  ). Amazing agent orchestration, subagent messaging, role maps,
-                  and highly extensible. My daily driver.
+                  ).
                 </>,
               ],
               [
@@ -143,7 +144,7 @@ export default function AIStackPage() {
                 </Link>,
                 <>
                   My terminal multiplexer, IDE, and agentic development harness.
-                  Integrates perfectly with omp. <strong>MUST TRY.</strong>
+                  It integrates with omp.
                 </>,
               ],
               [

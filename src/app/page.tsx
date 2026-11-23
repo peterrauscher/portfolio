@@ -91,16 +91,7 @@ export default function Page() {
         <BlurFade inView>
           <h2 className={heading}>About</h2>
           <div className="prose text-muted-foreground dark:prose-invert mt-5 max-w-full font-sans text-[15px] leading-relaxed text-pretty">
-            <p>
-              I&apos;m a senior software engineer based in Seattle, WA. Most of
-              my career has been backend and infrastructure: distributed
-              systems, query optimization, and slashing cloud spend. I care
-              about the unshiny wins that move graphs in the right direction:
-              building apps that feel instant, services that cost pennies to
-              run, and systems that scale without drama. Outside work, I tinker
-              with custom agent harnesses, eval loops, and a personal software
-              factory.
-            </p>
+            <p>{DATA.summary}</p>
           </div>
         </BlurFade>
       </section>

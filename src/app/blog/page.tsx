@@ -9,17 +9,17 @@ import { ChevronRight } from "lucide-react";
 export const metadata: Metadata = {
   title: "Blog",
   description:
-    "Thoughts on software, reflections on work, and lessons from my life and travels.",
+    "Writing about software, work, and how I think about time and career.",
   openGraph: {
     title: "Blog",
     description:
-      "Thoughts on software, reflections on work, and lessons from my life and travels.",
+      "Writing about software, work, and how I think about time and career.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Blog",
     description:
-      "Thoughts on software, reflections on work, and lessons from my life and travels.",
+      "Writing about software, work, and how I think about time and career.",
   },
 };
 
@@ -53,8 +53,7 @@ export default async function BlogPage({
           </span>
         </h1>
         <p className="text-muted-foreground mb-8 text-sm">
-          Thoughts on software, reflections on work, and lessons from my life
-          and travels.
+          Writing about software, work, and how I think about time and career.
         </p>
       </BlurFade>
 
