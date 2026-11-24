@@ -2,18 +2,18 @@
 title: "Building a flat-file CMS with Angular"
 publishedAt: "2023-08-21"
 author: "Peter Rauscher"
-summary: "Markdown, Node, and Angular wired so a blog can run as flat files on S3."
+summary: "How I wired Markdown, Node, and Angular together so this blog can run entirely from flat files on S3."
 ---
 
-Flat-file CMS: Markdown in a folder, no database. Build step turns posts into HTML and the site stays static. I spent two days wiring this for an earlier version of this site. Walkthrough below. Mostly the build pipeline, not the CSS.
+A flat-file CMS allows you to manage content for your website without a database backend. Instead, store your pages as regular text files (or in this case, Markdown files), build, and publish! If you're reading this right now, you know what the result of this looks like. I spent the last two days building my own flat-file CMS for my site, and now I'd love to walk you through how I did it.
 
-I'll skip most of the styling. The point is a custom Angular blog without a new component per post, a database, or writing posts in raw HTML.
+Though I'll skip most of the stylistic choices (because they're mostly irrelevant) this framework can be used to build a custom blog on your own Angular website, without the need to individually create new components for each post, manage a database, or write your posts in HTML format. Let's get started!
 
 ## Converting posts from Markdown to HTML
 
 Writing in markdown is super convenient, and supported by just about any text editor. To convert these `.md` files to browser-ready HTML, I wrote a simple little Node.js script using two great npm packages called [gray-matter](https://www.npmjs.com/package/gray-matter) and [showdown](https://www.npmjs.com/package/showdown).
 
-The `gray-matter` package lets us define Jekyll-style front matter for our posts, so we can add metadata for each that we'll use later in the build script, like so:
+The `gray-matter` package lets us define Jekyll-style front matter for our posts, so we can add metadata for each that we'll use later in the build script - like so:
 
 ```yaml
 ---
@@ -99,7 +99,7 @@ And the function `converter.makeHtml(post.content)` converts the `content` field
 }
 ```
 
-Since I wanted to have thumbnails for each post (the file it uses is defined by the `thumbnail` field in the front matter), I decided to add some code that copies the files from our `posts` folder to the `assets` folder in Angular. This way, we can easily reference them in our Angular code. However, some of the image files I would download from [Unsplash.com](https://unsplash.com/) (fantastic public domain images btw) were huge and would take a few seconds to load in the browser. So, I delegated this task to `gulp`, where the files would first be piped to `imagemin` and then copied to the `assets` folder. My `gulpfile.mjs` looks like this:
+Since I wanted to have thumbnails for each post (the file it uses is defined by the `thumbnail` field in the front matter), I decided to add some code that copies the files from our `posts` folder to the `assets` folder in Angular. This way, we can easily reference them in our Angular code. However, some of the image files I would download from [Unsplash.com](https://unsplash.com/) (fantastic public domain images btw) were huge and would take a few seconds to load in the browser. So, I delegated this task to `gulp`, where the files would first be piped to `imagemin` and then copied to the `assets` folder. This optimized the images for faster load times. My `gulpfile.mjs` looks like this:
 
 ```javascript
 const THUMBNAIL_DIRECTORY = "posts/thumbnails";
@@ -113,14 +113,14 @@ export default () =>
 
 ## Using the posts in Angular
 
-Great! So our `files` array holds everything we need to write the HTML files, and our thumbnails are in place to be served by our website. Now, we just have to make this available to Angular in some way. Here are a couple of options I considered:
+Great! So our `files` array holds everything we need to write the HTML files, and our thumbnails are in place to be served by our website. Now, we just have to make this available to Angular in some way. Here are a couple of options I considered for achieving this:
 
 - Serve the posts over an API endpoint
 - Dynamically generate new components for each post
 
-I decided against these two options because deploying a whole server for this purpose seemed overkill, and dynamically generating components (although cool) would be a fairly big task and go against Angular best practices.
+Ultimately, I decided against these two options because deploying a whole server for this purpose seemed overkill, and dynamically generating components (although cool) would be a fairly big task and go against Angular best practices.
 
-Instead, I used one of the coolest things about Angular. It builds everything into a static site and some plain vanilla JS, entirely in the build process. Cool! So let's have one generic `post` Component, and dynamically load the content into it using client-side JS. So, our build script writes our `files` array to a `.json` file called `posts.json` in the `src` folder of our Angular app. It also writes each post to its own HTML file, but this is just to allow me to easily inspect if the Markdown-to-HTML conversion went off without a hitch on my end:
+Instead, I decided to leverage one of the coolest things about Angular: it builds everything into a static site and some plain vanilla JS, entirely in the build process. Cool! So let's have one generic `post` Component, and dynamically load the content into it using client-side JS. So, our build script writes our `files` array to a `.json` file called `posts.json` in the `src` folder of our Angular app. It also writes each post to its own HTML file, but this is just to allow me to easily inspect if the Markdown-to-HTML conversion went off without a hitch on my end:
 
 ```javascript
 // Write only the published: true posts to posts.json for Angular to serve
@@ -173,9 +173,9 @@ So, our `post.component.html` component is the generic page where all posts will
 </div>
 ```
 
-Note the inline directive, `[innerHTML]="content"` on the content div. This takes the component's `content` property and loads the raw HTML into it, creating the actual content of our post. The `{{ meta.title }}` and `{{ meta.date }}` properties define the title and publishing date of the post (I know, shocking 😱).
+Note the inline directive, `[innerHTML]="content"` on the content div. This takes the component's `content` property and loads the raw HTML into it, creating the actual content of our post. The `{{ meta.title }}` and `{{ meta.date }}` properties define, the title and publishing date of the post (I know, shocking 😱).
 
-The TypeScript code for the component:
+And here's the cool part: the TypeScript code for the component:
 
 ```typescript
 // A library that provides syntax highlighting for <code> blocks
@@ -242,7 +242,7 @@ ngAfterViewInit(): void {
 
 ### The Blog component
 
-The last piece is the `Blog` component, which lists all of the posts available on our site. Again, the CSS classes for this template come from Bulma:
+The final piece of this puzzle is the `Blog` component, which lists all of the posts available on our site. Again, the CSS classes for this template come from Bulma:
 
 ```html
 <div class="main section container pt-0">
@@ -344,6 +344,6 @@ artifacts:
 
 ## Wrapping up
 
-That's the whole loop: Markdown → Node build → Angular routes → S3 + CloudFront. Tweak paths and drop features you don't need.
+And that's about it! We've covered all of the logic needed to set up a flat-file blog on your own Angular site. Feel free to tweak things like the routing/paths, stylistic choices, or removing features you don't intend to use, but I'm quite happy with how this worked out and happy that I was able to implement it statically so I could still run it purely on S3. I hope you enjoyed the read and learned something you can apply on your own!
 
-> Note: I don't run this setup anymore. It was an Angular warm-up before an interview. Site's on something else now. Keeping the post because the pipeline still holds up as a pattern.
+> 💡 Note: This is no longer the setup I use for my personal site. It was a project I took on to get familiar with Angular prior to an interview. I'm rocking [Hugo](https://gohugo.io/) now.
