@@ -22,3 +22,17 @@ bun.lock
 .claude
 # local planning notes
 plans
+
+# Agent assets and vendored lint policy
+.agent
+.agents
+.codex
+.continue
+.cursor
+.gemini
+.opencode
+.pi
+.roo
+.windsurf
+.omp
+tools/oxlint/anti-slop
