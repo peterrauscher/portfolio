@@ -6,9 +6,7 @@ export default function ContactSection() {
       <div className="bg-muted/40 border-border relative overflow-hidden rounded-[28px] border p-6 sm:p-8">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-foreground text-[36px] leading-[0.95] font-semibold tracking-[-0.035em] sm:text-[48px] md:text-[54px]">
-            SAY
-            <br />
-            HELLO.
+            Say hello.
           </p>
           <a
             href={`mailto:${DATA.contact.email}`}

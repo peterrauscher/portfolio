@@ -9,7 +9,7 @@ export const DATA = {
   locationLink: "https://www.google.com/maps/place/seattle",
   description: "I like making sites faster and cloud bills smaller.",
   summary:
-    "I'm a senior software engineer based in Seattle, WA. Most of my career has been backend and infrastructure: distributed systems, query optimization, and slashing cloud spend. I care about the unshiny wins that move graphs in the right direction: building apps that feel instant, services that cost pennies to run, and systems that scale without drama. Outside work, I tinker with custom agent harnesses, eval loops, and a personal software factory.",
+    "I'm a senior software engineer in Seattle, WA. Most of my career has been backend and infrastructure: distributed systems, query optimization, and slashing cloud spend. Outside work, I tinker with custom agent harnesses, eval loops, and a personal software factory. I care about apps that feel instant, services that cost pennies to run, and systems that scale.",
   avatarUrl: "/portrait.webp",
   navbar: [
     { href: "/", icon: HomeIcon, label: "Home" },
@@ -55,7 +55,7 @@ export const DATA = {
       start: "May 2026",
       end: "Present",
       description:
-        "Building Rust services and cleaning up workflows that used to be bloated. Lots of performance tuning and query optimization work.",
+        "I build Rust services and clean up workflows that used to be bloated. The work is performance tuning and query optimization.",
     },
     {
       company: "Perpay",
@@ -67,7 +67,7 @@ export const DATA = {
       start: "Apr 2024",
       end: "May 2026",
       description:
-        "Architected a scalable full-suite e-commerce application with built-in BNPL loans. Rebuilt a legacy Magento instance into a high-converting React storefront, lowered cloud and EKS spend, and overhauled vendor integrations for reliable scaling.",
+        "Built an e-commerce application with built-in BNPL loans. Rebuilt a legacy Magento instance into a React storefront, lowered cloud and EKS spend, and overhauled vendor integrations.",
     },
     {
       company: "Almo Corporation",
@@ -79,7 +79,7 @@ export const DATA = {
       start: "Jul 2023",
       end: "Apr 2024",
       description:
-        "Built warehouse integration systems and real-time inventory APIs for enterprise e-commerce clients, generalizing workflows to streamline new vendor onboarding.",
+        "Built warehouse integration systems and real-time inventory APIs for enterprise e-commerce clients, and generalized the workflows for new vendor onboarding.",
     },
   ],
   education: [
