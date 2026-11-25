@@ -1,13 +1,12 @@
 # peterrauscher.com
 
-My personal portfolio and blog built with Next.js, and Magic UI, deployed on Vercel.
+My personal site and blog, deployed on Vercel.
 
 ## Stack
 
-- **Framework:** Next.js 16, React 19, TypeScript
-- **Styling:** Tailwind CSS v4, shadcn/ui, Magic UI
-- **Blog:** MDX via Content Collections with syntax highlighting (Shiki)
-- **Animation:** Motion (Framer Motion)
+- **Framework:** Next.js
+- **Styling:** Tailwind and shadcn/ui
+- **Blog:** Flat-file via [Content Collections](https://www.content-collections.dev/)
 
 ## Local Development
 
